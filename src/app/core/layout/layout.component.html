@@ -1,0 +1,12 @@
+<mat-drawer-container fullscreen>
+  <mat-drawer mode="side" opened class="layout-sidebar">
+    <app-sidebar></app-sidebar>
+  </mat-drawer>
+  
+  <mat-drawer-content>
+    <app-header></app-header>
+    <div class="layout-content">
+      <ng-content></ng-content>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

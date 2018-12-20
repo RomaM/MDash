@@ -1,0 +1,28 @@
+.item-details {
+    display: flex;
+    flex-flow: row wrap;
+
+    > * {
+      padding: 0 10px;
+      width: 50%;
+      box-sizing: border-box;
+    }
+
+    &__field {
+      &__image {
+        width: 50%;
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      &__title {
+        width: 50%;
+
+        > * {
+          width: 100%;
+        }
+      }
+    }
+}

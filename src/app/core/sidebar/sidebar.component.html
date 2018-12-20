@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" class="sidebar">
+	<mat-toolbar-row class="sidebar__logo">
+		<a routerLink="/" mat-button>
+			<img src="assets/images/logo.png" alt="Funnels Details Logo">
+		</a>
+	</mat-toolbar-row>
+</mat-toolbar>
+<nav class="sidebar-menu">
+	<button
+			mat-button
+			class="sidebar-menu__btn"
+			routerLink="/"
+			routerLinkActive="sidebar-menu__btn__active">
+		<mat-icon>format_list_bulleted</mat-icon>
+		Pages List
+	</button>
+	<button mat-button class="sidebar-menu__btn">
+		<mat-icon>info</mat-icon>
+		Pages Info/Notes
+	</button>
+	<button mat-button class="sidebar-menu__btn">
+		<mat-icon>bar_chart</mat-icon>
+		Statistics
+	</button>
+	<button mat-button class="sidebar-menu__btn">
+		<mat-icon>account_circle</mat-icon>
+		Profile Info
+	</button>
+</nav>

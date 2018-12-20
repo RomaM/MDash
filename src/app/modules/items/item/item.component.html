@@ -1,0 +1,22 @@
+<mat-card class="card">
+  <img class="card__image" mat-card-image src="{{itemData.image}}" alt="Page Screenshot">
+  <mat-card-content class="card-content">
+    <h3 class="card-content__title">{{itemData.title}}</h3>
+    <h4 class="card-content__detail card-content__detail__brand">{{itemData.brand}}</h4>
+    <h4 class="card-content__detail card-content__detail__lang">{{itemData.lang}}</h4>
+    <h4 class="card-content__detail card-content__detail__steps">{{itemData.steps}}</h4>
+    <h4 class="card-content__detail card-content__detail__features">{{itemData.features}}</h4>
+    <h4 class="card-content__detail card-content__detail__date">{{itemData.date}}</h4>
+  </mat-card-content>
+  <mat-card-actions class="card-actions">
+    <a mat-button class="card-actions__btn card-actions__btn__edit">
+      <mat-icon color="primary" routerLink="item/{{index}}">edit</mat-icon>
+    </a>
+    <a mat-button class="card-actions__btn card-actions__btn__remove">
+      <mat-icon color="warn">remove</mat-icon>
+    </a>
+    <a mat-button class="card-actions__btn card-actions__btn__link" href="{{itemData.url}}" target="_blank">
+      <mat-icon>link</mat-icon>
+    </a>
+  </mat-card-actions>
+</mat-card>

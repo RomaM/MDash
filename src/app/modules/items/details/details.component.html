@@ -1,0 +1,44 @@
+<mat-card>
+  <form class="item-details" [formGroup]="detailsForm" (ngSubmit)="onSubmit()">
+    <div class="item-details__field item-details__field__image">
+      <img src="assets/images/noimage.png" alt="Page Screenshot">
+      <input type="file">
+    </div>
+    
+    <mat-form-field class="item-details__field item-details__field__title">
+      <input matInput placeholder="Title">
+    </mat-form-field>
+  
+    <mat-form-field class="item-details__field item-details__field__brand">
+      <mat-select placeholder="Brand">
+        <mat-option value="RCPro">RCPro</mat-option>
+        <mat-option value="S2Trade">S2Trade</mat-option>
+        <mat-option value="Glenm">Glenm</mat-option>
+        <mat-option value="TradeLTD">TradeLTD</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field class="item-details__field item-details__field__lang">
+      <mat-select placeholder="Language">
+        <mat-option value="ar">ar</mat-option>
+        <mat-option value="en">en</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field class="item-details__field item-details__field__steps">
+      <mat-select placeholder="Steps">
+        <mat-option value="1">1</mat-option>
+        <mat-option value="2">2</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <section class="item-details__field item-details__field__features">
+      <mat-checkbox>BB</mat-checkbox>
+      <mat-checkbox>Sticky</mat-checkbox>
+      <mat-checkbox>Form</mat-checkbox>
+      <mat-checkbox>Video</mat-checkbox>
+      <mat-checkbox>Slider</mat-checkbox>
+    </section>
+    <button mat-button>Submit</button>
+  </form>
+</mat-card>

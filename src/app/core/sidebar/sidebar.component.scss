@@ -1,0 +1,39 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 50px;
+
+  &__logo {
+    margin: 0;
+    padding: 0;
+    height: 50px;
+
+    a {
+      display: block;
+      margin: 0 auto;
+      padding: 0;
+      min-width: 1px;
+      border-radius: 0 18px 18px 0;
+    }
+
+    img {
+      width: auto;
+      max-height: 40px;
+    }
+  }
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0;
+
+  &__btn {
+    border-radius: 0;
+    text-align: left;
+
+    &__active {
+      background: rgba(0,0,0,.15);
+    }
+  }
+}

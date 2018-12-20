@@ -1,0 +1,10 @@
+<!--<button mat-button (click)="store()">Store</button>-->
+<!--<button mat-button (click)="get()">Get</button>-->
+
+<div class="item-cards">
+  <app-item *ngFor="let item of pagesList; let i = index;"
+            [index]="i"
+            [itemData]="item"
+            class="item-cards__item">
+  </app-item>
+</div>

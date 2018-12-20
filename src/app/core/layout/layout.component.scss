@@ -1,0 +1,11 @@
+.layout {
+  &-sidebar {
+    min-width: 250px;
+  }
+
+  &-content {
+    margin-top: 50px;
+    height: calc(100% - 50px);
+    overflow-y: auto;
+  }
+}
