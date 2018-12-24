@@ -9,8 +9,10 @@
     }
 
     &__field {
+      box-sizing: border-box;
+
       &__image {
-        width: 50%;
+        width: 100%;
         img {
           width: 100%;
           height: auto;
@@ -18,11 +20,25 @@
       }
 
       &__title {
-        width: 50%;
+        width: 100%;
 
         > * {
           width: 100%;
         }
+      }
+
+      &__brand {
+        width: 60%;
+      }
+
+      &__lang {
+        width: 20%;
+        padding-left: 10px;
+      }
+
+      &__steps {
+        width: 20%;
+        padding-left: 10px;
       }
     }
 }
