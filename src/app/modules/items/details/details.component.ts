@@ -8,6 +8,7 @@ import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class DetailsComponent implements OnInit {
   detailsForm: FormGroup;
+  isEduitedMode: false;
 
   constructor() { }
 
@@ -16,12 +17,18 @@ export class DetailsComponent implements OnInit {
   }
 
   initForm () {
-    const noimage = '/assets/noimage.png';
-    const title = 'asd';
+    const title = '';
     const brand = new FormArray([]);
     const lang = new FormArray([]);
     const steps = new FormArray([]);
     const features = new FormArray([]);
+
+
+    if (this.isEduitedMode) {
+
+
+    }
+
 
     this.detailsForm = new FormGroup({
       'title': new FormControl(title, Validators.required),
@@ -32,6 +39,7 @@ export class DetailsComponent implements OnInit {
     });
   }
 
-  onSubmit() {}
+  onSubmit() {
+  }
 
 }
