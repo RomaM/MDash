@@ -1,8 +1,8 @@
-<!--<button mat-button (click)="store()">Store</button>-->
+<button mat-button (click)="push()">Store</button>
 <!--<button mat-button (click)="get()">Get</button>-->
 
 <div class="item-cards">
-  <app-item *ngFor="let item of pagesList; let i = index;"
+  <app-item *ngFor="let item of (pagesList | async).pages; let i = index;"
             [index]="i"
             [itemData]="item"
             class="item-cards__item">

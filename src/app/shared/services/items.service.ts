@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpRequest} from '@angular/common/http';
-import {PageDetailsModel} from '../models/page-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class ItemsService {
     return this.httpClient.request(req);
   }
 
-  getItems() {
+  fetchItems() {
     return this.httpClient.get<any>('https://funnelsdetails.firebaseio.com/pages.json',
       {
         observe: 'body',

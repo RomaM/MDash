@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {PageDetailsModel} from '../../shared/models/page-detail.model';
+import {Store} from '@ngrx/store';
+import * as pagesReducers from './store/pages.reducers';
+import * as pagesActions from './store/pages.actions';
 
 @Component({
   selector: 'app-items',
@@ -7,9 +11,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemsComponent implements OnInit {
 
-  constructor() { }
+  pagesList: PageDetailsModel[];
+
+  constructor(private store: Store<pagesReducers.State>) {
+
+  }
 
   ngOnInit() {
+    this.store.dispatch(new pagesActions.FetchPagesAction());
   }
 
 }
