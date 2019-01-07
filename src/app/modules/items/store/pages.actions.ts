@@ -3,7 +3,6 @@ import {PageDetailsModel} from '../../../shared/models/page-detail.model';
 
 export enum PageActionTypes {
   FETCH_PAGES = '[Pages] FETCH',
-  FETCH_PAGES_SUCCESS = '[Pages] FETCH SUCCESS',
   PUSH_PAGES = '[Pages] PUSH',
   SET_PAGES = '[Pages] SET',
   ADD_PAGE = '[Pages] Add',
@@ -13,10 +12,6 @@ export enum PageActionTypes {
 
 export class FetchPagesAction implements Action {
   readonly type = PageActionTypes.FETCH_PAGES;
-}
-
-export class FetchSuccessAction implements Action {
-  readonly type = PageActionTypes.FETCH_PAGES_SUCCESS;
 }
 
 export class PushPagesAction implements Action {
@@ -49,7 +44,6 @@ export class UpdatePageAction implements Action {
 
 export type PageActions =
   FetchPagesAction |
-  FetchSuccessAction |
   PushPagesAction |
   SetPagesAction |
   AddPageAction |

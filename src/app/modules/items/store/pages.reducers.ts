@@ -18,11 +18,7 @@ export function pagesReducer(state = initialState, action: PageActions.PageActio
     case PageActions.PageActionTypes.SET_PAGES:
       return {
         ...state,
-        pages: action.payload
-      };
-      case PageActions.PageActionTypes.FETCH_PAGES_SUCCESS:
-      return {
-        ...state,
+        pages: action.payload,
         loaded: true
       };
     case PageActions.PageActionTypes.ADD_PAGE: {

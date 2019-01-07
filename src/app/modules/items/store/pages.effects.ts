@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {Effect, Actions, ofType} from '@ngrx/effects';
 import {HttpClient, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs/index';
+import {Observable, empty} from 'rxjs';
 import {switchMap, map, withLatestFrom, mergeMap} from 'rxjs/operators';
 
 import * as PagesActions from './pages.actions';
@@ -15,7 +15,14 @@ export class PagesEffects {
   @Effect()
   fetchPages$: Observable<PagesActions.PageActions> = this.actions$.pipe(
     ofType(PagesActions.PageActionTypes.FETCH_PAGES),
-    switchMap( () => {
+    withLatestFrom(this.store.pipe(
+      select('pagesState', 'loaded')
+    )),
+    switchMap( (loaded) => {
+      if (loaded) {
+        console.log(loaded)
+        return empty();
+      }
       return this.itemsService.fetchItems();
     }),
     map((payload) => {
