@@ -1,8 +1,25 @@
-<button mat-button (click)="push()">Store</button>
+<!--<button mat-button (click)="push()">Store</button>-->
 <!--<button mat-button (click)="get()">Get</button>-->
 
+<div class="item-filters">
+  <mat-form-field class="item-filters__filter">
+    <input matInput placeholder="Title" value="" [(ngModel)]="filterTitle">
+  </mat-form-field>
+  
+  <mat-form-field class="item-filters__filter">
+    <mat-select placeholder="Steps" [(ngModel)]="filterSteps">
+      <mat-option value="">All</mat-option>
+      <mat-option value="1">1 step</mat-option>
+      <mat-option value="2">2 step</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
 <div class="item-cards">
-  <app-item *ngFor="let item of (pagesList | async).pages; let i = index;"
+  <app-item *ngFor="let item of pagesList
+    | filter:'title':filterTitle
+    | filter:'steps':filterSteps;
+    let i = index;"
             [index]="i"
             [itemData]="item"
             class="item-cards__item">

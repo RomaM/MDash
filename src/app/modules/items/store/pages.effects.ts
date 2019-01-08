@@ -3,7 +3,7 @@ import {select, Store} from '@ngrx/store';
 import {Effect, Actions, ofType} from '@ngrx/effects';
 import {HttpClient, HttpRequest} from '@angular/common/http';
 import {Observable, empty} from 'rxjs';
-import {switchMap, map, withLatestFrom, mergeMap} from 'rxjs/operators';
+import {switchMap, map, withLatestFrom, takeUntil, takeWhile, tap} from 'rxjs/operators';
 
 import * as PagesActions from './pages.actions';
 import * as pageReducer from './pages.reducers';
@@ -18,17 +18,17 @@ export class PagesEffects {
     withLatestFrom(this.store.pipe(
       select('pagesState', 'loaded')
     )),
-    switchMap( (loaded) => {
-      if (loaded) {
-        console.log(loaded)
-        return empty();
-      }
+    takeWhile(([, loaded]) => {
+      console.log('Loaded: ' + loaded);
+      return loaded === false;
+    }),
+    switchMap( () => {
+      console.log('Fetch Req');
       return this.itemsService.fetchItems();
     }),
     map((payload) => {
       return new PagesActions.SetPagesAction(payload);
-    }),
-    // map(() => new PagesActions.FetchSuccessAction())
+    })
   );
 
   // @Effect()

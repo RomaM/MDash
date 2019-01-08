@@ -19,6 +19,9 @@ export class ItemsComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new pagesActions.FetchPagesAction());
+    setTimeout(() => {
+      this.store.dispatch(new pagesActions.FetchPagesAction());
+    }, 2000);
   }
 
 }

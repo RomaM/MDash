@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {PageDetailsModel} from '../../../shared/models/page-detail.model';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as PagesActions from '../store/pages.actions';
 import * as pagesReducer from '../store/pages.reducers';
-import {Observable} from 'rxjs/index';
+import {Observable, pipe} from 'rxjs';
 import {ItemsService} from '../../../shared/services/items.service';
 
 @Component({
@@ -12,6 +12,8 @@ import {ItemsService} from '../../../shared/services/items.service';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+  filterTitle: string;
+  filterSteps: string;
 
   pagesList: Observable<PageDetailsModel[]>;
   // pagesList: PageDetailsModel[]
@@ -152,7 +154,14 @@ export class ListComponent implements OnInit {
               private itemsService: ItemsService) { }
 
   ngOnInit() {
-    this.pagesList = this.store.select('pagesState');
+    this.filterTitle = '';
+    this.filterSteps = '';
+
+    this.store.pipe(
+      select('pagesState', 'pages')
+    ).subscribe(
+      data => this.pagesList = data
+    );
   }
 
   push() {
