@@ -2,15 +2,37 @@
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  padding: 10px 5px 0;
+  padding: 10px 10px 0;
   box-sizing: border-box;
 
   &__filter {
-    flex: 0 1 20%;
-    padding: 0 5px;
+    flex: 0 1 10%;
+    padding-left: 15px;
+    width: 10%;
 
-    > * {
+    &__title {
+      padding-left: 0;
+      width: 25%;
+    }
+  }
 
+  .item-actions {
+    display: flex;
+    margin-left: auto;
+    padding: 10px 0;
+
+    &__btn {
+      &__push {
+        color: #6e00ff;
+      }
+
+      &__fetch {
+        color: #ff00f4;
+      }
+
+      &__add {
+        color: #01b60b;
+      }
     }
   }
 }

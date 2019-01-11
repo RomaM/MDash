@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpRequest} from '@angular/common/http';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {ItemsData} from '../models/page-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,9 @@ import {HttpClient, HttpRequest} from '@angular/common/http';
 export class ItemsService {
   constructor(private httpClient: HttpClient) {}
 
-  storeItems(items: any[]) {
+  loadedData = new BehaviorSubject([]);
+
+  pushItems(items: any) {
     const req = new HttpRequest('PUT', 'https://funnelsdetails.firebaseio.com/pages.json',
       items, {reportProgress: true});
 
@@ -21,6 +25,10 @@ export class ItemsService {
         observe: 'body',
         responseType: 'json'
       });
+  }
+
+  onLoaded(data: Array<ItemsData>) {
+    this.loadedData.next(data);
   }
 }
 

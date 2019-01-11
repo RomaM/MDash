@@ -1,30 +1,28 @@
 import * as PageActions from './pages.actions';
-import {PageDetailsModel} from '../../../shared/models/page-detail.model';
 
 export interface State {
-  pages: PageDetailsModel[];
-  selected: number;
   loaded: boolean;
+  selected: number;
+  timestamp: number;
 }
 
 export const initialState: State = {
-  pages: [],
+  loaded: false,
   selected: -1,
-  loaded: false
+  timestamp: 1
 };
 
 export function pagesReducer(state = initialState, action: PageActions.PageActions): State {
   switch (action.type) {
-    case PageActions.PageActionTypes.SET_PAGES:
+    case PageActions.PageActionTypes.LOADING_PAGES: {
       return {
         ...state,
-        pages: action.payload,
-        loaded: true
+        loaded: action.payload
       };
+    }
     case PageActions.PageActionTypes.ADD_PAGE: {
       return {
-        ...state,
-        pages: [...state.pages, action.payload]
+        ...state
       };
     }
     default: {

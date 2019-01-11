@@ -12,38 +12,22 @@ import {ItemsService} from '../../../shared/services/items.service';
 @Injectable()
 
 export class PagesEffects {
-  @Effect()
-  fetchPages$: Observable<PagesActions.PageActions> = this.actions$.pipe(
-    ofType(PagesActions.PageActionTypes.FETCH_PAGES),
-    withLatestFrom(this.store.pipe(
-      select('pagesState', 'loaded')
-    )),
-    takeWhile(([, loaded]) => {
-      console.log('Loaded: ' + loaded);
-      return loaded === false;
-    }),
-    switchMap( () => {
-      console.log('Fetch Req');
-      return this.itemsService.fetchItems();
-    }),
-    map((payload) => {
-      return new PagesActions.SetPagesAction(payload);
-    })
-  );
-
   // @Effect()
-  // setPages$ = this.actions$.pipe(
-  //   ofType(PagesActions.PageActionTypes.PUSH_PAGES),
-  //   withLatestFrom(() => {
-  //     const state = this.store.select('pagesState');
-  //     console.log(state);
-  //     return state;
+  // fetchPages$: Observable<PagesActions.PageActions> = this.actions$.pipe(
+  //   ofType(PagesActions.PageActionTypes.FETCH_PAGES),
+  //   withLatestFrom(this.store.pipe(
+  //     select('pagesState', 'loaded')
+  //   )),
+  //   takeWhile(([, loaded]) => {
+  //     console.log('Loaded: ' + loaded);
+  //     return loaded === false;
   //   }),
-  //   switchMap((payload) => {
-  //     const req = new HttpRequest('PUT', 'https://funnelsdetails.firebaseio.com/pages.json',
-  //       payload, {reportProgress: true});
-  //
-  //     return this.httpClient.request(req);
+  //   switchMap( () => {
+  //     console.log('Fetch Req');
+  //     return this.itemsService.fetchItems();
+  //   }),
+  //   map((payload) => {
+  //     return new PagesActions.SetPagesAction(payload);
   //   })
   // );
 

@@ -2,26 +2,16 @@ import {Action} from '@ngrx/store';
 import {PageDetailsModel} from '../../../shared/models/page-detail.model';
 
 export enum PageActionTypes {
-  FETCH_PAGES = '[Pages] FETCH',
-  PUSH_PAGES = '[Pages] PUSH',
-  SET_PAGES = '[Pages] SET',
+  LOADING_PAGES = '[Pages] LOADING',
   ADD_PAGE = '[Pages] Add',
   DELETE_PAGE = '[Pages] Delete',
-  UPDATE_PAGE = '[Pages] Change',
+  UPDATE_PAGE = '[Pages] Update',
 }
 
-export class FetchPagesAction implements Action {
-  readonly type = PageActionTypes.FETCH_PAGES;
-}
+export class LoadingPagesAction implements Action {
+  readonly type = PageActionTypes.LOADING_PAGES;
 
-export class PushPagesAction implements Action {
-  readonly type = PageActionTypes.PUSH_PAGES;
-}
-
-export class SetPagesAction implements Action {
-  readonly type = PageActionTypes.SET_PAGES;
-
-  constructor(public payload: PageDetailsModel[]) {}
+  constructor(public payload: boolean) {}
 }
 
 export class AddPageAction implements Action {
@@ -43,9 +33,7 @@ export class UpdatePageAction implements Action {
 }
 
 export type PageActions =
-  FetchPagesAction |
-  PushPagesAction |
-  SetPagesAction |
+  LoadingPagesAction |
   AddPageAction |
   DeletePageAction |
   UpdatePageAction;
