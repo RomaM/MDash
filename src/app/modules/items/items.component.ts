@@ -30,6 +30,12 @@ export class ItemsComponent implements OnInit {
       (serverData: any) => {
         console.log('Fetch');
         this.itemsService.onLoaded(serverData.list);
+
+        this.store.dispatch(new PagesActions.LoadingPagesAction(true));
+      },
+      (error) => {
+        console.log('Fetch Items Error: '); // todo: Error to Log
+        console.log(error);
       }
     );
   }
