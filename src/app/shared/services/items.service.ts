@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpRequest} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {ItemsData} from '../models/page-detail.model';

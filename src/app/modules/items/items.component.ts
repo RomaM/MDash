@@ -4,6 +4,7 @@ import {select, Store} from '@ngrx/store';
 import * as pagesReducer from './store/pages.reducers';
 import * as PagesActions from './store/pages.actions';
 import {map, tap} from 'rxjs/operators';
+import {ItemsData} from '../../shared/models/page-detail.model';
 
 @Component({
   selector: 'app-items',
@@ -13,6 +14,8 @@ import {map, tap} from 'rxjs/operators';
 export class ItemsComponent implements OnInit {
   constructor(private itemsService: ItemsService,
               private store: Store<pagesReducer.State>) {}
+
+  itemsData: Array<ItemsData>;
 
   ngOnInit() {
     // this.itemsService.onLoaded();
@@ -28,7 +31,7 @@ export class ItemsComponent implements OnInit {
 
     this.itemsService.fetchItems().subscribe(
       (serverData: any) => {
-        console.log('Fetch');
+        console.log('--> Fetch Data from Server');
         this.itemsService.onLoaded(serverData.list);
 
         this.store.dispatch(new PagesActions.LoadingPagesAction(true));

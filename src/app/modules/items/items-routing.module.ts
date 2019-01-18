@@ -9,7 +9,7 @@ const itemsRoutes: Routes = [
     children: [
       {path: '', component: ListComponent},
       {path: 'item/:id', component: DetailsComponent},
-      {path: 'item/new', component: DetailsComponent},
+      {path: 'new', component: DetailsComponent},
     ]
   }
 ];
