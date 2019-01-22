@@ -26,13 +26,13 @@
   
       <mat-form-field class="item-details__field item-details__field__lang">
         <mat-select placeholder="Language" formControlName="lang">
-          <mat-option *ngFor="let lang of lang" value="{{lang | lowercase}}">{{lang}}</mat-option>
+          <mat-option *ngFor="let lang of pageLangs" value="{{lang | lowercase}}">{{lang}}</mat-option>
         </mat-select>
       </mat-form-field>
   
       <mat-form-field class="item-details__field item-details__field__steps">
         <mat-select placeholder="Steps" formControlName="step">
-          <mat-option *ngFor="let step of pageSteps" value="1">1</mat-option>
+          <mat-option *ngFor="let step of pageSteps" value="step">{{step}}</mat-option>
         </mat-select>
       </mat-form-field>
   
@@ -41,7 +41,7 @@
       </mat-form-field>
   
       <a mat-button class="item-details__field item-details__field__page-link"
-         href="" target="_blank">
+         href="{{detailsForm.get('url').value}}" target="_blank">
         <mat-icon>link</mat-icon>
       </a>
       

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable, Subscription} from 'rxjs/index';
 import * as pagesReducer from '../store/pages.reducers';
 import * as PagesActions from '../store/pages.actions';
@@ -15,7 +15,7 @@ import {ItemsService} from '../../../shared/services/items.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   detailsForm: FormGroup;
-  detailsFormData = new PageDetailsModel( null, '', '', '', '', '', '', null, [], '', '', '');
+  // detailsFormData = new PageDetailsModel( null, '', '', '', '', '', '', null, [], '', '', '');
   editedItem = -1;
   itemsLoadedSubscription: Subscription;
 
@@ -50,7 +50,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
         data => {
           if (data.length > 0) {
-            this.detailsFormData = data[this.editedItem];
+            console.log(data[this.editedItem]);
+            console.log(this.detailsForm.value);
+
+            for (const [name, value] of this.detailsForm.value) {
+              console.log(value);
+              console.log('aaa');
+            }
           }
         }
       );
@@ -61,18 +67,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
     });
 
     this.detailsForm = new FormGroup({
-      'title': new FormControl(this.detailsFormData.title, Validators.required),
-      'author': new FormControl(this.detailsFormData.author, Validators.required),
-      'id': new FormControl(this.detailsFormData.id, Validators.required),
-      'url': new FormControl(this.detailsFormData.url, Validators.required),
-      'taskUrl': new FormControl(this.detailsFormData.taskUrl, Validators.required),
-      'date': new FormControl(this.detailsFormData.date, Validators.required),
-      'image': new FormControl(this.detailsFormData.image, Validators.required),
-      'desc': new FormControl(this.detailsFormData.description, Validators.required),
-      'brand': new FormControl(this.detailsFormData.brand),
-      'lang': new FormControl(this.detailsFormData.lang),
-      'step': new FormControl(this.detailsFormData.steps),
-      'features': new FormArray(this.featuresControls)
+      'title': new FormControl('', Validators.required),
+      'author': new FormControl('', Validators.required),
+      'id': new FormControl('', Validators.required),
+      'url': new FormControl('', Validators.required),
+      'taskUrl': new FormControl('', Validators.required),
+      'date': new FormControl('', Validators.required),
+      'image': new FormControl('', Validators.required),
+      'desc': new FormControl('', Validators.required),
+      'brand': new FormControl(''),
+      'lang': new FormControl(''),
+      'step': new FormControl(''),
+      'features': new FormArray([])
     });
   }
 
