@@ -20,13 +20,13 @@
       
       <mat-form-field class="item-details__field item-details__field__brand">
         <mat-select placeholder="Brand" formControlName="brand">
-          <mat-option *ngFor="let brand of pageBrands" value="{{brand | lowercase}}">{{brand}}</mat-option>
+          <mat-option *ngFor="let brand of pageBrands" value="{{brand}}">{{brand}}</mat-option>
         </mat-select>
       </mat-form-field>
   
       <mat-form-field class="item-details__field item-details__field__lang">
         <mat-select placeholder="Language" formControlName="lang">
-          <mat-option *ngFor="let lang of pageLangs" value="{{lang | lowercase}}">{{lang}}</mat-option>
+          <mat-option *ngFor="let lang of pageLangs" value="{{lang}}">{{lang}}</mat-option>
         </mat-select>
       </mat-form-field>
   
@@ -58,8 +58,12 @@
         <input matInput placeholder="Date" formControlName="date">
       </mat-form-field>
   
-      <section class="item-details__field item-details__field__features" FormArrayName="features">
-        <mat-checkbox *ngFor="let feature of features">{{feature}}</mat-checkbox>
+      <section class="item-details__field item-details__field__features" formGroupName="features">
+        <mat-checkbox formControlName="bb">BB</mat-checkbox>
+        <mat-checkbox formControlName="push">Push</mat-checkbox>
+        <mat-checkbox formControlName="video">Video</mat-checkbox>
+        <mat-checkbox formControlName="slider">Slider</mat-checkbox>
+        <mat-checkbox formControlName="form">form</mat-checkbox>
       </section>
       
       <mat-form-field class="item-details__field item-details__field__desc">

@@ -15,16 +15,12 @@ import {ItemsService} from '../../../shared/services/items.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   detailsForm: FormGroup;
-  // detailsFormData = new PageDetailsModel( null, '', '', '', '', '', '', null, [], '', '', '');
   editedItem = -1;
   itemsLoadedSubscription: Subscription;
 
   pageBrands = ['RCPro', 'S2Trade', 'Glenm', 'TradeLTD', 'TradeFW'];
   pageLangs = ['ru', 'en', 'de', 'es'];
   pageSteps = ['1', '2'];
-  pageFeatures = ['bb', 'push', 'video', 'slider', 'forms'];
-
-  featuresControls = [];
 
   constructor(private itemsService: ItemsService,
               private store: Store<pagesReducer.State>,
@@ -50,21 +46,20 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
         data => {
           if (data.length > 0) {
-            console.log(data[this.editedItem]);
-            console.log(this.detailsForm.value);
+            Object.entries(data[this.editedItem]).map(
+              ([key, value]) => {
+                if (Array.isArray(value)) {
 
-            for (const [name, value] of this.detailsForm.value) {
-              console.log(value);
-              console.log('aaa');
-            }
+                }
+              }
+            );
+
+            this.detailsForm.patchValue(data[this.editedItem]);
+            // this.detailsForm.patchValue({features: {bb: true}});
           }
         }
       );
     }
-
-    this.pageFeatures.map( i => {
-      this.featuresControls.push(new FormControl(i));
-    });
 
     this.detailsForm = new FormGroup({
       'title': new FormControl('', Validators.required),
@@ -75,10 +70,16 @@ export class DetailsComponent implements OnInit, OnDestroy {
       'date': new FormControl('', Validators.required),
       'image': new FormControl('', Validators.required),
       'desc': new FormControl('', Validators.required),
-      'brand': new FormControl(''),
-      'lang': new FormControl(''),
-      'step': new FormControl(''),
-      'features': new FormArray([])
+      'brand': new FormControl('', Validators.required),
+      'lang': new FormControl('', Validators.required),
+      'step': new FormControl('', Validators.required),
+      'features': new FormGroup({
+        'bb': new FormControl(false),
+        'push': new FormControl(false),
+        'video': new FormControl(false),
+        'slider': new FormControl(false),
+        'form': new FormControl(false),
+      })
     });
   }
 

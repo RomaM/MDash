@@ -7,7 +7,7 @@ export class PageDetailsModel {
   public url: string;
   public taskUrl: string;
   public steps: number;
-  public features: Array<string>;
+  public features: {};
   public description: string;
   public image: string;
   public date: string;
@@ -20,7 +20,7 @@ export class PageDetailsModel {
               url: string,
               taskUrl: string,
               steps: number,
-              features: Array<string>,
+              features: {},
               description: string,
               image: string,
               date: string) {
