@@ -32,7 +32,7 @@ export class ItemsComponent implements OnInit {
     this.itemsService.fetchItems().subscribe(
       (serverData: any) => {
         console.log('--> Fetch Data from Server');
-        this.itemsService.onLoaded(serverData.list);
+        this.itemsService.onLoaded(serverData);
 
         this.store.dispatch(new PagesActions.LoadingPagesAction(true));
       },

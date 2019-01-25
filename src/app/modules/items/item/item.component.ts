@@ -19,6 +19,7 @@ export class ItemComponent implements OnInit {
               private store: Store<pagesReducer.State>) { }
 
   ngOnInit() {
+
   }
 
   editItem(index: number) {

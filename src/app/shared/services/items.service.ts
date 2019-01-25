@@ -27,7 +27,7 @@ export class ItemsService {
       });
   }
 
-  onLoaded(data: ItemsData) {
+  onLoaded(data) {
     this.loadedData.next(data);
   }
 }
