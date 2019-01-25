@@ -37,7 +37,7 @@ export class ItemsComponent implements OnInit {
         this.store.dispatch(new PagesActions.LoadingPagesAction(true));
       },
       (error) => {
-        console.log('Fetch Items Error: '); // todo: Error to Log
+        console.log('Fetch Items Error: '); // ToDo: Errors to Log
         console.log(error);
       }
     );

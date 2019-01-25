@@ -21,9 +21,9 @@ export class ListComponent implements OnInit, OnDestroy {
   filterBrands: string;
   filterLang: string;
 
-  pagesList: ItemsData[];
+  pagesList: ItemsData;
   // pagesList: ItemsData = {
-  //     list: [
+  //   list: [
   //       {
   //         id: 1,
   //         author: 'Roman Maiboroda',
@@ -151,8 +151,8 @@ export class ListComponent implements OnInit, OnDestroy {
   //         date: '21.09.18',
   //       },
   //     ],
-  //     timeStamp: 123123123
-  //   };
+  //   timeStamp: 123123123
+  // };
 
   constructor(private store: Store<pagesReducer.State>,
               private itemsService: ItemsService) { }
@@ -164,16 +164,20 @@ export class ListComponent implements OnInit, OnDestroy {
     this.filterLang = '';
 
     this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
-      (data: ItemsData[]) => {
+      (data: any) => {
         this.pagesList = data;
+
+        console.log(this.pagesList);
       }
     );
   }
 
   push() {
-    this.itemsService.pushItems(this.pagesList).subscribe((data) => {
-      console.log(data);
-    });
+    console.log(this.pagesList);
+    this.itemsService.pushItems(this.pagesList).subscribe(
+      data => console.log(data),
+      error => console.log(error)
+    );
   }
 
   fetch() {

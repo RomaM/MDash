@@ -15,12 +15,12 @@ import {ItemsService} from '../../../shared/services/items.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   detailsForm: FormGroup;
-  editedItem = -1;
+  editedItem: any;
   itemsLoadedSubscription: Subscription;
 
   pageBrands = ['RCPro', 'S2Trade', 'Glenm', 'TradeLTD', 'TradeFW'];
-  pageLangs = ['ru', 'en', 'de', 'es'];
-  pageSteps = ['1', '2'];
+  pageLangs = ['ru', 'en', 'de', 'es', 'it'];
+  pageSteps = [1, 2];
 
   constructor(private itemsService: ItemsService,
               private store: Store<pagesReducer.State>,
@@ -34,45 +34,26 @@ export class DetailsComponent implements OnInit, OnDestroy {
     //   })
     // );
 
-    this.editedItem = +this.route.snapshot.params.id;
+    this.editedItem = this.route.snapshot.params.id;
+
+    this.store.dispatch(new PagesActions.EditedPagesAction({edited: !!this.editedItem, selected: this.editedItem}));
 
     this.initForm();
   }
 
   initForm () {
-    if (this.editedItem >= 0) {
-      this.store.dispatch(new PagesActions.EditedPagesAction({edited: true, selected: this.editedItem}));
-
-      this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
-        data => {
-          if (data.length > 0) {
-            Object.entries(data[this.editedItem]).map(
-              ([key, value]) => {
-                if (Array.isArray(value)) {
-
-                }
-              }
-            );
-
-            this.detailsForm.patchValue(data[this.editedItem]);
-            // this.detailsForm.patchValue({features: {bb: true}});
-          }
-        }
-      );
-    }
-
     this.detailsForm = new FormGroup({
       'title': new FormControl('', Validators.required),
       'author': new FormControl('', Validators.required),
-      'id': new FormControl('', Validators.required),
+      'id': new FormControl({value: '', disabled: true}, Validators.required),
       'url': new FormControl('', Validators.required),
       'taskUrl': new FormControl('', Validators.required),
       'date': new FormControl('', Validators.required),
       'image': new FormControl('', Validators.required),
-      'desc': new FormControl('', Validators.required),
+      'desc': new FormControl(''),
       'brand': new FormControl('', Validators.required),
       'lang': new FormControl('', Validators.required),
-      'step': new FormControl('', Validators.required),
+      'steps': new FormControl('', Validators.required),
       'features': new FormGroup({
         'bb': new FormControl(false),
         'push': new FormControl(false),
@@ -81,13 +62,32 @@ export class DetailsComponent implements OnInit, OnDestroy {
         'form': new FormControl(false),
       })
     });
+
+    if (this.editedItem) {
+      this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
+        data => {
+          if (data.length > 0) {
+            // Object.entries(data[this.editedItem]).map(
+            //   ([key, value]) => {
+            //     if (Array.isArray(value)) {}
+            //   }
+            // );
+
+            this.detailsForm.patchValue(data[this.editedItem]);
+          }
+        }
+      );
+    }
   }
 
   onSubmit() {
+    console.log('Submited'); // ToDo: Loader for communications with server
   }
 
   ngOnDestroy() {
-    this.itemsLoadedSubscription.unsubscribe();
+    if (this.editedItem) {
+      this.itemsLoadedSubscription.unsubscribe();
+    }
   }
 
 }
