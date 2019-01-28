@@ -14,6 +14,8 @@ export class ItemComponent implements OnInit {
   @Input() itemData;
   @Input() index;
 
+  objKeys = Object.keys;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private store: Store<pagesReducer.State>) { }

@@ -1,48 +1,47 @@
-.item-filters {
+.filters {
   display: flex;
   flex-flow: row wrap;
   width: 100%;
   padding: 10px 10px 0;
   box-sizing: border-box;
 
-  &__filter {
+  &__cell {
     flex: 0 1 10%;
     padding-left: 15px;
     width: 10%;
 
-    &__title {
+    &_title {
       padding-left: 0;
       width: 25%;
     }
   }
 
-  .item-actions {
+  .actions {
     display: flex;
     margin-left: auto;
     padding: 10px 0;
 
     &__btn {
-      &__push {
+      &_push {
         color: #6e00ff;
       }
 
-      &__fetch {
+      &_fetch {
         color: #ff00f4;
       }
 
-      &__add {
+      &_add {
         color: #01b60b;
       }
     }
   }
 }
 
-.item-cards {
+.list {
   display: flex;
   flex-flow: row wrap;
-  width: 100%;
 
-  &__item {
+  &__elem {
     flex: 0 1 25%;
   }
 }

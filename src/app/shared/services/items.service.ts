@@ -10,7 +10,7 @@ import {ItemsData} from '../models/page-detail.model';
 export class ItemsService {
   constructor(private httpClient: HttpClient) {}
 
-  loadedData = new BehaviorSubject([]);
+  loadedData = new BehaviorSubject(<any>{});
 
   pushItems(items: any) {
     const req = new HttpRequest('PUT', 'https://funnelsdetails.firebaseio.com/pages.json',

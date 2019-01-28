@@ -4,7 +4,7 @@ import {Observable, Subscription} from 'rxjs/index';
 import * as pagesReducer from '../store/pages.reducers';
 import * as PagesActions from '../store/pages.actions';
 import {select, Store} from '@ngrx/store';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PageDetailsModel} from '../../../shared/models/page-detail.model';
 import {ItemsService} from '../../../shared/services/items.service';
 
@@ -22,9 +22,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
   pageLangs = ['ru', 'en', 'de', 'es', 'it'];
   pageSteps = [1, 2];
 
+  id = 0;
+  image = 'assets/images/noimage.png';
+
   constructor(private itemsService: ItemsService,
               private store: Store<pagesReducer.State>,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
     // this.store.pipe(
@@ -45,12 +49,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.detailsForm = new FormGroup({
       'title': new FormControl('', Validators.required),
       'author': new FormControl('', Validators.required),
-      'id': new FormControl({value: '', disabled: true}, Validators.required),
+      'id': new FormControl({value: this.id, disabled: true}, Validators.required),
       'url': new FormControl('', Validators.required),
       'taskUrl': new FormControl('', Validators.required),
       'date': new FormControl('', Validators.required),
-      'image': new FormControl('', Validators.required),
-      'desc': new FormControl(''),
+      'image': new FormControl(this.image, Validators.required),
+      'description': new FormControl(''),
       'brand': new FormControl('', Validators.required),
       'lang': new FormControl('', Validators.required),
       'steps': new FormControl('', Validators.required),
@@ -63,17 +67,20 @@ export class DetailsComponent implements OnInit, OnDestroy {
       })
     });
 
-    if (this.editedItem) {
+    if (!!this.editedItem) {
+      console.log('Edit Mode');
       this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
         data => {
-          if (data.length > 0) {
+          if (data.hasOwnProperty('list') && data.list.length > 0) {
             // Object.entries(data[this.editedItem]).map(
             //   ([key, value]) => {
             //     if (Array.isArray(value)) {}
             //   }
             // );
 
-            this.detailsForm.patchValue(data[this.editedItem]);
+            this.detailsForm.patchValue(data.list[this.editedItem]);
+
+            console.log(data.list[this.editedItem]);
           }
         }
       );
@@ -82,10 +89,26 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log('Submited'); // ToDo: Loader for communications with server
+
+    if (this.detailsForm.valid) {
+      if (!!this.editedItem) {
+
+      } else {
+
+      }
+    }
+  }
+
+  remove() {
+
+  }
+
+  cancel() {
+    this.router.navigate(['/list']);
   }
 
   ngOnDestroy() {
-    if (this.editedItem) {
+    if (!!this.editedItem) {
       this.itemsLoadedSubscription.unsubscribe();
     }
   }

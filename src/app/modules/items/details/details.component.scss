@@ -7,70 +7,70 @@
     width: 50%;
     box-sizing: border-box;
   }
+}
 
-  &__field {
-    box-sizing: border-box;
-    font-size: 14px;
+.field {
+  box-sizing: border-box;
+  font-size: 14px;
 
-    &__image {
+  &__image {
+    width: 100%;
+    img {
       width: 100%;
-      img {
-        width: 100%;
-        height: auto;
-      }
+      height: auto;
     }
+  }
 
-    &__title {
-      width: 62%;
-    }
+  &__title {
+    width: 62%;
+  }
 
-    &__author {
-      width: 38%;
-      padding-left: 10px;
-    }
+  &__author {
+    width: 38%;
+    padding-left: 10px;
+  }
 
-    &__brand {
-      width: 25%;
-    }
+  &__brand {
+    width: 25%;
+  }
 
-    &__lang {
-      width: 20%;
-      padding-left: 10px;
-    }
+  &__lang {
+    width: 20%;
+    padding-left: 10px;
+  }
 
-    &__steps {
-      width: 20%;
-      padding-left: 10px;
-    }
+  &__steps {
+    width: 20%;
+    padding-left: 10px;
+  }
 
-    &__date {
-      width: 20%;
-      padding-left: 10px;
-    }
+  &__date {
+    width: 20%;
+    padding-left: 10px;
+  }
 
-    &__id {
-      width: 15%;
-      padding-left: 10px;
-    }
+  &__id {
+    width: 15%;
+    padding-left: 10px;
+  }
 
-    &__page-url, &__task-url {
-      width: calc(100% - 74px);
-    }
+  &__page-url, &__task-url {
+    width: calc(100% - 74px);
+  }
 
-    &__page-link, &__task-link {
-      width: 64px;
-      margin-left: 10px;
-    }
+  &__page-link, &__task-link {
+    width: 64px;
+    margin-left: 10px;
+  }
 
-    &__features {
-      & > * {
-        padding-right: 10px;
-      }
+  &__features {
+    & > * {
+      padding-right: 10px;
     }
+  }
 
-    &__desc {
-      width: 100%;
-    }
+  &__description {
+    width: 100%;
   }
 }
 
@@ -83,15 +83,15 @@
     margin: 0 5px;
     font-size: 16px;
 
-    &__save {
+    &_save {
       background: #009908;
     }
 
-    &__remove {
+    &_remove {
       background: #dc005a;
     }
 
-    &__cancel {
+    &_cancel {
       background: #6e00ff;
     }
   }
