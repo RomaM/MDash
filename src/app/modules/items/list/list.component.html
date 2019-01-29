@@ -45,14 +45,14 @@
 </div>
 
 <div class="list">
-  <app-item *ngFor="let item of pagesData.list
+  <app-item *ngFor="let item of pagesData.list | keyvalue
     | filter:'title':filterTitle
     | filter:'steps':filterSteps
     | filter:'brand':filterBrands
     | filter:'lang':filterLang;
     let i = index;"
             [index]="i"
-            [itemData]="item"
+            [itemData]="item.value"
             class="list__elem">
   </app-item>
 </div>

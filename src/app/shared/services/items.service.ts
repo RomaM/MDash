@@ -1,7 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
-import {HttpClient, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {ItemsData} from '../models/page-detail.model';
+import {ItemsData, PageDetailsModel} from '../models/page-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,19 @@ export class ItemsService {
   constructor(private httpClient: HttpClient) {}
 
   loadedData = new BehaviorSubject(<any>{});
+
+  addItem(item: any) {
+    // const req = new HttpRequest('POST', 'https://funnelsdetails.firebaseio.com/pages.json',
+    //   item, {reportProgress: true});
+    //
+    // return this.httpClient.request(req);
+
+    const params = new HttpParams().set('name', '10');
+
+    return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/pages/list.json',
+      item, { params }
+      );
+  }
 
   pushItems(items: any) {
     const req = new HttpRequest('PUT', 'https://funnelsdetails.firebaseio.com/pages.json',

@@ -72,12 +72,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
         data => {
           if (data.hasOwnProperty('list') && data.list.length > 0) {
-            // Object.entries(data[this.editedItem]).map(
-            //   ([key, value]) => {
-            //     if (Array.isArray(value)) {}
-            //   }
-            // );
-
             this.detailsForm.patchValue(data.list[this.editedItem]);
 
             console.log(data.list[this.editedItem]);
@@ -93,8 +87,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (this.detailsForm.valid) {
       if (!!this.editedItem) {
 
-      } else {
 
+      } else {
+        this.itemsService.addItem(this.detailsForm.getRawValue()).subscribe(
+          res => console.log(res),
+          err => console.log(err)
+        );
       }
     }
   }

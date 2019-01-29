@@ -4,8 +4,7 @@ import {select, Store} from '@ngrx/store';
 import * as pagesReducer from '../store/pages.reducers';
 import {Observable, Subscription} from 'rxjs';
 import {ItemsService} from '../../../shared/services/items.service';
-import {tap, map, switchMap} from 'rxjs/operators';
-import {withLatestFrom} from 'rxjs/internal/operators';
+import {tap, map, switchMap, timeout} from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -21,7 +20,8 @@ export class ListComponent implements OnInit, OnDestroy {
   filterBrands: string;
   filterLang: string;
 
-  pagesData: ItemsData;
+  pagesData: any = {};
+  objKeys = Object.keys;
 
   // pagesData: ItemsData = {
   //   list: [
@@ -179,11 +179,12 @@ export class ListComponent implements OnInit, OnDestroy {
     this.filterBrands = '';
     this.filterLang = '';
 
-    this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
+    this.itemsLoadedSubscription = this.itemsService.loadedData
+      .subscribe(
       (data: any) => {
-        this.pagesData = data;
-
-        console.log(this.pagesData);
+        if (Object.keys(data).length > 0 && data.constructor === Object) {
+          this.pagesData = data;
+        }
       }
     );
   }
