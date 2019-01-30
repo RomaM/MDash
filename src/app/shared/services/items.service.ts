@@ -18,10 +18,10 @@ export class ItemsService {
     //
     // return this.httpClient.request(req);
 
-    const params = new HttpParams().set('name', '10');
+    const keyval = {10: item};
 
     return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/pages/list.json',
-      item, { params }
+      keyval
       );
   }
 

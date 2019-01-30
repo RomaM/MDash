@@ -3,12 +3,17 @@
   padding: 0;
 
   &__image {
-    width: 100%;
-    height: auto;
-    margin: 0;
+    max-height: 235px;
+    overflow: hidden;
 
-    &:first-child {
+    img {
+      width: 100%;
+      height: auto;
       margin: 0;
+
+      &:first-child {
+        //margin: 0;
+      }
     }
   }
 }

@@ -5,10 +5,9 @@
         <img src="{{detailsForm.value.image}}" alt="{{detailsForm.value.title}} Page Screenshot">
       </div>
       <ng-template #noImage>
-        <img [src]="image" alt="No Image">
+        <img [src]="detailsForm.value.image" alt="No Image">
       </ng-template>
-      
-      <input type="file">
+      <input type="file" (change)="setImage($event)">
       <input hidden formControlName="image">
     </div>
     
@@ -83,7 +82,12 @@
       <button mat-flat-button class="actions__btn actions__btn_save" type="submit">
         Save
       </button>
-      <button mat-flat-button class="actions__btn actions__btn_remove" type="button" (click)="remove()">
+      <button
+          *ngIf="!!editedItem"
+          mat-flat-button
+          class="actions__btn actions__btn_remove"
+          type="button"
+          (click)="remove()">
         Remove
       </button>
       <button mat-flat-button class="actions__btn actions__btn_cancel" type="button" (click)="cancel()">

@@ -12,9 +12,8 @@ import * as PagesActions from '../store/pages.actions';
 })
 export class ItemComponent implements OnInit {
   @Input() itemData;
+  @Input() timestamp;
   @Input() index;
-
-  objKeys = Object.keys;
 
   constructor(private router: Router,
               private route: ActivatedRoute,

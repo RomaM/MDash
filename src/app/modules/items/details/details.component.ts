@@ -22,8 +22,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   pageLangs = ['ru', 'en', 'de', 'es', 'it'];
   pageSteps = [1, 2];
 
+  imageUrl = 'assets/images/noimage.png';
   id = 0;
-  image = 'assets/images/noimage.png';
 
   constructor(private itemsService: ItemsService,
               private store: Store<pagesReducer.State>,
@@ -40,7 +40,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
     this.editedItem = this.route.snapshot.params.id;
 
-    this.store.dispatch(new PagesActions.EditedPagesAction({edited: !!this.editedItem, selected: this.editedItem}));
+    console.log(this.route.snapshot.params);
 
     this.initForm();
   }
@@ -53,7 +53,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       'url': new FormControl('', Validators.required),
       'taskUrl': new FormControl('', Validators.required),
       'date': new FormControl('', Validators.required),
-      'image': new FormControl(this.image, Validators.required),
+      'image': new FormControl(this.imageUrl, Validators.required),
       'description': new FormControl(''),
       'brand': new FormControl('', Validators.required),
       'lang': new FormControl('', Validators.required),
@@ -71,7 +71,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       console.log('Edit Mode');
       this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
         data => {
-          if (data.hasOwnProperty('list') && data.list.length > 0) {
+          if (data.hasOwnProperty('list')) {
             this.detailsForm.patchValue(data.list[this.editedItem]);
 
             console.log(data.list[this.editedItem]);
@@ -83,10 +83,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log('Submited'); // ToDo: Loader for communications with server
+    console.log(this.detailsForm);
 
     if (this.detailsForm.valid) {
       if (!!this.editedItem) {
-
 
       } else {
         this.itemsService.addItem(this.detailsForm.getRawValue()).subscribe(
@@ -103,6 +103,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.router.navigate(['/list']);
+  }
+
+  setImage(event) {
+    const imgName = event.srcElement.files[0].name;
+    this.detailsForm.patchValue({image: 'assets/images/funnels/' + imgName});
   }
 
   ngOnDestroy() {

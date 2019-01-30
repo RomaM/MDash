@@ -51,8 +51,9 @@
     | filter:'brand':filterBrands
     | filter:'lang':filterLang;
     let i = index;"
-            [index]="i"
-            [itemData]="item.value"
-            class="list__elem">
+    [index]="i"
+    [timestamp]="item.key"
+    [itemData]="item.value"
+    class="list__elem">
   </app-item>
 </div>

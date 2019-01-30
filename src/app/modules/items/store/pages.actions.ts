@@ -3,7 +3,8 @@ import {PageDetailsModel} from '../../../shared/models/page-detail.model';
 
 export enum PageActionTypes {
   LOADING_PAGES = '[Pages] Loading',
-  EDITED_PAGE = '[Pages] Edited Mode',
+  EDITED_PAGE = '[Pages] Edited Page',
+  EDITED_MODE = '[Pages] Edited Mode',
   ADD_PAGE = '[Pages] Add',
   DELETE_PAGE = '[Pages] Delete',
   UPDATE_PAGE = '[Pages] Update',
@@ -16,7 +17,12 @@ export class LoadingPagesAction implements Action {
 
 export class EditedPagesAction implements Action {
   readonly type = PageActionTypes.EDITED_PAGE;
-  constructor(public payload: {edited: boolean, selected: number}) {}
+  constructor(public payload: {selected: string}) {}
+}
+
+export class EditedModeAction implements Action {
+  readonly type = PageActionTypes.EDITED_MODE;
+  constructor(public payload: {edited: boolean}) {}
 }
 
 export class AddPageAction implements Action {
@@ -37,6 +43,7 @@ export class UpdatePageAction implements Action {
 export type PageActions =
   LoadingPagesAction |
   EditedPagesAction |
+  EditedModeAction |
   AddPageAction |
   DeletePageAction |
   UpdatePageAction;

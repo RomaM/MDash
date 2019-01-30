@@ -4,10 +4,12 @@ import {CommonModule} from '@angular/common';
 import {StoreModule} from '@ngrx/store';
 import {ItemsRoutingModule} from './items-routing.module';
 import {
-MatCardModule,
-MatCheckboxModule,
-MatInputModule,
-MatSelectModule} from '@angular/material';
+  MatCardModule,
+  MatCheckboxModule,
+  MatGridListModule, MatIconModule,
+  MatInputModule,
+  MatSelectModule
+} from '@angular/material';
 
 import {ItemsComponent} from './items.component';
 import {ItemComponent} from './item/item.component';
@@ -34,6 +36,7 @@ import {FilterPipe} from '../../shared/pipes/filter.pipe';
     StoreModule.forFeature('pagesState', pagesReducer),
     EffectsModule.forFeature([PagesEffects]),
     MatCardModule,
+    MatGridListModule,
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,

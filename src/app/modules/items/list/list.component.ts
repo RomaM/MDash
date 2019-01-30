@@ -21,7 +21,6 @@ export class ListComponent implements OnInit, OnDestroy {
   filterLang: string;
 
   pagesData: any = {};
-  objKeys = Object.keys;
 
   // pagesData: ItemsData = {
   //   list: [

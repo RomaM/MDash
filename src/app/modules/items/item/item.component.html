@@ -1,5 +1,7 @@
 <mat-card class="item">
-  <img class="item__image" mat-card-image src="{{itemData.image}}" alt="Page Screenshot">
+  <div class="item__image">
+    <img mat-card-image src="{{itemData.image}}" alt="{{itemData.title}} Page Screenshot">
+  </div>
   
   <mat-card-content class="content">
     <h4 class="content__detail content__detail_title">{{itemData.title}}</h4>
@@ -7,15 +9,15 @@
     <h4 class="content__detail content__detail_lang">{{itemData.lang}}</h4>
     <h4 class="content__detail content__detail_steps">{{itemData.steps}}</h4>
     <h5 class="content__detail content__detail_features">
-      <span *ngFor="let feature of objKeys(itemData.features)">
-        {{itemData.features[feature] ? feature + '; ' : ''}}
+      <span *ngFor="let feature of itemData.features | keyvalue">
+        {{feature.value ? feature.key + '; ' : ''}}
       </span>
     </h5>
     <h4 class="content__detail content__detail_date">{{itemData.date}}</h4>
   </mat-card-content>
   
   <mat-card-actions class="actions">
-    <a mat-button class="actions__btn actions__btn_edit" (click)="editItem(index)">
+    <a mat-button class="actions__btn actions__btn_edit" (click)="editItem(timestamp)">
       <mat-icon color="primary">edit</mat-icon>
     </a>
     <!--<a mat-button class="card-actions__btn card-actions__btn__remove">-->
