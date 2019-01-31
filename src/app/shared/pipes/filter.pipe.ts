@@ -12,6 +12,7 @@ export class FilterPipe implements PipeTransform {
       if (data && filter.length !== 0 && filter !== 'all') {
         filteredData = data.filter(
           (obj) => {
+            console.log(obj);
             return obj[prop].toString().toLowerCase().indexOf(filter.toString().toLowerCase()) !== -1;
           }
         );

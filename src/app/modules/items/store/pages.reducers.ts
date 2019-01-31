@@ -25,12 +25,7 @@ export function pagesReducer(state = initialState, action: PageActions.PageActio
     case PageActions.PageActionTypes.EDITED_PAGE: {
       return {
         ...state,
-        selected: action.payload.selected
-      };
-    }
-    case PageActions.PageActionTypes.EDITED_MODE: {
-      return {
-        ...state,
+        selected: action.payload.selected,
         edited: action.payload.edited
       };
     }

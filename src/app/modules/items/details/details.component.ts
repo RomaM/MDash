@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Observable, Subscription} from 'rxjs/index';
+import {from, Observable, Subscription} from 'rxjs';
 import * as pagesReducer from '../store/pages.reducers';
 import * as PagesActions from '../store/pages.actions';
 import {select, Store} from '@ngrx/store';
@@ -23,7 +23,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   pageSteps = [1, 2];
 
   imageUrl = 'assets/images/noimage.png';
-  id = 0;
+
+  key = '';
 
   constructor(private itemsService: ItemsService,
               private store: Store<pagesReducer.State>,
@@ -49,7 +50,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.detailsForm = new FormGroup({
       'title': new FormControl('', Validators.required),
       'author': new FormControl('', Validators.required),
-      'id': new FormControl({value: this.id, disabled: true}, Validators.required),
+      'id': new FormControl({value: 0, disabled: true}, Validators.required),
       'url': new FormControl('', Validators.required),
       'taskUrl': new FormControl('', Validators.required),
       'date': new FormControl('', Validators.required),
@@ -72,9 +73,14 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
         data => {
           if (data.hasOwnProperty('list')) {
-            this.detailsForm.patchValue(data.list[this.editedItem]);
+            this.key = data.list[this.editedItem][0];
 
-            console.log(data.list[this.editedItem]);
+            this.store.dispatch(new PagesActions.EditedPageAction(
+              {selected: this.key, edited: true}
+              )
+            );
+
+            this.detailsForm.patchValue(data.list[this.editedItem][1]);
           }
         }
       );
@@ -83,11 +89,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log('Submited'); // ToDo: Loader for communications with server
-    console.log(this.detailsForm);
 
     if (this.detailsForm.valid) {
       if (!!this.editedItem) {
-
+        this.itemsService.updateItem(this.detailsForm.getRawValue(), this.key).subscribe(
+          res => console.log(res),
+          err => console.log(err)
+        );
       } else {
         this.itemsService.addItem(this.detailsForm.getRawValue()).subscribe(
           res => console.log(res),
@@ -98,7 +106,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   remove() {
-
+    this.itemsService.removeItem(this.key).subscribe(
+      res => {
+        console.log(res);
+        this.router.navigate(['/list'])
+      },
+      err => console.log(err)
+    );
   }
 
   cancel() {
@@ -113,6 +127,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (!!this.editedItem) {
       this.itemsLoadedSubscription.unsubscribe();
+
+      this.store.dispatch(new PagesActions.EditedPageAction(
+        {selected: '', edited: false}
+        )
+      );
     }
   }
 

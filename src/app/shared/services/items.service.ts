@@ -2,6 +2,8 @@ import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {ItemsData, PageDetailsModel} from '../models/page-detail.model';
+import {map, tap} from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +15,22 @@ export class ItemsService {
   loadedData = new BehaviorSubject(<any>{});
 
   addItem(item: any) {
-    // const req = new HttpRequest('POST', 'https://funnelsdetails.firebaseio.com/pages.json',
-    //   item, {reportProgress: true});
-    //
-    // return this.httpClient.request(req);
-
-    const keyval = {10: item};
-
     return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/pages/list.json',
-      keyval
+      item
       );
+  }
+
+  updateItem(item: any, key) {
+    return this.httpClient.patch<any>(
+      'https://funnelsdetails.firebaseio.com/pages/list/' + key + '.json',
+      item
+    );
+  }
+
+  removeItem(key) {
+    return this.httpClient.delete<any>(
+      'https://funnelsdetails.firebaseio.com/pages/list/' + key + '.json'
+    );
   }
 
   pushItems(items: any) {
@@ -37,7 +45,12 @@ export class ItemsService {
       {
         observe: 'body',
         responseType: 'json'
-      });
+      }).pipe(
+        map(data => {
+          data.list = Object.entries(data.list);
+          return data;
+        }),
+    );
   }
 
   onLoaded(data) {

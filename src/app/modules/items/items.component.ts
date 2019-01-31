@@ -18,8 +18,6 @@ export class ItemsComponent implements OnInit {
   itemsData: Array<ItemsData>;
 
   ngOnInit() {
-    // this.itemsService.onLoaded();
-
     // this.store.pipe(
     //   select('pagesState', 'loaded'),
     //   map((data) => {
@@ -30,11 +28,11 @@ export class ItemsComponent implements OnInit {
     // this.store.dispatch(new PagesActions.LoadingPagesAction(true));
 
     this.itemsService.fetchItems().subscribe(
-      (serverData: any) => {
+      (list: any) => {
         console.log('--> Fetch Data from Server');
-        console.log(serverData);
+        console.log(list);
 
-        this.itemsService.onLoaded(serverData);
+        this.itemsService.onLoaded(list);
 
         this.store.dispatch(new PagesActions.LoadingPagesAction(true));
       },

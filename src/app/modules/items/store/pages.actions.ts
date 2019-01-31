@@ -15,14 +15,9 @@ export class LoadingPagesAction implements Action {
   constructor(public payload: boolean) {}
 }
 
-export class EditedPagesAction implements Action {
+export class EditedPageAction implements Action {
   readonly type = PageActionTypes.EDITED_PAGE;
-  constructor(public payload: {selected: string}) {}
-}
-
-export class EditedModeAction implements Action {
-  readonly type = PageActionTypes.EDITED_MODE;
-  constructor(public payload: {edited: boolean}) {}
+  constructor(public payload: {selected: string, edited: boolean}) {}
 }
 
 export class AddPageAction implements Action {
@@ -42,8 +37,7 @@ export class UpdatePageAction implements Action {
 
 export type PageActions =
   LoadingPagesAction |
-  EditedPagesAction |
-  EditedModeAction |
+  EditedPageAction |
   AddPageAction |
   DeletePageAction |
   UpdatePageAction;
