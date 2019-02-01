@@ -3,14 +3,14 @@ import * as PageActions from './pages.actions';
 export interface State {
   loaded: boolean;
   edited: boolean;
-  selected: string;
+  selected: {};
   timestamp: number;
 }
 
 export const initialState: State = {
   loaded: false,
   edited: false,
-  selected: '',
+  selected: {},
   timestamp: 1
 };
 
@@ -27,11 +27,6 @@ export function pagesReducer(state = initialState, action: PageActions.PageActio
         ...state,
         selected: action.payload.selected,
         edited: action.payload.edited
-      };
-    }
-    case PageActions.PageActionTypes.ADD_PAGE: {
-      return {
-        ...state
       };
     }
     default: {

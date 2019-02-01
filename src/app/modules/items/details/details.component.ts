@@ -41,9 +41,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
     this.editedItem = this.route.snapshot.params.id;
 
-    console.log(this.route.snapshot.params);
-
     this.initForm();
+
+    // this.itemsService.getTimestamp().subscribe(data => console.log(data));
   }
 
   initForm () {
@@ -76,8 +76,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
             this.key = data.list[this.editedItem][0];
 
             this.store.dispatch(new PagesActions.EditedPageAction(
-              {selected: this.key, edited: true}
-              )
+              {selected: data.list[this.editedItem], edited: true})
             );
 
             this.detailsForm.patchValue(data.list[this.editedItem][1]);
@@ -91,14 +90,21 @@ export class DetailsComponent implements OnInit, OnDestroy {
     console.log('Submited'); // ToDo: Loader for communications with server
 
     if (this.detailsForm.valid) {
+
+      this.store.dispatch();
+
       if (!!this.editedItem) {
         this.itemsService.updateItem(this.detailsForm.getRawValue(), this.key).subscribe(
-          res => console.log(res),
+          res => {
+            this.itemsService.setTimestamp({request: 'edit'}).subscribe(data => console.log(data));
+          },
           err => console.log(err)
         );
       } else {
         this.itemsService.addItem(this.detailsForm.getRawValue()).subscribe(
-          res => console.log(res),
+          res => {
+            this.itemsService.setTimestamp({request: 'add'}).subscribe(data => console.log(data));
+          },
           err => console.log(err)
         );
       }
@@ -109,14 +115,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.itemsService.removeItem(this.key).subscribe(
       res => {
         console.log(res);
-        this.router.navigate(['/list'])
+        this.router.navigate(['/list']);
       },
       err => console.log(err)
     );
-  }
-
-  cancel() {
-    this.router.navigate(['/list']);
   }
 
   setImage(event) {

@@ -25,21 +25,7 @@ export class ItemsComponent implements OnInit {
     //   })
     // );
 
-    // this.store.dispatch(new PagesActions.LoadingPagesAction(true));
+    this.store.dispatch(new PagesActions.LoadPagesAction());
 
-    this.itemsService.fetchItems().subscribe(
-      (list: any) => {
-        console.log('--> Fetch Data from Server');
-        console.log(list);
-
-        this.itemsService.onLoaded(list);
-
-        this.store.dispatch(new PagesActions.LoadingPagesAction(true));
-      },
-      (error) => {
-        console.log('Fetch Items Error: '); // ToDo: Errors to Log
-        console.log(error);
-      }
-    );
   }
 }

@@ -2,12 +2,17 @@ import {Action} from '@ngrx/store';
 import {PageDetailsModel} from '../../../shared/models/page-detail.model';
 
 export enum PageActionTypes {
+  LOAD_PAGES = '[Pages] Load',
   LOADING_PAGES = '[Pages] Loading',
   EDITED_PAGE = '[Pages] Edited Page',
   EDITED_MODE = '[Pages] Edited Mode',
   ADD_PAGE = '[Pages] Add',
   DELETE_PAGE = '[Pages] Delete',
   UPDATE_PAGE = '[Pages] Update',
+}
+
+export class LoadPagesAction implements Action {
+  readonly type = PageActionTypes.LOAD_PAGES;
 }
 
 export class LoadingPagesAction implements Action {
@@ -36,6 +41,7 @@ export class UpdatePageAction implements Action {
 }
 
 export type PageActions =
+  LoadPagesAction |
   LoadingPagesAction |
   EditedPageAction |
   AddPageAction |

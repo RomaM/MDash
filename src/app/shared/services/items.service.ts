@@ -53,6 +53,20 @@ export class ItemsService {
     );
   }
 
+  setTimestamp(timestamp) {
+    return this.httpClient.put('https://funnelsdetails.firebaseio.com/pages/timestamp.json',
+      timestamp, {reportProgress: true});
+  }
+
+  getTimestamp() {
+    return this.httpClient.get<{key, val}>('https://funnelsdetails.firebaseio.com/pages/timestamp.json')
+      .pipe(
+        map( timestamp => {
+          return timestamp;
+        })
+      );
+  }
+
   onLoaded(data) {
     this.loadedData.next(data);
   }
