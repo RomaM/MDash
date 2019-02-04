@@ -25,7 +25,7 @@ export class ItemsComponent implements OnInit {
     //   })
     // );
 
-    this.store.dispatch(new PagesActions.LoadPagesAction());
+    this.store.dispatch(new PagesActions.LoadPages());
 
   }
 }

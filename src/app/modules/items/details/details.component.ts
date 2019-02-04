@@ -75,7 +75,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
           if (data.hasOwnProperty('list')) {
             this.key = data.list[this.editedItem][0];
 
-            this.store.dispatch(new PagesActions.EditedPageAction(
+            this.store.dispatch(new PagesActions.EditedPage(
               {selected: data.list[this.editedItem], edited: true})
             );
 
@@ -91,7 +91,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
     if (this.detailsForm.valid) {
 
-      this.store.dispatch();
+      // this.store.dispatch();
 
       if (!!this.editedItem) {
         this.itemsService.updateItem(this.detailsForm.getRawValue(), this.key).subscribe(
@@ -130,7 +130,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (!!this.editedItem) {
       this.itemsLoadedSubscription.unsubscribe();
 
-      this.store.dispatch(new PagesActions.EditedPageAction(
+      this.store.dispatch(new PagesActions.EditedPage(
         {selected: '', edited: false}
         )
       );

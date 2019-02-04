@@ -11,39 +11,39 @@ export enum PageActionTypes {
   UPDATE_PAGE = '[Pages] Update',
 }
 
-export class LoadPagesAction implements Action {
+export class LoadPages implements Action {
   readonly type = PageActionTypes.LOAD_PAGES;
 }
 
-export class LoadingPagesAction implements Action {
+export class LoadingPages implements Action {
   readonly type = PageActionTypes.LOADING_PAGES;
   constructor(public payload: boolean) {}
 }
 
-export class EditedPageAction implements Action {
+export class EditedPage implements Action {
   readonly type = PageActionTypes.EDITED_PAGE;
   constructor(public payload: {selected: string, edited: boolean}) {}
 }
 
-export class AddPageAction implements Action {
+export class AddPage implements Action {
   readonly type = PageActionTypes.ADD_PAGE;
   constructor(public payload: PageDetailsModel) {}
 }
 
-export class DeletePageAction implements Action {
+export class DeletePage implements Action {
   readonly type = PageActionTypes.DELETE_PAGE;
   constructor(public payload: number) {}
 }
 
-export class UpdatePageAction implements Action {
+export class UpdatePage implements Action {
   readonly type = PageActionTypes.UPDATE_PAGE;
   constructor(public payload: {id: number, page: PageDetailsModel[]}) {}
 }
 
 export type PageActions =
-  LoadPagesAction |
-  LoadingPagesAction |
-  EditedPageAction |
-  AddPageAction |
-  DeletePageAction |
-  UpdatePageAction;
+  LoadPages |
+  LoadingPages |
+  EditedPage |
+  AddPage |
+  DeletePage |
+  UpdatePage;
