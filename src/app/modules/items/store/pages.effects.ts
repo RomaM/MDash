@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {Effect, Actions, ofType} from '@ngrx/effects';
 import {Observable, throwError} from 'rxjs';
-import {switchMap, withLatestFrom, map, catchError} from 'rxjs/operators';
+import {switchMap, withLatestFrom, map, catchError, takeWhile} from 'rxjs/operators';
 
 import * as PagesActions from './pages.actions';
 import * as pageReducer from './pages.reducers';
@@ -39,6 +39,12 @@ export class PagesEffects {
   @Effect()
   loadPages$: Observable<PagesActions.PageActions> = this.actions$.pipe(
     ofType(PagesActions.PageActionTypes.LOAD_PAGES),
+    withLatestFrom(this.store.pipe(
+      select('pagesState', 'loaded')
+    )),
+    takeWhile(([, loaded]) => {
+      return loaded === false;
+    }),
     switchMap(() => this.itemsService.fetchItems().pipe(
         map( data => data),
         catchError((err) => throwError(err))
@@ -50,17 +56,21 @@ export class PagesEffects {
     })
   );
 
-  @Effect()
-  pushPage$ = this.actions$.pipe(
-    ofType(PagesActions.PageActionTypes.ADD_PAGE, PagesActions.PageActionTypes.UPDATE_PAGE),
-    withLatestFrom(this.store.select('pagesState', 'selected')),
-    switchMap((item) => {
-     if (item) {
-
-       // this.itemsService.addItem(item);
-     }
+  @Effect({dispatch: false})
+  addPage$ = this.actions$.pipe(
+    ofType(PagesActions.PageActionTypes.ADD_PAGE),
+    switchMap((action: PagesActions.AddPage) => {
+      return this.itemsService.addItem(action.payload);
     })
-  )
+  );
+
+  @Effect({dispatch: false})
+  updatePage$ = this.actions$.pipe(
+    ofType(PagesActions.PageActionTypes.UPDATE_PAGE),
+    switchMap((action: PagesActions.UpdatePage) => {
+      return this.itemsService.updateItem(action.payload.key, action.payload.val);
+    })
+  );
 
   constructor(private actions$: Actions,
               private store: Store<pageReducer.State>,

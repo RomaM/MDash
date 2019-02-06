@@ -1,12 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {from, Observable, Subscription} from 'rxjs';
+import {map, tap} from 'rxjs/operators';
 import * as pagesReducer from '../store/pages.reducers';
 import * as PagesActions from '../store/pages.actions';
 import {select, Store} from '@ngrx/store';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageDetailsModel} from '../../../shared/models/page-detail.model';
 import {ItemsService} from '../../../shared/services/items.service';
+import {takeWhile} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-details',
@@ -32,18 +34,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit() {
-    // this.store.pipe(
-    //   select('pagesState', 'edited'),
-    //   tap((edited) => {
-    //     this.isEditedMode = edited;
-    //   })
-    // );
-
     this.editedItem = this.route.snapshot.params.id;
 
     this.initForm();
-
-    // this.itemsService.getTimestamp().subscribe(data => console.log(data));
   }
 
   initForm () {
@@ -70,14 +63,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
     if (!!this.editedItem) {
       console.log('Edit Mode');
+      this.store.dispatch(new PagesActions.EditedPage({ selectedID: +this.editedItem, editedMode: true }));
+
       this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
         data => {
-          if (data.hasOwnProperty('list')) {
+          if (data.hasOwnProperty('list') && data.list.length > 0) {
+            console.log(data.list);
             this.key = data.list[this.editedItem][0];
-
-            this.store.dispatch(new PagesActions.EditedPage(
-              {selected: data.list[this.editedItem], edited: true})
-            );
 
             this.detailsForm.patchValue(data.list[this.editedItem][1]);
           }
@@ -90,23 +82,19 @@ export class DetailsComponent implements OnInit, OnDestroy {
     console.log('Submited'); // ToDo: Loader for communications with server
 
     if (this.detailsForm.valid) {
-
-      // this.store.dispatch();
+      console.log('Submited Success');
 
       if (!!this.editedItem) {
-        this.itemsService.updateItem(this.detailsForm.getRawValue(), this.key).subscribe(
-          res => {
-            this.itemsService.setTimestamp({request: 'edit'}).subscribe(data => console.log(data));
-          },
-          err => console.log(err)
-        );
+        // this.itemsService.updateItem(this.detailsForm.getRawValue(), this.key).subscribe(
+        //   res => {
+        //     this.itemsService.setTimestamp({request: 'edit'}).subscribe(data => console.log(data));
+        //   },
+        //   err => console.log(err)
+        // );
+
+        this.store.dispatch(new PagesActions.UpdatePage({key: this.key, val: this.detailsForm.getRawValue()}));
       } else {
-        this.itemsService.addItem(this.detailsForm.getRawValue()).subscribe(
-          res => {
-            this.itemsService.setTimestamp({request: 'add'}).subscribe(data => console.log(data));
-          },
-          err => console.log(err)
-        );
+        this.store.dispatch(new PagesActions.AddPage(this.detailsForm.getRawValue()));
       }
     }
   }
@@ -131,7 +119,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.itemsLoadedSubscription.unsubscribe();
 
       this.store.dispatch(new PagesActions.EditedPage(
-        {selected: '', edited: false}
+        {selectedID: -1, editedMode: false}
         )
       );
     }

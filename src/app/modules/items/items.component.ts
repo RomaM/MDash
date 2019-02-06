@@ -18,14 +18,6 @@ export class ItemsComponent implements OnInit {
   itemsData: Array<ItemsData>;
 
   ngOnInit() {
-    // this.store.pipe(
-    //   select('pagesState', 'loaded'),
-    //   map((data) => {
-    //     console.log(data);
-    //   })
-    // );
-
     this.store.dispatch(new PagesActions.LoadPages());
-
   }
 }

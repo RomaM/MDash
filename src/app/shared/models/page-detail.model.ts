@@ -41,5 +41,5 @@ export class PageDetailsModel {
 
 export interface ItemsData {
   list: PageDetailsModel[];
-  timeStamp: number;
+  timestamp: string;
 }

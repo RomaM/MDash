@@ -12,7 +12,7 @@ import {map, tap} from 'rxjs/operators';
 export class ItemsService {
   constructor(private httpClient: HttpClient) {}
 
-  loadedData = new BehaviorSubject(<any>{});
+  loadedData = new BehaviorSubject<ItemsData>({list: [], timestamp: ''});
 
   addItem(item: any) {
     return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/pages/list.json',
@@ -20,7 +20,7 @@ export class ItemsService {
       );
   }
 
-  updateItem(item: any, key) {
+  updateItem(key: string, item: Object) {
     return this.httpClient.patch<any>(
       'https://funnelsdetails.firebaseio.com/pages/list/' + key + '.json',
       item

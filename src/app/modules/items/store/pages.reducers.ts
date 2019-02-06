@@ -1,17 +1,18 @@
 import * as PageActions from './pages.actions';
+import {PageDetailsModel} from '../../../shared/models/page-detail.model';
 
 export interface State {
   loaded: boolean;
-  edited: boolean;
-  selected: {};
+  editedMode: boolean;
+  selectedID: number;
   timestamp: number;
 }
 
 export const initialState: State = {
   loaded: false,
-  edited: false,
-  selected: {},
-  timestamp: 1
+  editedMode: false,
+  selectedID: -1,
+  timestamp: ''
 };
 
 export function pagesReducer(state = initialState, action: PageActions.PageActions): State {
@@ -25,8 +26,8 @@ export function pagesReducer(state = initialState, action: PageActions.PageActio
     case PageActions.PageActionTypes.EDITED_PAGE: {
       return {
         ...state,
-        selected: action.payload.selected,
-        edited: action.payload.edited
+        selectedID: action.payload.selectedID,
+        editedMode: action.payload.editedMode
       };
     }
     default: {
