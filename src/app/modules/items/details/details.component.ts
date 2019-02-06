@@ -67,11 +67,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
       this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
         data => {
-          if (data.hasOwnProperty('list') && data.list.length > 0) {
-            console.log(data.list);
-            this.key = data.list[this.editedItem][0];
+          // if (data.hasOwnProperty('list') && data.list.length > 0) {
+          if (data.length > 0) {
+            console.log(data);
+            this.key = data[this.editedItem][0];
 
-            this.detailsForm.patchValue(data.list[this.editedItem][1]);
+            this.detailsForm.patchValue(data[this.editedItem][1]);
           }
         }
       );

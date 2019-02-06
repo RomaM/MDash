@@ -12,7 +12,8 @@ import {map, tap} from 'rxjs/operators';
 export class ItemsService {
   constructor(private httpClient: HttpClient) {}
 
-  loadedData = new BehaviorSubject<ItemsData>({list: [], timestamp: ''});
+  // loadedData = new BehaviorSubject<ItemsData>({list: [], timestamp: ''});
+  loadedData = new BehaviorSubject<PageDetailsModel[]>([]);
 
   addItem(item: any) {
     return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/pages/list.json',
@@ -45,12 +46,17 @@ export class ItemsService {
       {
         observe: 'body',
         responseType: 'json'
-      }).pipe(
+      })
+      .pipe(
         map(data => {
           data.list = Object.entries(data.list);
-          return data;
+          return data.list;
         }),
-    );
+      );
+  }
+
+  fetchTimestamp() {
+
   }
 
   setTimestamp(timestamp) {

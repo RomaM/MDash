@@ -5,7 +5,7 @@ export interface State {
   loaded: boolean;
   editedMode: boolean;
   selectedID: number;
-  timestamp: number;
+  timestamp: string;
 }
 
 export const initialState: State = {

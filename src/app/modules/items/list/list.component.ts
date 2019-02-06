@@ -20,7 +20,7 @@ export class ListComponent implements OnInit, OnDestroy {
   filterBrands: string;
   filterLang: string;
 
-  pagesData: any = {};
+  pagesData: any = [];
 
   // pagesData: ItemsData = {
   //   list: [
@@ -181,7 +181,8 @@ export class ListComponent implements OnInit, OnDestroy {
     this.itemsLoadedSubscription = this.itemsService.loadedData
       .subscribe(
       (data: any) => {
-        if (Object.keys(data).length > 0 && data.constructor === Object) {
+        // if (Object.keys(data).length > 0 && data.constructor === Object) {
+        if (data.length > 0) {
           this.pagesData = data;
         }
       }
