@@ -8,8 +8,9 @@ export enum PageActionTypes {
   ADD_PAGE = '[Pages] Add',
   DELETE_PAGE = '[Pages] Delete',
   UPDATE_PAGE = '[Pages] Update',
-  GET_TIMESTAMP = '[Pages] TIMESTAMP',
-  UPDATE_TIMESTAMP = '[Pages] TIMESTAMP',
+  GET_TIMESTAMP = '[Pages] Get Timestamp',
+  SET_TIMESTAMP = '[Pages] Set Timestamp',
+  UPDATE_TIMESTAMP = '[Pages] Update Timestamp',
 }
 
 export class LoadPages implements Action {
@@ -46,6 +47,12 @@ export class GetTimestamp implements Action {
   readonly type = PageActionTypes.GET_TIMESTAMP;
 }
 
+export class SetTimestamp implements Action {
+  readonly type = PageActionTypes.SET_TIMESTAMP;
+
+  constructor(public payload: string) {}
+}
+
 export class UpdateTimestamp implements Action {
   readonly type = PageActionTypes.UPDATE_TIMESTAMP;
 
@@ -59,5 +66,6 @@ export type PageActions =
   AddPage |
   DeletePage |
   UpdatePage |
-  GetTimestamp|
+  GetTimestamp |
+  SetTimestamp |
   UpdateTimestamp;

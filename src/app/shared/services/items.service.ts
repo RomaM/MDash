@@ -50,7 +50,7 @@ export class ItemsService {
       .pipe(
         map(data => {
           data.list = Object.entries(data.list);
-          return data.list;
+          return data;
         }),
       );
   }
@@ -60,12 +60,12 @@ export class ItemsService {
   }
 
   setTimestamp(timestamp) {
-    return this.httpClient.put('https://funnelsdetails.firebaseio.com/pages/timestamp.json',
-      timestamp, {reportProgress: true});
+    return this.httpClient.patch('https://funnelsdetails.firebaseio.com/pages/timestamp.json',
+      {val: timestamp}, {reportProgress: true});
   }
 
   getTimestamp() {
-    return this.httpClient.get<{key, val}>('https://funnelsdetails.firebaseio.com/pages/timestamp.json')
+    return this.httpClient.get('https://funnelsdetails.firebaseio.com/pages/timestamp.json')
       .pipe(
         map( timestamp => {
           return timestamp;

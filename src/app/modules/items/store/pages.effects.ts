@@ -51,8 +51,13 @@ export class PagesEffects {
       )
     ),
     map( data => {
-      this.itemsService.onLoaded(data);
-      return new PagesActions.LoadingPages(true);
+      this.itemsService.onLoaded(data.list);
+      return data;
+    }),
+    switchMap( data => {
+      return [
+        new PagesActions.LoadingPages(true),
+        new PagesActions.SetTimestamp(data.timestamp.val)];
     })
   );
 

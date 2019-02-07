@@ -30,6 +30,12 @@ export function pagesReducer(state = initialState, action: PageActions.PageActio
         editedMode: action.payload.editedMode
       };
     }
+    case PageActions.PageActionTypes.SET_TIMESTAMP: {
+      return {
+        ...state,
+        timestamp: action.payload
+      };
+    }
     default: {
       return state;
     }
