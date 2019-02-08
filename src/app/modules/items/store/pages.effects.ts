@@ -2,11 +2,12 @@ import {Injectable} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {Effect, Actions, ofType} from '@ngrx/effects';
 import {Observable, throwError} from 'rxjs';
-import {switchMap, withLatestFrom, map, catchError, takeWhile} from 'rxjs/operators';
+import {combineLatest, switchMap, withLatestFrom, map, catchError, takeWhile} from 'rxjs/operators';
 
 import * as PagesActions from './pages.actions';
 import * as pageReducer from './pages.reducers';
 import {ItemsService} from '../../../shared/services/items.service';
+import {mergeMap} from 'rxjs/internal/operators';
 
 @Injectable()
 
@@ -64,16 +65,23 @@ export class PagesEffects {
   @Effect({dispatch: false})
   addPage$ = this.actions$.pipe(
     ofType(PagesActions.PageActionTypes.ADD_PAGE),
-    switchMap((action: PagesActions.AddPage) => {
-      return this.itemsService.addItem(action.payload);
+    mergeMap((action: PagesActions.AddPage) => {
+      return [
+        this.itemsService.setTimestamp(action.payload),
+        this.itemsService.addItem(action.payload)
+      ];
     })
-  );
+    );
 
   @Effect({dispatch: false})
   updatePage$ = this.actions$.pipe(
     ofType(PagesActions.PageActionTypes.UPDATE_PAGE),
     switchMap((action: PagesActions.UpdatePage) => {
       return this.itemsService.updateItem(action.payload.key, action.payload.val);
+    }),
+    catchError(err => {
+      console.log(throwError(err));
+      return throwError(err);
     })
   );
 

@@ -59,7 +59,13 @@ export class ItemsService {
 
   }
 
-  setTimestamp(timestamp) {
+  setTimestamp(data) {
+    let timestamp = 'FailedTimestamp';
+
+    if (data.title && data.author && data.date) {
+      timestamp = (data.date + data.title + data.author).replace(/[-.* ]/g, '');
+    }
+
     return this.httpClient.patch('https://funnelsdetails.firebaseio.com/pages/timestamp.json',
       {val: timestamp}, {reportProgress: true});
   }

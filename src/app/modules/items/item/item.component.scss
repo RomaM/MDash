@@ -1,20 +1,16 @@
 .item {
   margin: 10px;
   padding: 0;
+}
 
-  &__image {
-    max-height: 235px;
-    overflow: hidden;
+.poster {
+  max-height: 235px;
+  overflow: hidden;
 
-    img {
-      width: 100%;
-      height: auto;
-      margin: 0;
-
-      &:first-child {
-        //margin: 0;
-      }
-    }
+  &__img {
+    width: 100%;
+    height: auto;
+    margin: 0;
   }
 }
 
