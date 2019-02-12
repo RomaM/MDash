@@ -13,7 +13,15 @@ export class ItemsService {
   constructor(private httpClient: HttpClient) {}
 
   // loadedData = new BehaviorSubject<ItemsData>({list: [], timestamp: ''});
-  loadedData = new BehaviorSubject<PageDetailsModel[]>([]);
+  loadedData = new BehaviorSubject<any>([]);
+
+  generateTimestamp(data: PageDetailsModel): string {
+    let timestamp = 'FailedTimestamp';
+    if (data.title && data.author && data.date) {
+      timestamp = (data.date + data.title + data.author).replace(/[-.* ]/g, '');
+    }
+    return timestamp;
+  }
 
   addItem(item: any) {
     return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/pages/list.json',
@@ -55,21 +63,6 @@ export class ItemsService {
       );
   }
 
-  fetchTimestamp() {
-
-  }
-
-  setTimestamp(data) {
-    let timestamp = 'FailedTimestamp';
-
-    if (data.title && data.author && data.date) {
-      timestamp = (data.date + data.title + data.author).replace(/[-.* ]/g, '');
-    }
-
-    return this.httpClient.patch('https://funnelsdetails.firebaseio.com/pages/timestamp.json',
-      {val: timestamp}, {reportProgress: true});
-  }
-
   getTimestamp() {
     return this.httpClient.get('https://funnelsdetails.firebaseio.com/pages/timestamp.json')
       .pipe(
@@ -79,8 +72,20 @@ export class ItemsService {
       );
   }
 
-  onLoaded(data) {
-    this.loadedData.next(data);
+  updateTimestamp(data: string) {
+    return this.httpClient.patch('https://funnelsdetails.firebaseio.com/pages/timestamp.json',
+      {val: data}, {reportProgress: true});
+  }
+
+  onLoaded(data: PageDetailsModel, key?: string) {
+    if (key) {
+      const newList = this.loadedData.getValue();
+
+      newList.push([key, data]);
+      this.loadedData.next(newList);
+    } else {
+      this.loadedData.next(data);
+    }
   }
 }
 

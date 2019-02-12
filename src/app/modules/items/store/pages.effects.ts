@@ -2,16 +2,21 @@ import {Injectable} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {Effect, Actions, ofType} from '@ngrx/effects';
 import {Observable, throwError} from 'rxjs';
-import {combineLatest, switchMap, withLatestFrom, map, catchError, takeWhile} from 'rxjs/operators';
+import {combineLatest, tap, switchMap, withLatestFrom, map, catchError, takeWhile} from 'rxjs/operators';
 
 import * as PagesActions from './pages.actions';
 import * as pageReducer from './pages.reducers';
 import {ItemsService} from '../../../shared/services/items.service';
-import {mergeMap} from 'rxjs/internal/operators';
+import {Route, Router} from '@angular/router';
 
 @Injectable()
 
 export class PagesEffects {
+  constructor(private actions$: Actions,
+              private store: Store<pageReducer.State>,
+              private itemsService: ItemsService,
+              private router: Router) {}
+
   // @Effect()
   // fetchPages$: Observable<PagesActions.PageActions> = this.actions$.pipe(
   //   ofType(PagesActions.PageActionTypes.FETCH_PAGES),
@@ -62,16 +67,19 @@ export class PagesEffects {
     })
   );
 
-  @Effect({dispatch: false})
+  @Effect()
   addPage$ = this.actions$.pipe(
     ofType(PagesActions.PageActionTypes.ADD_PAGE),
-    mergeMap((action: PagesActions.AddPage) => {
-      return [
-        this.itemsService.setTimestamp(action.payload),
-        this.itemsService.addItem(action.payload)
-      ];
-    })
-    );
+    switchMap((action: PagesActions.AddPage) => this.itemsService.addItem(action.payload).pipe(
+      map(data => {
+        const timestamp = this.itemsService.generateTimestamp(action.payload);
+        this.itemsService.onLoaded(action.payload, data.name);
+        return new PagesActions.UpdateTimestamp(timestamp);
+      }),
+      catchError(err => throwError(err))
+    )),
+    tap(() => this.router.navigate(['/list']))
+  );
 
   @Effect({dispatch: false})
   updatePage$ = this.actions$.pipe(
@@ -80,12 +88,26 @@ export class PagesEffects {
       return this.itemsService.updateItem(action.payload.key, action.payload.val);
     }),
     catchError(err => {
-      console.log(throwError(err));
       return throwError(err);
-    })
+    }),
+    tap(() => this.router.navigate(['/list']))
   );
 
-  constructor(private actions$: Actions,
-              private store: Store<pageReducer.State>,
-              private itemsService: ItemsService) {}
+  @Effect()
+  getTimestamp$ = this.actions$.pipe(
+    ofType(PagesActions.PageActionTypes.GET_TIMESTAMP),
+    switchMap(data => this.itemsService.getTimestamp().pipe(
+      map((timestamp: {[key: string]: string}) => new PagesActions.SetTimestamp(timestamp.key))
+    ))
+  );
+
+  @Effect()
+  updateTimestamp$ = this.actions$.pipe(
+    ofType(PagesActions.PageActionTypes.UPDATE_TIMESTAMP),
+    switchMap((action: PagesActions.UpdateTimestamp) => {
+      return this.itemsService.updateTimestamp(action.payload).pipe(
+        map(data => new PagesActions.SetTimestamp(action.payload))
+      );
+    })
+  );
 }

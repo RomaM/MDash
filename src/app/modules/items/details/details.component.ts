@@ -17,7 +17,7 @@ import {takeWhile} from 'rxjs/internal/operators';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   detailsForm: FormGroup;
-  editedItem: any;
+  editedItem: number;
   itemsLoadedSubscription: Subscription;
 
   pageBrands = ['RCPro', 'S2Trade', 'Glenm', 'TradeLTD', 'TradeFW'];
@@ -34,8 +34,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit() {
-    this.editedItem = this.route.snapshot.params.id;
-
+    this.editedItem = this.route.snapshot.params.id ? this.route.snapshot.params.id : 0;
     this.initForm();
   }
 
@@ -43,7 +42,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.detailsForm = new FormGroup({
       'title': new FormControl('', Validators.required),
       'author': new FormControl('', Validators.required),
-      'id': new FormControl({value: 0, disabled: true}, Validators.required),
+      'id': new FormControl({value: this.editedItem, disabled: true}, Validators.required),
       'url': new FormControl('', Validators.required),
       'taskUrl': new FormControl('', Validators.required),
       'date': new FormControl('', Validators.required),
@@ -61,38 +60,28 @@ export class DetailsComponent implements OnInit, OnDestroy {
       })
     });
 
-    if (!!this.editedItem) {
-      console.log('Edit Mode');
-      this.store.dispatch(new PagesActions.EditedPage({ selectedID: +this.editedItem, editedMode: true }));
+    this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
+      data => {
+        if (!!this.editedItem && data.length > 0) {
+          console.log('Edit Mode');
+          this.store.dispatch(new PagesActions.EditedPage({ selectedID: +this.editedItem, editedMode: true }));
 
-      this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
-        data => {
-          // if (data.hasOwnProperty('list') && data.list.length > 0) {
-          if (data.length > 0) {
-            console.log(data);
-            this.key = data[this.editedItem][0];
+          this.key = data[this.editedItem][0];
 
-            this.detailsForm.patchValue(data[this.editedItem][1]);
-          }
+          this.detailsForm.patchValue(data[this.editedItem][1]);
+        } else if (data.length > 0) {
+          this.detailsForm.patchValue({id: data.length + 1});
         }
-      );
-    }
+      }
+    );
   }
 
   onSubmit() {
     console.log('Submited'); // ToDo: Loader for communications with server
 
     if (this.detailsForm.valid) {
-      console.log('Submited Success');
 
       if (!!this.editedItem) {
-        // this.itemsService.updateItem(this.detailsForm.getRawValue(), this.key).subscribe(
-        //   res => {
-        //     this.itemsService.setTimestamp({request: 'edit'}).subscribe(data => console.log(data));
-        //   },
-        //   err => console.log(err)
-        // );
-
         this.store.dispatch(new PagesActions.UpdatePage({key: this.key, val: this.detailsForm.getRawValue()}));
       } else {
         this.store.dispatch(new PagesActions.AddPage(this.detailsForm.getRawValue()));
@@ -116,13 +105,15 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (!!this.editedItem) {
-      this.itemsLoadedSubscription.unsubscribe();
+    this.itemsLoadedSubscription.unsubscribe();
 
-      this.store.dispatch(new PagesActions.EditedPage(
-        {selectedID: -1, editedMode: false}
-        )
-      );
+    this.store.dispatch(new PagesActions.EditedPage(
+      {selectedID: -1, editedMode: false}
+      )
+    );
+
+    if (!!this.editedItem) {
+
     }
   }
 
