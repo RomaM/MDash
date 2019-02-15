@@ -1,8 +1,10 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {ItemsData, PageDetailsModel} from '../models/page-detail.model';
 import {map, tap} from 'rxjs/operators';
+import {AngularFireDatabase} from '@angular/fire/database';
+import {fromPromise} from 'rxjs/internal/observable/fromPromise';
 
 
 @Injectable({
@@ -10,7 +12,7 @@ import {map, tap} from 'rxjs/operators';
 })
 
 export class ItemsService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private db: AngularFireDatabase) {}
 
   // loadedData = new BehaviorSubject<ItemsData>({list: [], timestamp: ''});
   loadedData = new BehaviorSubject<any>([]);
@@ -27,6 +29,7 @@ export class ItemsService {
     return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/pages/list.json',
       item
       );
+    // return fromPromise(this.db.object('list').set(item));
   }
 
   updateItem(key: string, item: Object) {

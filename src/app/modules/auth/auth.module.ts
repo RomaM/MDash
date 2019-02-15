@@ -1,6 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CoreModule} from '../../core/core.module';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule} from '@angular/material';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthRoutingModule} from './auth-routing.module';
 
 import {RegisterComponent} from './register/register.component';
@@ -15,7 +21,13 @@ import {AuthComponent} from './auth.component';
   ],
   imports: [
     CommonModule,
-    CoreModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
     AuthRoutingModule
   ]
 })

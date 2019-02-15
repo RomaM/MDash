@@ -5,6 +5,7 @@ import * as pagesReducer from '../store/pages.reducers';
 import {Observable, Subscription} from 'rxjs';
 import {ItemsService} from '../../../shared/services/items.service';
 import {tap, map, switchMap, timeout} from 'rxjs/operators';
+import {AngularFireDatabase} from '@angular/fire/database';
 
 @Component({
   selector: 'app-list',
@@ -23,7 +24,8 @@ export class ListComponent implements OnInit, OnDestroy {
   pagesData: any = [];
 
   constructor(private store: Store<pagesReducer.State>,
-              private itemsService: ItemsService) { }
+              private itemsService: ItemsService,
+              private db: AngularFireDatabase) { }
 
   ngOnInit() {
     this.filterTitle = '';
@@ -44,5 +46,10 @@ export class ListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.itemsLoadedSubscription.unsubscribe();
+  }
+
+  log() {
+    this.db.list('pages/list').valueChanges().subscribe(data =>
+    console.log(data));
   }
 }

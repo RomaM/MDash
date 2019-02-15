@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 const routes: Routes = [
   { path: 'list', loadChildren: './modules/items/items.module#ListItemsModule' },
-  { path: 'auth', loadChildren: './modules/auth/auth.module#AuthModule' },
+  { path: 'auth', loadChildren: './modules/auth/auth.module#AuthModule'},
   { path: '**', redirectTo: 'list' },
 ];
 

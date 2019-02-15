@@ -9,3 +9,12 @@ $custom-theme-warn:    mat-palette($mat-deep-orange);
 $custom-theme: mat-dark-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
 
 @include angular-material-theme($custom-theme);
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background: #424242;
+}

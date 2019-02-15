@@ -10,6 +10,10 @@ import {AppRoutingModule } from './app-routing.module';
 
 import {AppComponent } from './app.component';
 import {NotFoundComponent} from './core/not-found/not-found.component';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -20,6 +24,9 @@ import {NotFoundComponent} from './core/not-found/not-found.component';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
