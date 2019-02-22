@@ -10,6 +10,7 @@ const itemsRoutes: Routes = [
       {path: '', component: ListComponent},
       {path: 'item/:id', component: DetailsComponent},
       {path: 'new', component: DetailsComponent},
+      {path: '**', redirectTo: 'list'}
     ]
   }
 ];

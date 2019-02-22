@@ -1,5 +1,5 @@
 <h1 class="title">Sign In</h1>
-<form class="login" [formGroup]="loginForm" (ngSubmit)="logIn()">
+<form class="login" [formGroup]="loginForm" (ngSubmit)="signInUser()">
 	<mat-form-field class="field-wrap" appearance="outline">
 		<mat-label>Enter your email</mat-label>
 		<input
@@ -38,3 +38,5 @@
 		<a mat-stroked-button class="actions__link" routerLink="/auth/register">Register</a>
 	</div>
 </form>
+
+<button mat-button (click)="signOutUser()">Sign Out</button>

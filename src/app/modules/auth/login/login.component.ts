@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,11 +8,15 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   loginForm: FormGroup;
+  hide = true;
 
   ngOnInit() {
+    // this.authService.getToken();
+
+
     this.formInit();
   }
 
@@ -26,11 +31,15 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  logIn() {
+  signInUser() {
     if (this.loginForm && this.loginForm.valid) {
-      console.log('Valid');
+      console.log('Login form is valid');
+      this.authService.signIn(this.loginForm.value.email, this.loginForm.value.password);
     }
-    console.log('LogIn');
+  }
+
+  signOutUser() {
+    this.authService.signOut();
   }
 
 }

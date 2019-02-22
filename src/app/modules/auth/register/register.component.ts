@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MustMatch} from '../../../shared/validators/must-match.validator';
+import {AuthService} from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -9,9 +10,11 @@ import {MustMatch} from '../../../shared/validators/must-match.validator';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   registerForm: FormGroup;
+  hide = true;
+  hideCP = true;
 
   ngOnInit() {
     this.formInit();
@@ -31,10 +34,10 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.controls;
   }
 
-  register() {
+  signUpUser() {
     if (this.registerForm && this.registerForm.valid) {
-      console.log('Valid');
+      console.log('Register form is valid');
+      this.authService.signUp(this.registerForm.value.email, this.registerForm.value.password);
     }
-    console.log('LogIn');
   }
 }

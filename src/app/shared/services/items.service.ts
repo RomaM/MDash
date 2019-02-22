@@ -5,6 +5,7 @@ import {ItemsData, PageDetailsModel} from '../models/page-detail.model';
 import {map, tap} from 'rxjs/operators';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {fromPromise} from 'rxjs/internal/observable/fromPromise';
+import {AuthService} from './auth.service';
 
 
 @Injectable({
@@ -12,7 +13,9 @@ import {fromPromise} from 'rxjs/internal/observable/fromPromise';
 })
 
 export class ItemsService {
-  constructor(private httpClient: HttpClient, private db: AngularFireDatabase) {}
+  constructor(private httpClient: HttpClient,
+              private db: AngularFireDatabase,
+              private authService: AuthService) {}
 
   // loadedData = new BehaviorSubject<ItemsData>({list: [], timestamp: ''});
   loadedData = new BehaviorSubject<any>([]);
