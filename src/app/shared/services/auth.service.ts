@@ -1,8 +1,9 @@
-// import {firebase} from 'firebase/app';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import * as firebase from 'firebase';
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
+import {Observable} from 'rxjs/index';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,41 +11,85 @@ import {AngularFireAuth} from '@angular/fire/auth';
 
 export class AuthService {
   userData: any;
-  token: string;
+  token = '';
 
-  constructor(private afAuth: AngularFireAuth) {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-      } else {
-        localStorage.setItem('user', null);
-      }
-    });
+  // constructor(private afAuth: AngularFireAuth, private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {
+    console.log('Auth Service Running...');
+
+    // firebase.auth().onAuthStateChanged(user => {
+    //   if (user) {
+    //       this.userData = user;
+    //       this.token = user.refreshToken;
+    //       console.log(this.token);
+    //       // localStorage.setItem('user', JSON.stringify(this.userData));
+    //     } else {
+    //       // localStorage.setItem('user', null);
+    //     }
+    // });
+
+    // this.afAuth.authState.subscribe(user => {
+    //   console.log(user);
+    //
+    //   if (user) {
+    //     this.userData = user;
+    //     this.token = user.refreshToken;
+    //     localStorage.setItem('user', JSON.stringify(this.userData));
+    //   } else {
+    //     localStorage.setItem('user', null);
+    //   }
+    //
+    //   console.log(this.token);
+    // });
   }
 
   signIn(email: string, password: string) {
-    this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => console.log(err));
+    // this.afAuth.auth.signInWithEmailAndPassword(email, password)
+    //   .then(response => {
+    //     console.log('Sign In Response: ');
+    //     console.log(response);
+    //   })
+    //   .catch(err => console.log(err));
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(
+        response => {
+          firebase.auth().currentUser.getIdToken()
+            .then((token) => {
+              this.token = token;
+              console.log(this.token);
+              return this.token;
+            });
+        }
+      );
   }
 
   signUp(email: string, password: string) {
-    this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+    firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(response => console.log(response))
       .catch(err => console.log(err));
   }
 
   signOut() {
-    return this.afAuth.auth.signOut().then(() => {
-      localStorage.removeItem('user');
+    firebase.auth().signOut().then(() => {
+      // localStorage.removeItem('user');
     });
   }
 
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return (user !== null && user.emailVerified !== false) ? true : false;
+  // get isLoggedIn(): boolean {
+  //   const user = JSON.parse(localStorage.getItem('user'));
+  //   // return (user !== null && user.emailVerified !== false) ? true : false;
+  //   return (user !== null) ? true : false;
+  // }
+
+  getToken() {
+    console.log(firebase.auth().currentUser);
+    return firebase.auth().currentUser.getIdToken()
+      .then(token => this.token = token);
+  }
+
+  addUser(user: any) {
+    return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/users.json',
+      user
+    );
   }
 }

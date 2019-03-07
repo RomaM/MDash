@@ -3,10 +3,10 @@
 	<mat-form-field class="field-wrap" appearance="outline">
 		<mat-label>Enter your email</mat-label>
 		<input
-				class="field-wrap__input"
-				matInput
-				placeholder=""
-				formControlName="email">
+			class="field-wrap__input"
+			matInput
+			placeholder=""
+			formControlName="email">
 		<mat-error class="field-wrap__err" *ngIf="field.email.errors">
 			<span *ngIf="field.email.errors.email">Please enter a valid email address</span>
 			<span *ngIf="field.email.errors.required">Email is <strong>required</strong></span>
@@ -16,11 +16,11 @@
 	<mat-form-field class="field-wrap" appearance="outline">
 		<mat-label>Enter your password</mat-label>
 		<input
-				class="field-wrap__input"
-				matInput
-				placeholder=""
-				formControlName="password"
-				[type]="hide ? 'password' : 'text'">
+			class="field-wrap__input"
+			matInput
+			placeholder=""
+			formControlName="password"
+			[type]="hide ? 'password' : 'text'">
 		<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
 		<mat-error class="field-wrap__err" *ngIf="field.password.errors">
 			<span *ngIf="field.password.errors.minlength">Password must be at least 4 characters long</span>
@@ -30,13 +30,23 @@
 	
 	<div class="actions">
 		<button
-				class="actions__btn actions__btn_submit"
-				mat-raised-button
-				color="primary"
-				type="submit">SIGN IN</button>
+			class="actions__btn actions__btn_submit"
+			mat-raised-button
+			color="primary"
+			type="submit">SIGN IN</button>
 		<b class="actions__devider">or</b>
 		<a mat-stroked-button class="actions__link" routerLink="/auth/register">Register</a>
+		
+		<button
+			class="actions__btn actions__btn_sign-out"
+			mat-button
+			(click)="signOutUser()"
+			type="button">Sign Out</button>
+		
+		<button
+				class="actions__btn actions__btn_sign-out"
+				mat-button
+				(click)="addUser()"
+				type="button">ADD USER</button>
 	</div>
 </form>
-
-<button mat-button (click)="signOutUser()">Sign Out</button>

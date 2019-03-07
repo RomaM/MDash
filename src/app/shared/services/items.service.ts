@@ -7,15 +7,12 @@ import {AngularFireDatabase} from '@angular/fire/database';
 import {fromPromise} from 'rxjs/internal/observable/fromPromise';
 import {AuthService} from './auth.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
 
 export class ItemsService {
-  constructor(private httpClient: HttpClient,
-              private db: AngularFireDatabase,
-              private authService: AuthService) {}
+  constructor(private authService: AuthService, private httpClient: HttpClient) {}
 
   // loadedData = new BehaviorSubject<ItemsData>({list: [], timestamp: ''});
   loadedData = new BehaviorSubject<any>([]);
@@ -56,7 +53,11 @@ export class ItemsService {
   }
 
   fetchItems() {
-    return this.httpClient.get<any>('https://funnelsdetails.firebaseio.com/pages.json',
+    console.log('Fetch');
+    const token = this.authService.getToken();
+    console.log(token);
+
+    return this.httpClient.get<any>('https://funnelsdetails.firebaseio.com/pages.json?auth=' + token,
       {
         observe: 'body',
         responseType: 'json'

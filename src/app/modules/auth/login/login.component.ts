@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../shared/services/auth.service';
+import {map} from 'rxjs/operators';
+import {UserDetailsModel} from '../../../shared/models/user-details.model';
 
 @Component({
   selector: 'app-login',
@@ -40,6 +42,15 @@ export class LoginComponent implements OnInit {
 
   signOutUser() {
     this.authService.signOut();
+  }
+
+  addUser() {
+    const user =
+      new UserDetailsModel('Test Test', 'test@test.test', true, 'Test Test', 'ZDUPJGdibwWB9uXhNtu130ZPxq02');
+
+    this.authService.addUser(user).pipe(
+      map(data => console.log(data))
+    ).subscribe(data => console.log(data));
   }
 
 }
