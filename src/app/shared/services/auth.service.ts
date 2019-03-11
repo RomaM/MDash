@@ -82,9 +82,21 @@ export class AuthService {
   // }
 
   getToken() {
-    console.log(firebase.auth().currentUser);
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        user.getIdToken().then(token => {
+          console.log(token);
+          return token;
+        });
+      }
+    });
+
     return firebase.auth().currentUser.getIdToken()
-      .then(token => this.token = token);
+      .then(token => {
+        this.token = token;
+        console.log(this.token);
+        return this.token;
+      });
   }
 
   addUser(user: any) {

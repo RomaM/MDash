@@ -16,8 +16,7 @@ export class LoginComponent implements OnInit {
   hide = true;
 
   ngOnInit() {
-    // this.authService.getToken();
-
+    console.log('Login component initialized');
 
     this.formInit();
   }

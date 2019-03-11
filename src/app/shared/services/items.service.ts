@@ -55,7 +55,9 @@ export class ItemsService {
   fetchItems() {
     console.log('Fetch');
     const token = this.authService.getToken();
-    console.log(token);
+    token.then((data) => {
+      console.log(data);
+    });
 
     return this.httpClient.get<any>('https://funnelsdetails.firebaseio.com/pages.json?auth=' + token,
       {
