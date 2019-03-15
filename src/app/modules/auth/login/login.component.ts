@@ -4,6 +4,8 @@ import {AuthService} from '../../../shared/services/auth.service';
 import {map} from 'rxjs/operators';
 import {UserDetailsModel} from '../../../shared/models/user-details.model';
 
+import * as firebase from 'firebase';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

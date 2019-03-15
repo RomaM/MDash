@@ -24,8 +24,7 @@ export class ListComponent implements OnInit, OnDestroy {
   pagesData: any = [];
 
   constructor(private store: Store<pagesReducer.State>,
-              private itemsService: ItemsService,
-              private db: AngularFireDatabase) { }
+              private itemsService: ItemsService) { }
 
   ngOnInit() {
     this.filterTitle = '';
@@ -49,7 +48,7 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   log() {
-    this.db.list('pages/list').valueChanges().subscribe(data =>
-    console.log(data));
+    // this.db.list('pages/list').valueChanges().subscribe(data =>
+    // console.log(data));
   }
 }

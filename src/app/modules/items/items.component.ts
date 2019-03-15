@@ -3,6 +3,7 @@ import {ItemsService} from '../../shared/services/items.service';
 import {select, Store} from '@ngrx/store';
 import * as pagesReducer from './store/pages.reducers';
 import * as PagesActions from './store/pages.actions';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-items',

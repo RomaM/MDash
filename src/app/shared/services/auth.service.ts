@@ -1,66 +1,41 @@
 import * as firebase from 'firebase';
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {Observable} from 'rxjs/index';
+import {BehaviorSubject, Observable, throwError} from 'rxjs/index';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  userData: any;
-  token = '';
+  userDataSubject: BehaviorSubject<any>;
+  userData: Observable<any>;
+  token: string;
 
   // constructor(private afAuth: AngularFireAuth, private httpClient: HttpClient) {
-  constructor(private httpClient: HttpClient) {
-    console.log('Auth Service Running...');
+  constructor(private httpClient: HttpClient, private router: Router) {
+    this.userDataSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('logged')));
+    this.userData = this.userDataSubject.asObservable();
+  }
 
-    // firebase.auth().onAuthStateChanged(user => {
-    //   if (user) {
-    //       this.userData = user;
-    //       this.token = user.refreshToken;
-    //       console.log(this.token);
-    //       // localStorage.setItem('user', JSON.stringify(this.userData));
-    //     } else {
-    //       // localStorage.setItem('user', null);
-    //     }
-    // });
-
-    // this.afAuth.authState.subscribe(user => {
-    //   console.log(user);
-    //
-    //   if (user) {
-    //     this.userData = user;
-    //     this.token = user.refreshToken;
-    //     localStorage.setItem('user', JSON.stringify(this.userData));
-    //   } else {
-    //     localStorage.setItem('user', null);
-    //   }
-    //
-    //   console.log(this.token);
-    // });
+  get currentUser(): any {
+    console.log('Current user');
+    return this.userDataSubject.value;
   }
 
   signIn(email: string, password: string) {
-    // this.afAuth.auth.signInWithEmailAndPassword(email, password)
-    //   .then(response => {
-    //     console.log('Sign In Response: ');
-    //     console.log(response);
-    //   })
-    //   .catch(err => console.log(err));
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
         response => {
-          firebase.auth().currentUser.getIdToken()
-            .then((token) => {
-              this.token = token;
-              console.log(this.token);
-              return this.token;
-            });
+          localStorage.setItem('logged', JSON.stringify(!!response));
+          this.userDataSubject.next(response.user);
+          this.router.navigate(['/']);
         }
-      );
+      )
+      .catch(error => console.error(error));
   }
 
   signUp(email: string, password: string) {
@@ -70,33 +45,33 @@ export class AuthService {
   }
 
   signOut() {
-    firebase.auth().signOut().then(() => {
-      // localStorage.removeItem('user');
+    firebase.auth().signOut()
+      .then(() => {
+        localStorage.removeItem('logged');
+        this.userDataSubject.next(null);
+        console.log('Signed Out');
     });
   }
 
-  // get isLoggedIn(): boolean {
-  //   const user = JSON.parse(localStorage.getItem('user'));
-  //   // return (user !== null && user.emailVerified !== false) ? true : false;
-  //   return (user !== null) ? true : false;
-  // }
-
-  getToken() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        user.getIdToken().then(token => {
-          console.log(token);
-          return token;
-        });
-      }
-    });
-
-    return firebase.auth().currentUser.getIdToken()
-      .then(token => {
-        this.token = token;
-        console.log(this.token);
-        return this.token;
+  isAuthenticated(): Promise<any> {
+    return new Promise((res, rej) => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          return firebase.auth().currentUser.getIdToken()
+            .then(
+              token => {
+                this.token = token;
+                return res(true);
+              }
+            )
+            .catch(error => {
+              return rej(error);
+            });
+        } else {
+          return rej(null);
+        }
       });
+    });
   }
 
   addUser(user: any) {
