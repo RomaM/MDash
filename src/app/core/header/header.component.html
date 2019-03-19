@@ -4,6 +4,14 @@
     <span class="spacer"></span>
     <small>User Name</small>
     &nbsp;
-    <mat-icon>account_circle</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="signOut()">
+        <mat-icon>sentiment_very_dissatisfied</mat-icon>
+        <span>LogOut</span>
+      </button>
+    </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

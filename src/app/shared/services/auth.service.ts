@@ -13,12 +13,22 @@ import {Router} from '@angular/router';
 export class AuthService {
   userDataSubject: BehaviorSubject<any>;
   userData: Observable<any>;
+  isLogged: BehaviorSubject<any>;
   token: string;
 
   // constructor(private afAuth: AngularFireAuth, private httpClient: HttpClient) {
   constructor(private httpClient: HttpClient, private router: Router) {
-    this.userDataSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('logged')));
-    this.userData = this.userDataSubject.asObservable();
+    this.isLogged = new BehaviorSubject<boolean>(false);
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        this.userDataSubject = new BehaviorSubject<any>(user);
+        this.userData = this.userDataSubject.asObservable();
+        this.isLogged.next(true);
+      } else {
+        // No user is signed in.
+      }
+    });
   }
 
   get currentUser(): any {
@@ -30,7 +40,8 @@ export class AuthService {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
         response => {
-          localStorage.setItem('logged', JSON.stringify(!!response));
+          // localStorage.setItem('logged', JSON.stringify(!!response));
+          this.isLogged.next(true);
           this.userDataSubject.next(response.user);
           this.router.navigate(['/']);
         }
@@ -47,8 +58,10 @@ export class AuthService {
   signOut() {
     firebase.auth().signOut()
       .then(() => {
-        localStorage.removeItem('logged');
+        // localStorage.removeItem('logged');
+        this.isLogged.next(false);
         this.userDataSubject.next(null);
+        this.router.navigate(['/auth'])
         console.log('Signed Out');
     });
   }
@@ -57,6 +70,7 @@ export class AuthService {
     return new Promise((res, rej) => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
+          this.isLogged.next(false);
           return firebase.auth().currentUser.getIdToken()
             .then(
               token => {
@@ -68,6 +82,7 @@ export class AuthService {
               return rej(error);
             });
         } else {
+          this.isLogged.next(false);
           return rej(null);
         }
       });
