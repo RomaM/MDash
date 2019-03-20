@@ -11,29 +11,26 @@ import {Router} from '@angular/router';
 })
 
 export class AuthService {
-  userDataSubject: BehaviorSubject<any>;
-  userData: Observable<any>;
-  isLogged: BehaviorSubject<any>;
+  userDataSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  userData: Observable<any> = this.userDataSubject.asObservable();
+  isLogged: BehaviorSubject<any> = new BehaviorSubject<boolean>(false);
   token: string;
+
 
   // constructor(private afAuth: AngularFireAuth, private httpClient: HttpClient) {
   constructor(private httpClient: HttpClient, private router: Router) {
-    this.isLogged = new BehaviorSubject<boolean>(false);
-
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        this.userDataSubject = new BehaviorSubject<any>(user);
-        this.userData = this.userDataSubject.asObservable();
-        this.isLogged.next(true);
+        console.log(user);
       } else {
-        // No user is signed in.
+        console.log(user);
       }
     });
   }
 
   get currentUser(): any {
     console.log('Current user');
-    return this.userDataSubject.value;
+    return firebase.auth().currentUser;;
   }
 
   signIn(email: string, password: string) {
@@ -70,23 +67,18 @@ export class AuthService {
     return new Promise((res, rej) => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          this.isLogged.next(false);
-          return firebase.auth().currentUser.getIdToken()
-            .then(
-              token => {
-                this.token = token;
-                return res(true);
-              }
-            )
-            .catch(error => {
-              return rej(error);
-            });
+          this.isLogged.next(true);
+          return res(true);
         } else {
           this.isLogged.next(false);
-          return rej(null);
+          return rej(false);
         }
       });
     });
+  }
+
+  getToken(): Promise<any> {
+    return firebase.auth().currentUser.getIdToken();
   }
 
   addUser(user: any) {

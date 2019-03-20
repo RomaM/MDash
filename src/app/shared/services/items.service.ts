@@ -6,6 +6,7 @@ import {map, tap} from 'rxjs/operators';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {fromPromise} from 'rxjs/internal/observable/fromPromise';
 import {AuthService} from './auth.service';
+import {subscribeOn, switchMap} from "rxjs/internal/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -53,19 +54,24 @@ export class ItemsService {
   }
 
   fetchItems() {
-    const token = this.authService.token;
+    const token$ = fromPromise(this.authService.getToken());
 
-    return this.httpClient.get<any>('https://funnelsdetails.firebaseio.com/pages.json?auth=' + token,
-      {
-        observe: 'body',
-        responseType: 'json'
+    return token$.pipe(
+      switchMap(
+        (token) => {
+          return this.httpClient.get<any>('https://funnelsdetails.firebaseio.com/pages.json?auth=' + token,
+            {
+              observe: 'body',
+              responseType: 'json'
+            });
+        }
+      ),
+      map(data => {
+        data.list = Object.entries(data.list);
+        return data;
       })
-      .pipe(
-        map(data => {
-          data.list = Object.entries(data.list);
-          return data;
-        }),
-      );
+    );
+
   }
 
   getTimestamp() {
