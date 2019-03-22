@@ -3,7 +3,6 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {BehaviorSubject, Observable, throwError} from 'rxjs/index';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
 
 @Injectable({
@@ -11,26 +10,11 @@ import {Router} from '@angular/router';
 })
 
 export class AuthService {
-  userDataSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userData: Observable<any> = this.userDataSubject.asObservable();
-  isLogged: BehaviorSubject<any> = new BehaviorSubject<boolean>(false);
-  token: string;
+  userDataSubject = new BehaviorSubject<any>(null);
+  userData = this.userDataSubject.asObservable();
+  isLogged = !!localStorage.getItem('isLogged');
 
-
-  // constructor(private afAuth: AngularFireAuth, private httpClient: HttpClient) {
   constructor(private httpClient: HttpClient, private router: Router) {
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        console.log(user);
-      } else {
-        console.log(user);
-      }
-    });
-  }
-
-  get currentUser(): any {
-    console.log('Current user');
-    return firebase.auth().currentUser;;
   }
 
   signIn(email: string, password: string) {
@@ -38,7 +22,7 @@ export class AuthService {
       .then(
         response => {
           // localStorage.setItem('logged', JSON.stringify(!!response));
-          this.isLogged.next(true);
+          localStorage.setItem('isLogged', 'true');
           this.userDataSubject.next(response.user);
           this.router.navigate(['/']);
         }
@@ -55,8 +39,7 @@ export class AuthService {
   signOut() {
     firebase.auth().signOut()
       .then(() => {
-        // localStorage.removeItem('logged');
-        this.isLogged.next(false);
+        localStorage.removeItem('isLogged');
         this.userDataSubject.next(null);
         this.router.navigate(['/auth'])
         console.log('Signed Out');
@@ -67,10 +50,10 @@ export class AuthService {
     return new Promise((res, rej) => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          this.isLogged.next(true);
+          localStorage.setItem('isLogged', 'true');
           return res(true);
         } else {
-          this.isLogged.next(false);
+          localStorage.removeItem('isLogged');
           return rej(false);
         }
       });

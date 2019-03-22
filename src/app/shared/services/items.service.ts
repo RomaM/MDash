@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, from, Observable, Subject} from 'rxjs';
 import {ItemsData, PageDetailsModel} from '../models/page-detail.model';
 import {map, tap} from 'rxjs/operators';
-import {AngularFireDatabase} from '@angular/fire/database';
-import {fromPromise} from 'rxjs/internal/observable/fromPromise';
 import {AuthService} from './auth.service';
-import {subscribeOn, switchMap} from "rxjs/internal/operators";
+import {subscribeOn, switchMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +28,6 @@ export class ItemsService {
     return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/pages/list.json',
       item
       );
-    // return fromPromise(this.db.object('list').set(item));
   }
 
   updateItem(key: string, item: Object) {
@@ -54,7 +51,7 @@ export class ItemsService {
   }
 
   fetchItems() {
-    const token$ = fromPromise(this.authService.getToken());
+    const token$ = from(this.authService.getToken());
 
     return token$.pipe(
       switchMap(

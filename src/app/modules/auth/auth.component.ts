@@ -8,22 +8,14 @@ import {AuthService} from '../../shared/services/auth.service';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit, OnDestroy {
-  currentUser: any;
-
   constructor(private router: Router, private authService: AuthService) {
-    // this.currentUser = this.authService.currentUser;
-    console.log('Auth Component Constructor');
   }
 
   ngOnInit() {
-    this.authService.isLogged.subscribe(isLogged => {
-      console.log(isLogged);
-
-      if (isLogged) {
-        console.log('Auth Component INIT');
-        // this.router.navigate(['/']);
-      }
-    });
+    console.log('COMPONENT: AuthComponent - Init');
+    if (this.authService.isLogged) {
+      this.router.navigate(['/']);
+    }
   }
 
   ngOnDestroy() {

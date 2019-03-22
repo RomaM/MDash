@@ -3,8 +3,8 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './shared/guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'auth', loadChildren: './modules/auth/auth.module#AuthModule'},
   { path: 'list', loadChildren: './modules/items/items.module#ListItemsModule', canActivate: [AuthGuard]},
+  { path: 'auth', loadChildren: './modules/auth/auth.module#AuthModule'},
   { path: '**', redirectTo: 'list' },
 ];
 

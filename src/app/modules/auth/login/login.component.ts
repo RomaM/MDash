@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   hide = true;
 
   ngOnInit() {
-    console.log('Login component initialized');
+    console.log('COMPONENT: LoginComponent - Init');
 
     this.formInit();
   }
