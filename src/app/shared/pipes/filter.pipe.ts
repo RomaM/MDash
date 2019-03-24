@@ -8,12 +8,11 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class FilterPipe implements PipeTransform {
     transform(data: any, prop: string, filter: string) {
       let filteredData = '';
-      filter = filter.toString().toLowerCase();
       if (data && filter.length !== 0 && filter !== 'all') {
+        filter = filter.toString().toLowerCase();
         filteredData = data.filter(
           (obj) => {
-            console.log(obj);
-            return obj[prop].toString().toLowerCase().indexOf(filter.toString().toLowerCase()) !== -1;
+            return obj[1][prop].toString().toLowerCase().indexOf(filter.toString().toLowerCase()) !== -1;
           }
         );
         return filteredData;

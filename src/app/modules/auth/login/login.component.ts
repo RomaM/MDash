@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
 
   signInUser() {
     if (this.loginForm && this.loginForm.valid) {
-      console.log('Login form is valid');
       this.authService.signIn(this.loginForm.value.email, this.loginForm.value.password);
     }
   }

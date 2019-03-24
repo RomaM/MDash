@@ -7,11 +7,11 @@
 </mat-toolbar>
 <nav class="sidebar-menu">
 	<button
-			mat-button
-			class="sidebar-menu__btn"
-			routerLink="/"
-			routerLinkActive="sidebar-menu__btn__active">
-		<mat-icon>format_list_bulleted</mat-icon>
+    mat-button
+    class="sidebar-menu__btn"
+    routerLink="/list"
+    routerLinkActive="sidebar-menu__btn_active">
+		  <mat-icon>format_list_bulleted</mat-icon>
 		Pages List
 	</button>
 	<button mat-button class="sidebar-menu__btn">
@@ -22,8 +22,12 @@
 		<mat-icon>bar_chart</mat-icon>
 		Statistics
 	</button>
-	<button mat-button class="sidebar-menu__btn">
-		<mat-icon>account_circle</mat-icon>
+	<button
+    mat-button
+    class="sidebar-menu__btn"
+    routerLink="/profile"
+    routerLinkActive="sidebar-menu__btn_active">
+		  <mat-icon>account_circle</mat-icon>
 		Profile Info
 	</button>
 </nav>
