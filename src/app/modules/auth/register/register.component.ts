@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MustMatch} from '../../../shared/validators/must-match.validator';
 import {AuthService} from '../../../shared/services/auth.service';

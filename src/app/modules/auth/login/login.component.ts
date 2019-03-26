@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, DoCheck, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../shared/services/auth.service';
 import {map} from 'rxjs/operators';
@@ -11,7 +11,7 @@ import * as firebase from 'firebase';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) { }
 
   loginForm: FormGroup;
@@ -51,6 +51,10 @@ export class LoginComponent implements OnInit {
     this.authService.addUser(user).pipe(
       map(data => console.log(data))
     ).subscribe(data => console.log(data));
+  }
+
+  ngOnDestroy() {
+
   }
 
 }
