@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ItemsData, PageDetailsModel} from '../../../shared/models/page-detail.model';
 import {select, Store} from '@ngrx/store';
-import * as pagesReducer from '../store/pages.reducers';
+import * as pagesReducer from '../store/pages.reducer';
 import {Observable, Subscription} from 'rxjs';
 import {ItemsService} from '../../../shared/services/items.service';
 import {tap, map, switchMap, timeout} from 'rxjs/operators';

@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ItemsService} from '../../shared/services/items.service';
-import {select, Store} from '@ngrx/store';
-import * as pagesReducer from './store/pages.reducers';
+import {Store} from '@ngrx/store';
+import * as pagesReducer from './store/pages.reducer';
 import * as PagesActions from './store/pages.actions';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-items',

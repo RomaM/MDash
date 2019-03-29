@@ -37,7 +37,9 @@ export class RegisterComponent implements OnInit {
   signUpUser() {
     if (this.registerForm && this.registerForm.valid) {
       console.log('Register form is valid');
-      this.authService.signUp(this.registerForm.value.email, this.registerForm.value.password);
+      this.authService.signUp(this.registerForm.value.email, this.registerForm.value.password).then(
+        (data) => console.log(data)
+      );
     }
   }
 }

@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {HttpClient, HttpRequest} from '@angular/common/http';
+import {BehaviorSubject, from} from 'rxjs';
 import {ItemsData, PageDetailsModel} from '../models/page-detail.model';
-import {map, tap, switchMap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {AngularFireDatabase} from '@angular/fire/database';
-import {fromPromise} from 'rxjs/internal/observable/fromPromise';
 import {AuthService} from './auth.service';
 
 @Injectable({
@@ -53,12 +52,12 @@ export class ItemsService {
   }
 
   fetchItems() {
-    const token$ = fromPromise(this.authService.getToken());
+    const token$ = from(this.authService.getToken());
 
     return token$.pipe(
       switchMap(
         (token) => {
-          return this.httpClient.get<any>('https://funnelsdetails.firebaseio.com/pages.json?auth=' + token,
+          return this.httpClient.get<any>(`https://funnelsdetails.firebaseio.com/pages.json?auth=${token}`,
             {
               observe: 'body',
               responseType: 'json'

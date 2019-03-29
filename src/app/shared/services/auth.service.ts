@@ -11,18 +11,22 @@ import {Router} from '@angular/router';
 
 export class AuthService {
   userDataSubject = new BehaviorSubject<any>(null);
-  userData = this.userDataSubject.asObservable();
-  isLogged = !!localStorage.getItem('isLogged');
+  isLoggedSubject = new BehaviorSubject<boolean>(!!localStorage.getItem('isLogged'));
 
   constructor(private httpClient: HttpClient, private router: Router) {
+  }
+
+  set isLogged(value: boolean) {
+    value ? localStorage.setItem('isLogged', value.toString()) : localStorage.removeItem('isLogged');
+    this.isLoggedSubject.next(value);
   }
 
   signIn(email: string, password: string) {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
         response => {
-          localStorage.setItem('isLogged', 'true');
-          this.userDataSubject.next(response.user);
+          // localStorage.setItem('isLogged', 'true');
+          this.userDataSubject.next(response.user.providerData);
           this.router.navigate(['/']);
         }
       )
@@ -30,18 +34,15 @@ export class AuthService {
   }
 
   signUp(email: string, password: string) {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(response => console.log(response))
-      .catch(err => console.log(err));
+    return firebase.auth().createUserWithEmailAndPassword(email, password);
   }
 
   signOut() {
     firebase.auth().signOut()
       .then(() => {
-        localStorage.removeItem('isLogged');
+        this.isLogged = false;
         this.userDataSubject.next(null);
-        this.router.navigate(['/auth'])
-        console.log('Signed Out');
+        this.router.navigate(['/auth']);
     });
   }
 
@@ -49,11 +50,11 @@ export class AuthService {
     return new Promise((res, rej) => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          localStorage.setItem('isLogged', 'true');
-          console.log('isAuthenticated');
+          this.isLogged = true;
+          this.userDataSubject.next(user.providerData);
           return res(true);
         } else {
-          localStorage.removeItem('isLogged');
+          this.isLogged = false;
           return rej(false);
         }
       });
@@ -62,11 +63,5 @@ export class AuthService {
 
   getToken(): Promise<any> {
     return firebase.auth().currentUser.getIdToken();
-  }
-
-  addUser(user: any) {
-    return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/users.json',
-      user
-    );
   }
 }

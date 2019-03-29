@@ -5,7 +5,7 @@ import {Observable, throwError} from 'rxjs';
 import {combineLatest, tap, switchMap, withLatestFrom, map, catchError, takeWhile} from 'rxjs/operators';
 
 import * as PagesActions from './pages.actions';
-import * as pageReducer from './pages.reducers';
+import * as pageReducer from './pages.reducer';
 import {ItemsService} from '../../../shared/services/items.service';
 import {Route, Router} from '@angular/router';
 

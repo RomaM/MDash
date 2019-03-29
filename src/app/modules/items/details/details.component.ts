@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {from, Observable, Subscription} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
-import * as pagesReducer from '../store/pages.reducers';
+import * as pagesReducer from '../store/pages.reducer';
 import * as PagesActions from '../store/pages.actions';
 import {select, Store} from '@ngrx/store';
 import {ActivatedRoute, Router} from '@angular/router';

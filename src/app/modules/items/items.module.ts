@@ -17,7 +17,7 @@ import {DetailsComponent} from './details/details.component';
 import {ListComponent} from './list/list.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EffectsModule} from '@ngrx/effects';
-import {pagesReducer} from './store/pages.reducers';
+import {pagesReducer} from './store/pages.reducer';
 import {PagesEffects} from './store/pages.effects';
 import {FilterPipe} from '../../shared/pipes/filter.pipe';
 

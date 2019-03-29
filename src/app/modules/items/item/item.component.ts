@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 
-import * as pagesReducer from '../store/pages.reducers';
+import * as pagesReducer from '../store/pages.reducer';
 import * as PagesActions from '../store/pages.actions';
 
 @Component({

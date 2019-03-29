@@ -44,15 +44,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.signOut();
   }
 
-  addUser() {
-    const user =
-      new UserDetailsModel('Test Test', 'test@test.test', true, 'Test Test', 'ZDUPJGdibwWB9uXhNtu130ZPxq02');
-
-    this.authService.addUser(user).pipe(
-      map(data => console.log(data))
-    ).subscribe(data => console.log(data));
-  }
-
   ngOnDestroy() {
 
   }
