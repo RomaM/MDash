@@ -1,3 +1,40 @@
-<p>
-  details works!
-</p>
+<mat-card class="details">
+  <form [formGroup]="detailsForm" class="details__form">
+    <mat-form-field class="details__field details__field_name">
+      <input matInput placeholder="First Name" formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="details__field details__field_surname">
+      <input matInput placeholder="First Name" formControlName="surname">
+    </mat-form-field>
+    <mat-form-field class="details__field details__field_email">
+      <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field class="details__field details__field_phone">
+      <input matInput placeholder="Phone" formControlName="phone">
+    </mat-form-field>
+    <mat-form-field class="details__field details__field_uid">
+      <input matInput placeholder="User ID" formControlName="uid">
+    </mat-form-field>
+  
+    <div class="actions">
+      <button
+          mat-flat-button
+          class="actions__btn actions__btn_edit"
+          type="button">
+        Edit
+      </button>
+      <button
+          mat-flat-button
+          class="actions__btn actions__btn_save"
+          type="submit">
+        Save
+      </button>
+      <button
+          mat-flat-button
+          class="actions__btn actions__btn_cancel"
+          type="button">
+        Cancel
+      </button>
+    </div>
+  </form>
+</mat-card>

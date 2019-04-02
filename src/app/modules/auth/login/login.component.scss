@@ -28,19 +28,13 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
 
   &__btn {
     min-width: 180px;
     font-size: 16px;
     line-height: 2.5;
-
-    &_submit {
-
-    }
-
-    &_sign-out {
-
-    }
   }
 
   &__link {

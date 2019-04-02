@@ -33,6 +33,8 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
 
   &__btn {
     &_submit {
@@ -44,9 +46,5 @@
 
   &__link {
     color: #009908;
-  }
-
-  &__devider {
-    margin: 10px 0;
   }
 }

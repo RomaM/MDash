@@ -1,0 +1,60 @@
+.details {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
+  &__form {
+    max-width: 400px;
+  }
+}
+
+.details__field {
+  padding-bottom: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+
+  &_name {
+    width: 50%;
+    padding-right: 7px;
+  }
+
+  &_surname {
+    width: 50%;
+    padding-left: 8px;
+  }
+
+  &_email {
+    width: 100%;
+  }
+
+  &_phone {
+    width: 100%;
+  }
+
+  &_uid {
+    width: 100%;
+  }
+}
+
+.actions {
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+
+  &__btn {
+    margin: 0 5px;
+    font-size: 16px;
+
+    &_save {
+      background: #009908;
+    }
+
+    &_edit {
+      background: #dc005a;
+    }
+
+    &_cancel {
+      background: #6e00ff;
+    }
+  }
+}
