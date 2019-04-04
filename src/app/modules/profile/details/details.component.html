@@ -1,10 +1,20 @@
 <mat-card class="details">
+  <div class="actions">
+    <button
+        *ngIf="!editMode && isSAdmin"
+        mat-flat-button
+        class="actions__btn actions__btn_register"
+        type="button"
+        routerLink="/profile/new">
+      Register a new user
+    </button>
+  </div>
   <form [formGroup]="detailsForm" class="details__form">
     <mat-form-field class="details__field details__field_name">
       <input matInput placeholder="First Name" formControlName="name">
     </mat-form-field>
     <mat-form-field class="details__field details__field_surname">
-      <input matInput placeholder="First Name" formControlName="surname">
+      <input matInput placeholder="Last Name" formControlName="surname">
     </mat-form-field>
     <mat-form-field class="details__field details__field_email">
       <input matInput placeholder="Email" formControlName="email">
@@ -18,21 +28,26 @@
   
     <div class="actions">
       <button
+          *ngIf="!editMode"
           mat-flat-button
           class="actions__btn actions__btn_edit"
-          type="button">
+          type="button"
+          routerLink="/profile/edit">
         Edit
       </button>
       <button
+          *ngIf="editMode"
           mat-flat-button
           class="actions__btn actions__btn_save"
           type="submit">
         Save
       </button>
       <button
+          *ngIf="editMode"
           mat-flat-button
           class="actions__btn actions__btn_cancel"
-          type="button">
+          type="button"
+          routerLink="/profile">
         Cancel
       </button>
     </div>

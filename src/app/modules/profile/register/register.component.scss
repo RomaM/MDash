@@ -1,12 +1,17 @@
-.title {
-  text-align: center;
-}
-
 .register {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: space-between;
+}
+
+.title {
+  text-align: center;
+}
+
+.register-form {
+  max-width: 500px;
 
   .field-wrap {
     width: 100%;

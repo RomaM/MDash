@@ -1,78 +1,93 @@
-<h1 class="title">Register a new user</h1>
-<form class="register" [formGroup]="registerForm" (ngSubmit)="signUpUser()">
-	<mat-form-field class="field-wrap field-wrap_half" appearance="outline">
-		<mat-label>Enter user name</mat-label>
-		<input
-				class="field-wrap__input"
-				matInput
-				placeholder=""
-				formControlName="name">
-		<mat-error class="field-wrap__err" *ngIf="field.email.errors">
-			<span *ngIf="field.email.errors.required">Name is <strong>required</strong></span>
-		</mat-error>
-	</mat-form-field>
-	
-	<mat-form-field class="field-wrap field-wrap_half" appearance="outline">
-		<mat-label>Enter user surname</mat-label>
-		<input
-				class="field-wrap__input"
-				matInput
-				placeholder=""
-				formControlName="surname">
-		<mat-error class="field-wrap__err" *ngIf="field.email.errors">
-			<span *ngIf="field.email.errors.required">Name is <strong>required</strong></span>
-		</mat-error>
-	</mat-form-field>
-	
-	<mat-form-field class="field-wrap" appearance="outline">
-		<mat-label>Enter user email</mat-label>
-		<input
-				class="field-wrap__input"
-				matInput
-				placeholder=""
-				formControlName="email">
-		<mat-error class="field-wrap__err" *ngIf="field.email.errors">
-			<span *ngIf="field.email.errors.email">Please enter a valid email address</span>
-			<span *ngIf="field.email.errors.required">Email is <strong>required</strong></span>
-		</mat-error>
-	</mat-form-field>
-	
-	<mat-form-field class="field-wrap" appearance="outline">
-		<mat-label>Enter user password</mat-label>
-		<input
-				class="field-wrap__input"
-				matInput
-				placeholder=""
-				formControlName="password"
-				[type]="hide ? 'password' : 'text'">
-		<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-		<mat-error class="field-wrap__err" *ngIf="field.password.errors">
-			<span *ngIf="field.password.errors.minlength">Password must be at least 4 characters long</span>
-			<span *ngIf="field.password.errors.required">Password is <strong>required</strong></span>
-		</mat-error>
-	</mat-form-field>
-	
-	<mat-form-field class="field-wrap" appearance="outline">
-		<mat-label>Confirm Password</mat-label>
-		<input
-				class="field-wrap__input"
-				matInput
-				placeholder=""
-				formControlName="confirmPassword"
-				[type]="hideCP ? 'password' : 'text'">
-		<mat-icon matSuffix (click)="hideCP = !hideCP">{{hideCP ? 'visibility_off' : 'visibility'}}</mat-icon>
-		<mat-error class="field-wrap__err" *ngIf="field.confirmPassword.errors">
-			<span *ngIf="field.confirmPassword.errors.minlength">Confirm password must be at least 4 characters long</span>
-			<span *ngIf="field.confirmPassword.errors.required">Confirm password is <strong>required</strong></span>
-			<span *ngIf="field.confirmPassword.errors.mustMatch">Passwords must match</span>
-		</mat-error>
-	</mat-form-field>
-	
-	<div class="actions">
-		<button
-				class="actions__btn actions__btn_submit"
-				mat-raised-button
-				color="primary"
-				type="submit">REGISTER</button>
-	</div>
-</form>
+<mat-card class="register">
+	<h1 class="title">Register a new user</h1>
+	<form class="register-form" [formGroup]="registerForm" (ngSubmit)="signUpUser()">
+		<mat-form-field class="field-wrap field-wrap_half" >
+			<mat-label>Enter user name</mat-label>
+			<input
+					class="field-wrap__input"
+					matInput
+					placeholder=""
+					formControlName="name">
+			<mat-error class="field-wrap__err" *ngIf="field.email.errors">
+				<span *ngIf="field.email.errors.required">Name is <strong>required</strong></span>
+			</mat-error>
+		</mat-form-field>
+		
+		<mat-form-field class="field-wrap field-wrap_half" >
+			<mat-label>Enter user surname</mat-label>
+			<input
+					class="field-wrap__input"
+					matInput
+					placeholder=""
+					formControlName="surname">
+			<mat-error class="field-wrap__err" *ngIf="field.email.errors">
+				<span *ngIf="field.email.errors.required">Name is <strong>required</strong></span>
+			</mat-error>
+		</mat-form-field>
+		
+		<mat-form-field class="field-wrap" >
+			<mat-label>Enter user email</mat-label>
+			<input
+					class="field-wrap__input"
+					matInput
+					placeholder=""
+					formControlName="email">
+			<mat-error class="field-wrap__err" *ngIf="field.email.errors">
+				<span *ngIf="field.email.errors.email">Please enter a valid email address</span>
+				<span *ngIf="field.email.errors.required">Email is <strong>required</strong></span>
+			</mat-error>
+		</mat-form-field>
+		
+		<mat-form-field class="field-wrap" >
+			<mat-label>Enter user phone</mat-label>
+			<input
+					class="field-wrap__input"
+					matInput
+					placeholder=""
+					formControlName="phone">
+		</mat-form-field>
+		
+		<mat-form-field class="field-wrap" >
+			<mat-label>Enter user password</mat-label>
+			<input
+					class="field-wrap__input"
+					matInput
+					placeholder=""
+					formControlName="password"
+					[type]="hide ? 'password' : 'text'">
+			<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+			<mat-error class="field-wrap__err" *ngIf="field.password.errors">
+				<span *ngIf="field.password.errors.minlength">Password must be at least 4 characters long</span>
+				<span *ngIf="field.password.errors.required">Password is <strong>required</strong></span>
+			</mat-error>
+		</mat-form-field>
+		
+		<mat-form-field class="field-wrap" >
+			<mat-label>Confirm Password</mat-label>
+			<input
+					class="field-wrap__input"
+					matInput
+					placeholder=""
+					formControlName="confirmPassword"
+					[type]="hideCP ? 'password' : 'text'">
+			<mat-icon matSuffix (click)="hideCP = !hideCP">{{hideCP ? 'visibility_off' : 'visibility'}}</mat-icon>
+			<mat-error class="field-wrap__err" *ngIf="field.confirmPassword.errors">
+				<span *ngIf="field.confirmPassword.errors.minlength">Confirm password must be at least 4 characters long</span>
+				<span *ngIf="field.confirmPassword.errors.required">Confirm password is <strong>required</strong></span>
+				<span *ngIf="field.confirmPassword.errors.mustMatch">Passwords must match</span>
+			</mat-error>
+		</mat-form-field>
+		
+		<section class="field-wrap">
+			<mat-checkbox formControlName="isSAdmin">Is Super Admin</mat-checkbox>
+		</section>
+		
+		<div class="actions">
+			<button
+					class="actions__btn actions__btn_submit"
+					mat-raised-button
+					color="primary"
+					type="submit">REGISTER</button>
+		</div>
+	</form>
+</mat-card>

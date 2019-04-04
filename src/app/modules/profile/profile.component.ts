@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit, DoCheck, OnDestroy {
   ngOnInit() {
     this.profilesSubscription = this.authService.userDataSubject.subscribe(
       profiles => {
-        console.log(profiles);
+        // console.log(profiles);
       }
     );
   }

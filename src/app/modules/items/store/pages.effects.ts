@@ -44,7 +44,7 @@ export class PagesEffects {
 
   @Effect()
   loadPages$: Observable<PagesActions.PageActions> = this.actions$.pipe(
-    ofType(PagesActions.PageActionTypes.LOAD_PAGES),
+    ofType(<string>PagesActions.PageActionTypes.LOAD_PAGES),
     withLatestFrom(this.store.pipe(
       select('pagesState', 'loaded')
     )),
@@ -69,7 +69,7 @@ export class PagesEffects {
 
   @Effect()
   addPage$ = this.actions$.pipe(
-    ofType(PagesActions.PageActionTypes.ADD_PAGE),
+    ofType(<string>PagesActions.PageActionTypes.ADD_PAGE),
     switchMap((action: PagesActions.AddPage) => this.itemsService.addItem(action.payload).pipe(
       map(data => {
         const timestamp = this.itemsService.generateTimestamp(action.payload);
@@ -83,7 +83,7 @@ export class PagesEffects {
 
   @Effect({dispatch: false})
   updatePage$ = this.actions$.pipe(
-    ofType(PagesActions.PageActionTypes.UPDATE_PAGE),
+    ofType(<string>PagesActions.PageActionTypes.UPDATE_PAGE),
     switchMap((action: PagesActions.UpdatePage) => {
       return this.itemsService.updateItem(action.payload.key, action.payload.val);
     }),
@@ -95,7 +95,7 @@ export class PagesEffects {
 
   @Effect()
   getTimestamp$ = this.actions$.pipe(
-    ofType(PagesActions.PageActionTypes.GET_TIMESTAMP),
+    ofType(<string>PagesActions.PageActionTypes.GET_TIMESTAMP),
     switchMap(data => this.itemsService.getTimestamp().pipe(
       map((timestamp: {[key: string]: string}) => new PagesActions.SetTimestamp(timestamp.key))
     ))
@@ -103,7 +103,7 @@ export class PagesEffects {
 
   @Effect()
   updateTimestamp$ = this.actions$.pipe(
-    ofType(PagesActions.PageActionTypes.UPDATE_TIMESTAMP),
+    ofType(<string>PagesActions.PageActionTypes.UPDATE_TIMESTAMP),
     switchMap((action: PagesActions.UpdateTimestamp) => {
       return this.itemsService.updateTimestamp(action.payload).pipe(
         map(data => new PagesActions.SetTimestamp(action.payload))

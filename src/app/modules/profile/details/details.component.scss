@@ -4,7 +4,7 @@
   justify-content: center;
 
   &__form {
-    max-width: 400px;
+    max-width: 500px;
   }
 }
 
@@ -44,6 +44,10 @@
   &__btn {
     margin: 0 5px;
     font-size: 16px;
+
+    &_register {
+      background: #10a40d;
+    }
 
     &_save {
       background: #009908;

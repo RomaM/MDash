@@ -27,12 +27,8 @@ export class ProfilesService {
     );
   }
 
-  addUserProfile(userProfile: UserDetailsModel, password: string) {
-    this.authService.signUp(userProfile.email, password).then(
-      (data) => {
-        console.log(data);
-      }
-    );
+  addUserProfile(userProfile: UserDetailsModel) {
+    return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/users.json', userProfile);
   }
 }
 

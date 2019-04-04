@@ -6,15 +6,18 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import {
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule} from '@angular/material';
+  MatInputModule
+} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {StoreModule} from '@ngrx/store';
 import {profileReducer} from './store/profile.reducer';
-import { DetailsComponent } from './details/details.component';
+import {EffectsModule} from '@ngrx/effects';
+import {ProfileEffects} from './store/profile.effects';
+import {DetailsComponent} from './details/details.component';
 import {RegisterComponent} from './register/register.component';
 
 @NgModule({
@@ -29,7 +32,9 @@ import {RegisterComponent} from './register/register.component';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatCheckboxModule,
     StoreModule.forFeature('profileState', profileReducer),
+    EffectsModule.forFeature([ProfileEffects]),
     ProfileRoutingModule
   ]
 })

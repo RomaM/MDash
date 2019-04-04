@@ -1,10 +1,12 @@
 import {Action} from '@ngrx/store';
+import {UserDetailsModel} from '../../../shared/models/user-details.model';
 
 export enum ProfileActionTypes {
   LOAD_PROFILE = '[Profile] Load',
   LOADING_PROFILE = '[Profile] Loading',
-  LOADING_PROFILES = '[Profile] Loading All',
-  EDIT_PROFILE = '[Profile] Edit'
+  EDIT_PROFILE = '[Profile] Edit',
+  ADD_PROFILE = '[Profile] Add',
+  REGISTER_USER = '[Profile] User',
 }
 
 export class LoadProfile implements Action {
@@ -17,10 +19,16 @@ export class LoadingProfile implements Action {
   constructor(public payload: boolean) {}
 }
 
-export class LoadingProfiles implements Action {
-  readonly type = ProfileActionTypes.LOADING_PROFILES;
+export class RegisterUser implements Action {
+  readonly type = ProfileActionTypes.REGISTER_USER;
 
-  constructor(public payload: boolean) {}
+  constructor(public payload: {profile: UserDetailsModel, password: string}) {}
+}
+
+export class AddProfile implements Action {
+  readonly type = ProfileActionTypes.ADD_PROFILE;
+
+  constructor(public payload: UserDetailsModel) {}
 }
 
 export class EditProfile implements Action {
@@ -32,5 +40,6 @@ export class EditProfile implements Action {
 export type ProfileActions =
   LoadProfile |
   LoadingProfile |
-  LoadingProfiles |
-  EditProfile;
+  AddProfile |
+  EditProfile |
+  RegisterUser;
