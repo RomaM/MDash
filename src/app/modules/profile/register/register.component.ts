@@ -52,10 +52,6 @@ export class RegisterComponent implements OnInit {
       this.store.dispatch(
         new ProfileActions.RegisterUser({profile: newUser, password: values.password})
       );
-      //
-      // this.authService.signUp(this.registerForm.value.email, this.registerForm.value.password).then(
-      //   (data) => console.log(data)
-      // );
     }
   }
 }
