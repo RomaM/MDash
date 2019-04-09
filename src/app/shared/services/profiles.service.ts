@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {UserDetailsModel} from '../models/user-details.model';
-import {from} from 'rxjs';
+import {BehaviorSubject, from} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 
 @Injectable({
@@ -12,13 +12,15 @@ import {switchMap} from 'rxjs/operators';
 export class ProfilesService {
   constructor(private authService: AuthService, private httpClient: HttpClient) {}
 
-  getUserProfile(email: string) {
+  profilesDataSubject = new BehaviorSubject<any>(null);
+
+  fetchUserProfiles() {
     const token$ = from(this.authService.getToken());
 
     token$.pipe(
       switchMap((token) => {
         return this.httpClient.get<any>(
-          `https://funnelsdetails.firebaseio.com/users/.json?auth=${token}`,
+          `https://funnelsdetails.firebaseio.com/users.json?auth=${token}`,
           {
             observe: 'body',
             responseType: 'json'
@@ -27,8 +29,21 @@ export class ProfilesService {
     );
   }
 
+  getUserPrifile(email: string) {
+
+  }
+
   addUserProfile(userProfile: UserDetailsModel) {
     return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/users.json', userProfile);
+  }
+
+  profilesData(data: any, key?: string) {
+    if (key) {
+      const newProfiles = this.profilesDataSubject.getValue();
+      newProfiles.push([key, data]);
+    } else {
+      this.profilesDataSubject.next(data);
+    }
   }
 }
 

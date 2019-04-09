@@ -1,4 +1,6 @@
 <mat-card class="details">
+  <h1 class="title" *ngIf="!editMode">Profile Info</h1>
+  <h1 class="title" *ngIf="editMode">Edit Profile</h1>
   <div class="actions">
     <button
         *ngIf="!editMode && isSAdmin"

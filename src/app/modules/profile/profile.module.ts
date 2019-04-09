@@ -19,9 +19,10 @@ import {EffectsModule} from '@ngrx/effects';
 import {ProfileEffects} from './store/profile.effects';
 import {DetailsComponent} from './details/details.component';
 import {RegisterComponent} from './register/register.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
-  declarations: [ProfileComponent, DetailsComponent, RegisterComponent],
+  declarations: [ProfileComponent, DetailsComponent, RegisterComponent, ListComponent],
   imports: [
     CommonModule,
     CoreModule,

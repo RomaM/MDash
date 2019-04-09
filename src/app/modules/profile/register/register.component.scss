@@ -15,7 +15,7 @@
 
   .field-wrap {
     width: 100%;
-    padding: 0 10px;
+    padding-bottom: 15px;
     box-sizing: border-box;
     font-size: 14px;
 
@@ -33,23 +33,20 @@
 }
 
 .actions {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 100%;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  padding: 15px 0;
+  text-align: center;
 
   &__btn {
-    &_submit {
-      min-width: 180px;
-      font-size: 16px;
-      line-height: 2.5;
-    }
-  }
+    margin: 0 5px;
+    font-size: 16px;
 
-  &__link {
-    color: #009908;
+    &_submit {
+      background: #10a40d;
+    }
+
+    &_cancel {
+      background: #dc005a;
+    }
   }
 }

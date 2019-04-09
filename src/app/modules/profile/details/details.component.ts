@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {Store} from '@ngrx/store';
+
 
 @Component({
   selector: 'app-details',
@@ -9,6 +9,7 @@ import {Store} from '@ngrx/store';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
+
   detailsForm: FormGroup;
   editMode: boolean;
   isSAdmin: boolean;
