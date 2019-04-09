@@ -9,7 +9,7 @@ import {
   MatCardModule, MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule
+  MatInputModule, MatListModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
@@ -30,6 +30,7 @@ import { ListComponent } from './list/list.component';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatCardModule,
+    MatListModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,

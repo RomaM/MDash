@@ -1,9 +1,10 @@
 import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
 import 'zone.js/dist/zone';
 import 'zone.js/dist/long-stack-trace-zone';
+import {ProfilesService} from '../../shared/services/profiles.service';
 import {Store} from '@ngrx/store';
 import * as profileReducer from './store/profile.reducer';
-import {ProfilesService} from '../../shared/services/profiles.service';
+import * as ProfileActions from './store/profile.actions';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ export class ProfileComponent implements OnInit, DoCheck {
               private store: Store<profileReducer.State>) { }
 
   ngOnInit() {
+    this.store.dispatch(new ProfileActions.LoadProfile());
   }
 
   ngDoCheck () {

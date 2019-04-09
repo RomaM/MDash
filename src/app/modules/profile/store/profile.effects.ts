@@ -17,6 +17,21 @@ export class ProfileEffects {
               private profilesService: ProfilesService) {}
 
   @Effect()
+  fetchProfiles$ = this.actions$.pipe(
+    ofType(<string>ProfileActions.ProfileActionTypes.LOAD_PROFILE),
+    switchMap(() =>
+      this.profilesService.fetchUserProfiles()
+        .pipe(
+          map(data => {
+            this.profilesService.profilesDataSubject.next(data);
+            return new ProfileActions.LoadingProfile(true);
+          }),
+          catchError( err => throwError(err))
+        )
+    )
+  );
+
+  @Effect()
   registerUser$ = this.actions$.pipe(
     ofType(<string>ProfileActions.ProfileActionTypes.REGISTER_USER),
     switchMap((action: ProfileActions.RegisterUser) =>

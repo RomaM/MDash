@@ -1,3 +1,13 @@
-<p>
-  list works!
-</p>
+<h3 class="title">Profile list</h3>
+<mat-card class="list" *ngFor="let profile of profilesData; let i = index;">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{profile[1].firstName}} {{profile[1].lastName}}</mat-card-title>
+    <mat-card-subtitle>{{profile[1].email}}</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-actions>
+    <button mat-flat-button routerLink="/profile/edit/{{i}}">Edit</button>
+    <button mat-flat-button>Remove</button>
+  </mat-card-actions>
+</mat-card>

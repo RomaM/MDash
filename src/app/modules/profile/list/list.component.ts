@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/index';
+import {Observable, Subscription} from 'rxjs/index';
 import {UserDetailsModel} from '../../../shared/models/user-details.model';
 import {ProfilesService} from '../../../shared/services/profiles.service';
 
@@ -10,7 +10,7 @@ import {ProfilesService} from '../../../shared/services/profiles.service';
 })
 export class ListComponent implements OnInit, OnDestroy {
   profilesSubscription: Subscription;
-  profilesData: UserDetailsModel[];
+  profilesData: any;
 
   constructor(private profileService: ProfilesService) { }
 

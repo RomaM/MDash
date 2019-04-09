@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {UserDetailsModel} from '../models/user-details.model';
 import {BehaviorSubject, from} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {switchMap, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class ProfilesService {
   fetchUserProfiles() {
     const token$ = from(this.authService.getToken());
 
-    token$.pipe(
+    return token$.pipe(
       switchMap((token) => {
         return this.httpClient.get<any>(
           `https://funnelsdetails.firebaseio.com/users.json?auth=${token}`,
@@ -25,6 +25,10 @@ export class ProfilesService {
             observe: 'body',
             responseType: 'json'
           });
+      }),
+      map(data => {
+        data = Object.entries(data);
+        return data;
       })
     );
   }
