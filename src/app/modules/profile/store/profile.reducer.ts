@@ -2,14 +2,12 @@ import * as ProfileActions from './profile.actions';
 
 export interface State {
   loadedProfile: boolean;
-  isSAdmin: boolean;
   editedMode: boolean;
   selectedId: number;
 }
 
 export const initialState: State = {
   loadedProfile: false,
-  isSAdmin: false,
   editedMode: false,
   selectedId: -1
 };

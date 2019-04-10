@@ -2,7 +2,50 @@
   display: flex;
   flex-flow: row wrap;
 
-  &__item {
-    flex: 0 1 25%;
+  &__title {
+    flex: 0 1 100%;
+    padding: 0 10px;
+    margin: 10px 0;
+    text-align: center;
+  }
+}
+
+.item {
+  flex: 0 1 auto;
+  margin: 0 10px 10px 10px;
+  box-sizing: border-box;
+}
+
+.content {
+  &__icon {
+    width: auto;
+    height: auto;
+  }
+
+  &__title {
+
+  }
+
+  &__email {
+    margin: 0;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 15px 0;
+
+  &__btn {
+    &_edit {
+      margin-right: 5px;
+      background: #6e00ff;
+    }
+
+    &_remove {
+      margin-left: 5px;
+      background: #dc005a;
+    }
   }
 }

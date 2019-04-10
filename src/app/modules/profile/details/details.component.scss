@@ -2,37 +2,37 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-
-  &__form {
-    max-width: 500px;
-  }
 }
 
-.details__field {
-  padding-bottom: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
+.form {
+  max-width: 500px;
 
-  &_name {
-    width: 50%;
-    padding-right: 7px;
-  }
+  &__field {
+    padding-bottom: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
 
-  &_surname {
-    width: 50%;
-    padding-left: 8px;
-  }
+    &_name {
+      width: 50%;
+      padding-right: 7px;
+    }
 
-  &_email {
-    width: 100%;
-  }
+    &_surname {
+      width: 50%;
+      padding-left: 8px;
+    }
 
-  &_phone {
-    width: 100%;
-  }
+    &_email {
+      width: 100%;
+    }
 
-  &_uid {
-    width: 100%;
+    &_phone {
+      width: 100%;
+    }
+
+    &_uid {
+      width: 100%;
+    }
   }
 }
 

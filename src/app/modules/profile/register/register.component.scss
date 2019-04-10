@@ -1,9 +1,5 @@
 .register {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: space-between;
+
 }
 
 .title {
@@ -11,6 +7,7 @@
 }
 
 .register-form {
+  margin: auto;
   max-width: 500px;
 
   .field-wrap {
@@ -19,11 +16,16 @@
     box-sizing: border-box;
     font-size: 14px;
 
-    &_half {
+    &_name {
       width: 50%;
+      padding-right: 7px;
+      box-sizing: border-box;
     }
 
-    &__input {
+    &_surname {
+      width: 50%;
+      padding-left: 8px;
+      box-sizing: border-box;
     }
 
     &__err {

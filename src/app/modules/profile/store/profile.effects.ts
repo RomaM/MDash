@@ -22,8 +22,7 @@ export class ProfileEffects {
     switchMap(() =>
       this.profilesService.fetchUserProfiles()
         .pipe(
-          map(data => {
-            this.profilesService.profilesDataSubject.next(data);
+          map(() => {
             return new ProfileActions.LoadingProfile(true);
           }),
           catchError( err => throwError(err))

@@ -1,20 +1,20 @@
 export class UserDetailsModel {
   public isSAdmin: boolean;
-  public firstName: string;
-  public lastName: string;
+  public name: string;
+  public surname: string;
   public email: string;
   public phone: any;
   public uid: string;
 
   constructor (isSAdmin: boolean,
-               firstName: string,
-               lastName: string,
+               name: string,
+               surname: string,
                email: string,
                phone: any,
                uid: string) {
     this.isSAdmin = isSAdmin;
-    this.firstName = firstName;
-    this.lastName = lastName;
+    this.name = name;
+    this.surname = surname;
     this.email = email;
     this.phone = phone;
     this.uid = uid;

@@ -11,20 +11,20 @@
       Register a new user
     </button>
   </div>
-  <form [formGroup]="detailsForm" class="details__form">
-    <mat-form-field class="details__field details__field_name">
+  <form [formGroup]="detailsForm" class="form">
+    <mat-form-field class="form__field form__field_name">
       <input matInput placeholder="First Name" formControlName="name">
     </mat-form-field>
-    <mat-form-field class="details__field details__field_surname">
+    <mat-form-field class="form__field form__field_surname">
       <input matInput placeholder="Last Name" formControlName="surname">
     </mat-form-field>
-    <mat-form-field class="details__field details__field_email">
+    <mat-form-field class="form__field form__field_email">
       <input matInput placeholder="Email" formControlName="email">
     </mat-form-field>
-    <mat-form-field class="details__field details__field_phone">
+    <mat-form-field class="form__field form__field_phone">
       <input matInput placeholder="Phone" formControlName="phone">
     </mat-form-field>
-    <mat-form-field class="details__field details__field_uid">
+    <mat-form-field class="form__field form__field_uid">
       <input matInput placeholder="User ID" formControlName="uid">
     </mat-form-field>
   
@@ -55,4 +55,4 @@
     </div>
   </form>
 </mat-card>
-<app-list></app-list>
+<app-list *ngIf="!editMode && isSAdmin"></app-list>

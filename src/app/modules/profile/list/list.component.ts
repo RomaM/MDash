@@ -22,6 +22,10 @@ export class ListComponent implements OnInit, OnDestroy {
     );
   }
 
+  removeItem() {
+    console.log('Remove item');
+  }
+
   ngOnDestroy() {
     this.profilesSubscription.unsubscribe();
   }

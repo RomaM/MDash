@@ -25,8 +25,8 @@ export class AuthService {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
         response => {
-          // localStorage.setItem('isLogged', 'true');
-          this.userDataSubject.next(response.user.providerData);
+          console.log(response.user.providerData[0]);
+          this.userDataSubject.next(response.user.providerData[0]);
           this.router.navigate(['/']);
         }
       )
@@ -51,7 +51,8 @@ export class AuthService {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.isLogged = true;
-          this.userDataSubject.next(user.providerData);
+          console.log(user.providerData[0]);
+          this.userDataSubject.next(user.providerData[0]);
           return res(true);
         } else {
           this.isLogged = false;
