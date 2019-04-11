@@ -13,9 +13,11 @@ export class ProfilesService {
   constructor(private authService: AuthService, private httpClient: HttpClient) {}
 
   profilesDataSubject = new BehaviorSubject<any>(null);
+  profileSubject = new BehaviorSubject<[string, UserDetailsModel]>(null);
 
   fetchUserProfiles() {
     const token$ = from(this.authService.getToken());
+    const user = this.authService.userDataSubject.value;
 
     return token$.pipe(
       switchMap((token) => {
@@ -28,6 +30,8 @@ export class ProfilesService {
       }),
       map(data => {
         data = Object.entries(data);
+        const profile = this.getProfileData(data, user.email);
+        this.profileSubject.next(profile);
         this.profilesDataSubject.next(data);
         return data;
       })

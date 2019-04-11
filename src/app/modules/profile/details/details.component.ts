@@ -15,11 +15,10 @@ import {UserDetailsModel} from '../../../shared/models/user-details.model';
 export class DetailsComponent implements OnInit, OnDestroy {
   profilesDataSubscription: Subscription;
   detailsForm: FormGroup;
-  editMode: boolean;
-  selectedId: number;
-  currentUser: any;
-  currentProfile: [string, UserDetailsModel];
-  isSAdmin: boolean;
+  editMode = false;
+  selectedId = -1;
+  currentProfile: [string, UserDetailsModel] = [null, null];
+  isSAdmin = false;
 
   constructor(private route: ActivatedRoute,
               private profileService: ProfilesService,
@@ -29,15 +28,14 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     (this.route.snapshot.url.join('')).indexOf('edit') >= 0 ? this.editMode = true : this.editMode = false;
     this.selectedId = this.route.snapshot.params.id;
-    this.currentUser = this.authService.userDataSubject.value;
 
     this.initForm();
 
     this.profilesDataSubscription = this.profileService.profilesDataSubject.subscribe(
       data => {
         if (data) {
-          this.currentProfile =
-            this.profileService.getProfileData(data, this.currentUser.email);
+          this.currentProfile = this.profileService.profileSubject.value;
+          console.log(this.currentProfile)
           this.isSAdmin = this.currentProfile[1].isSAdmin;
 
           !!this.selectedId
