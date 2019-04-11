@@ -13,7 +13,6 @@ export class ProfilesService {
   constructor(private authService: AuthService, private httpClient: HttpClient) {}
 
   profilesDataSubject = new BehaviorSubject<any>(null);
-  currentProfileSubject = new BehaviorSubject<UserDetailsModel>(null);
 
   fetchUserProfiles() {
     const token$ = from(this.authService.getToken());
@@ -30,7 +29,6 @@ export class ProfilesService {
       map(data => {
         data = Object.entries(data);
         this.profilesDataSubject.next(data);
-        this.getProfileData(data);
         return data;
       })
     );
@@ -46,7 +44,6 @@ export class ProfilesService {
         );
       }),
       map((key) => {
-        console.log(key.name);
         const newProfiles = this.profilesDataSubject.value;
         newProfiles.push([key.name, userProfile]);
         this.profilesDataSubject.next(newProfiles);
@@ -54,16 +51,14 @@ export class ProfilesService {
     );
   }
 
-  getProfileData(profilesList: any[]) {
-    const currentEmail = this.authService.userDataSubject.value.email;
-    let profile = null;
+  getProfileData(profilesList: [string, UserDetailsModel][], currentEmail: string) {
+    let profile: [string, UserDetailsModel] = [null, null];
     if (currentEmail) {
-      profile = profilesList.filter(
+      profile = profilesList.find(
         el => el[1].email === currentEmail
       );
     }
-    this.currentProfileSubject.next(profile);
-    console.log('Profile: ', profile);
+    return profile;
   }
 
   // profilesData(data: any, key?: string) {

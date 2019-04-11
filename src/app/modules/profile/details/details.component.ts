@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/index';
+import {Observable, Subscription} from 'rxjs/index';
 import {ProfilesService} from '../../../shared/services/profiles.service';
 import {AuthService} from '../../../shared/services/auth.service';
+import {UserDetailsModel} from '../../../shared/models/user-details.model';
 
 
 @Component({
@@ -13,10 +14,12 @@ import {AuthService} from '../../../shared/services/auth.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   profilesDataSubscription: Subscription;
-  // userDataSubscription: Subscription;
   detailsForm: FormGroup;
   editMode: boolean;
-  isSAdmin = true;
+  selectedId: number;
+  currentUser: any;
+  currentProfile: [string, UserDetailsModel];
+  isSAdmin: boolean;
 
   constructor(private route: ActivatedRoute,
               private profileService: ProfilesService,
@@ -25,19 +28,24 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     (this.route.snapshot.url.join('')).indexOf('edit') >= 0 ? this.editMode = true : this.editMode = false;
+    this.selectedId = this.route.snapshot.params.id;
+    this.currentUser = this.authService.userDataSubject.value;
+
     this.initForm();
 
-    this.profilesDataSubscription = this.profileService.currentProfileSubject.subscribe(
+    this.profilesDataSubscription = this.profileService.profilesDataSubject.subscribe(
       data => {
-        if (data && this.detailsForm) {
+        if (data) {
+          this.currentProfile =
+            this.profileService.getProfileData(data, this.currentUser.email);
+          this.isSAdmin = this.currentProfile[1].isSAdmin;
 
+          !!this.selectedId
+            ? this.detailsForm.patchValue(data[this.selectedId][1])
+            : this.detailsForm.patchValue(this.currentProfile[1]);
         }
       }
     );
-
-    // this.userDataSubscription = this.authService.userDataSubject.subscribe(
-    //   data => console.log(data)
-    // );
   }
 
   initForm() {
@@ -53,6 +61,5 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.profilesDataSubscription.unsubscribe();
-    // this.userDataSubscription.unsubscribe();
   }
 }

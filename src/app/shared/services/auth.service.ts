@@ -51,7 +51,6 @@ export class AuthService {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.isLogged = true;
-          console.log(user.providerData[0]);
           this.userDataSubject.next(user.providerData[0]);
           return res(true);
         } else {

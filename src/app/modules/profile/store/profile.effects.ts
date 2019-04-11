@@ -37,7 +37,6 @@ export class ProfileEffects {
       from(this.authService.signUp(action.payload.profile.email, action.payload.password))
         .pipe(
           map( () => {
-            console.log(action.payload);
             return new ProfileActions.AddProfile(action.payload.profile);
           }),
           catchError(err => throwError(err))
