@@ -4,9 +4,10 @@ import {UserDetailsModel} from '../../../shared/models/user-details.model';
 export enum ProfileActionTypes {
   LOAD_PROFILE = '[Profile] Load',
   LOADING_PROFILE = '[Profile] Loading',
-  EDIT_PROFILE = '[Profile] Edit',
-  ADD_PROFILE = '[Profile] Add',
   REGISTER_USER = '[Profile] User',
+  EDITED_PROFILE = '[Profile] Edited',
+  ADD_PROFILE = '[Profile] Add',
+  UPDATE_PROFILE = '[Profile] Update'
 }
 
 export class LoadProfile implements Action {
@@ -31,15 +32,22 @@ export class AddProfile implements Action {
   constructor(public payload: UserDetailsModel) {}
 }
 
-export class EditProfile implements Action {
-  readonly type = ProfileActionTypes.EDIT_PROFILE;
+export class UpdateProfile implements Action {
+  readonly type = ProfileActionTypes.UPDATE_PROFILE;
 
-  constructor(public payload: {selectedId: number, editedMode: boolean}) {}
+  constructor(public payload: {key: string, profile: UserDetailsModel}) {}
+}
+
+export class EditedProfile implements Action {
+  readonly type = ProfileActionTypes.EDITED_PROFILE;
+
+  constructor(public payload: {selectedId: any, editedMode: boolean}) {}
 }
 
 export type ProfileActions =
   LoadProfile |
   LoadingProfile |
+  RegisterUser |
   AddProfile |
-  EditProfile |
-  RegisterUser;
+  UpdateProfile |
+  EditedProfile;

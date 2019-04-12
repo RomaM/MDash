@@ -33,7 +33,7 @@ export class ProfilesService {
         const profile = this.getProfileData(data, user.email);
         this.profileSubject.next(profile);
         this.profilesDataSubject.next(data);
-        return data;
+        // return data;
       })
     );
   }
@@ -44,13 +44,35 @@ export class ProfilesService {
     return token$.pipe(
       switchMap(token => {
         return this.httpClient.post<any>(
-          `https://funnelsdetails.firebaseio.com/users.json?auth=${token}`, userProfile
+          `https://funnelsdetails.firebaseio.com/users.json?auth=${token}`,
+          userProfile
         );
       }),
       map((key) => {
         const newProfiles = this.profilesDataSubject.value;
         newProfiles.push([key.name, userProfile]);
         this.profilesDataSubject.next(newProfiles);
+      })
+    );
+  }
+
+  updateUserProfile(key: string, userProfile: UserDetailsModel) {
+    const token$ = from(this.authService.getToken());
+
+    return token$.pipe(
+      switchMap(token => {
+        return this.httpClient.patch<any>(
+          `https://funnelsdetails.firebaseio.com/users/${key}.json?auth=${token}`,
+          userProfile
+        );
+      }),
+      map((profile) => {
+        const newProfiles = this.profilesDataSubject.value;
+        newProfiles.map((el) => {
+          if (el[1].email === profile.email) {
+            el[1] = profile;
+          }
+        });
       })
     );
   }

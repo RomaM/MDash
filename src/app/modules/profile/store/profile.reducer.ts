@@ -19,11 +19,11 @@ export function profileReducer(state = initialState, action: ProfileActions.Prof
         ...state,
         loadedProfile: action.payload
       };
-    case ProfileActions.ProfileActionTypes.EDIT_PROFILE:
+    case ProfileActions.ProfileActionTypes.EDITED_PROFILE:
       return {
         ...state,
-        editedMode: action.payload.editedMode,
-        selectedId: action.payload.selectedId
+        selectedId: action.payload.selectedId,
+        editedMode: action.payload.editedMode
       };
     default:
       return state;

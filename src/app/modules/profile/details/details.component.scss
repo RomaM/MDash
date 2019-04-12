@@ -12,26 +12,24 @@
     box-sizing: border-box;
     font-size: 14px;
 
-    &_name {
+    &_name, &_email {
       width: 50%;
       padding-right: 7px;
     }
 
-    &_surname {
+    &_surname, &_phone {
       width: 50%;
       padding-left: 8px;
     }
 
-    &_email {
-      width: 100%;
-    }
-
-    &_phone {
-      width: 100%;
-    }
-
     &_uid {
-      width: 100%;
+      width: 70%;
+      padding-right: 7px;
+    }
+
+    &_issadmin {
+      width: 30%;
+      padding-left: 8px;
     }
   }
 }

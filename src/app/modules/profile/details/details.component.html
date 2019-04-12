@@ -11,7 +11,7 @@
       Register a new user
     </button>
   </div>
-  <form [formGroup]="detailsForm" class="form">
+  <form [formGroup]="detailsForm" class="form" (ngSubmit)="saveChanges()">
     <mat-form-field class="form__field form__field_name">
       <input matInput placeholder="First Name" formControlName="name">
     </mat-form-field>
@@ -26,6 +26,9 @@
     </mat-form-field>
     <mat-form-field class="form__field form__field_uid">
       <input matInput placeholder="User ID" formControlName="uid">
+    </mat-form-field>
+    <mat-form-field class="form__field form__field_issadmin">
+      <input matInput placeholder="Super Admin Rights" formControlName="isSAdmin">
     </mat-form-field>
   
     <div class="actions">

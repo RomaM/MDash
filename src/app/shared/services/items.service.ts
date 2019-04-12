@@ -33,14 +33,14 @@ export class ItemsService {
 
   updateItem(key: string, item: Object) {
     return this.httpClient.patch<any>(
-      'https://funnelsdetails.firebaseio.com/pages/list/' + key + '.json',
+      `https://funnelsdetails.firebaseio.com/pages/list/${key}.json`,
       item
     );
   }
 
   removeItem(key) {
     return this.httpClient.delete<any>(
-      'https://funnelsdetails.firebaseio.com/pages/list/' + key + '.json'
+      `https://funnelsdetails.firebaseio.com/pages/list/${key}.json`
     );
   }
 
@@ -89,7 +89,6 @@ export class ItemsService {
   onLoaded(data: PageDetailsModel, key?: string) {
     if (key) {
       const newList = this.loadedData.getValue();
-
       newList.push([key, data]);
       this.loadedData.next(newList);
     } else {
