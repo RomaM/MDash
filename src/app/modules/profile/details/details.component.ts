@@ -30,7 +30,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     if ((this.route.snapshot.url.join('')).indexOf('edit') >= 0) {
       this.editMode = true;
       this.selectedId = this.route.snapshot.params.id ? this.route.snapshot.params.id : null;

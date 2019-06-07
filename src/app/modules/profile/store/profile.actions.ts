@@ -7,7 +7,8 @@ export enum ProfileActionTypes {
   REGISTER_USER = '[Profile] User',
   EDITED_PROFILE = '[Profile] Edited',
   ADD_PROFILE = '[Profile] Add',
-  UPDATE_PROFILE = '[Profile] Update'
+  UPDATE_PROFILE = '[Profile] Update',
+  DELETE_PROFILE = '[Profile] Delete'
 }
 
 export class LoadProfile implements Action {
@@ -44,10 +45,17 @@ export class EditedProfile implements Action {
   constructor(public payload: {selectedId: any, editedMode: boolean}) {}
 }
 
+export class DeleteProfile implements Action {
+  readonly type = ProfileActionTypes.DELETE_PROFILE;
+
+  constructor(public payload: number) {}
+}
+
 export type ProfileActions =
   LoadProfile |
   LoadingProfile |
   RegisterUser |
   AddProfile |
   UpdateProfile |
-  EditedProfile;
+  EditedProfile |
+  DeleteProfile;

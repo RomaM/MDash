@@ -13,7 +13,7 @@ import {NotFoundComponent} from './core/not-found/not-found.component';
 // import {AngularFireModule} from '@angular/fire';
 // import {AngularFireAuthModule} from '@angular/fire/auth';
 // import {AngularFireDatabaseModule} from '@angular/fire/database';
-// import {environment} from '../environments/environment';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -29,9 +29,7 @@ import {NotFoundComponent} from './core/not-found/not-found.component';
     // AngularFireDatabaseModule,
     // AngularFireAuthModule,
     StoreModule.forRoot({}),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-    }),
+    !environment.production ? StoreDevtoolsModule.instrument({maxAge: 25,}) : [],
     EffectsModule.forRoot([]),
     AppRoutingModule
   ],

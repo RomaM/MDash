@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {Effect, Actions, ofType} from '@ngrx/effects';
-import {Observable, throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {combineLatest, tap, switchMap, withLatestFrom, map, catchError, takeWhile} from 'rxjs/operators';
 
 import * as PagesActions from './pages.actions';
@@ -17,33 +17,8 @@ export class PagesEffects {
               private itemsService: ItemsService,
               private router: Router) {}
 
-  // @Effect()
-  // fetchPages$: Observable<PagesActions.PageActions> = this.actions$.pipe(
-  //   ofType(PagesActions.PageActionTypes.FETCH_PAGES),
-  //   withLatestFrom(this.store.pipe(
-  //     select('pagesState', 'loaded')
-  //   )),
-  //   takeWhile(([, loaded]) => {
-  //     console.log('Loaded: ' + loaded);
-  //     return loaded === false;
-  //   }),
-  //   switchMap( () => {
-  //     console.log('Fetch Req');
-  //     return this.itemsService.fetchItems();
-  //   }),
-  //   map((payload) => {
-  //     return new PagesActions.SetPagesAction(payload);
-  //   })
-  // );
-
-  // @Effect()
-  // addItem$: Observable<PagesActions.AddPageAction> = this.actions$.pipe(
-  //   ofType(PagesActions.PageActionTypes.ADD_PAGE),
-  //
-  // );
-
   @Effect()
-  loadPages$: Observable<PagesActions.PageActions> = this.actions$.pipe(
+  loadPages$ = this.actions$.pipe(
     ofType(<string>PagesActions.PageActionTypes.LOAD_PAGES),
     withLatestFrom(this.store.pipe(
       select('pagesState', 'loaded')
@@ -64,7 +39,8 @@ export class PagesEffects {
       return [
         new PagesActions.LoadingPages(true),
         new PagesActions.SetTimestamp(data.timestamp.val)];
-    })
+    }),
+    catchError( err => of(`Pages Service: ${err}`))
   );
 
   @Effect()
@@ -78,7 +54,8 @@ export class PagesEffects {
       }),
       catchError(err => throwError(err))
     )),
-    tap(() => this.router.navigate(['/list']))
+    tap(() => this.router.navigate(['/list'])),
+    catchError( err => of(`Pages Service: ${err}`))
   );
 
   @Effect({dispatch: false})
@@ -90,7 +67,8 @@ export class PagesEffects {
     catchError(err => {
       return throwError(err);
     }),
-    tap(() => this.router.navigate(['/list']))
+    tap(() => this.router.navigate(['/list'])),
+    catchError( err => of(`Pages Service: ${err}`))
   );
 
   @Effect()
@@ -98,7 +76,8 @@ export class PagesEffects {
     ofType(<string>PagesActions.PageActionTypes.GET_TIMESTAMP),
     switchMap(data => this.itemsService.getTimestamp().pipe(
       map((timestamp: {[key: string]: string}) => new PagesActions.SetTimestamp(timestamp.key))
-    ))
+    )),
+    catchError( err => of(`Pages Service: ${err}`))
   );
 
   @Effect()
@@ -108,6 +87,7 @@ export class PagesEffects {
       return this.itemsService.updateTimestamp(action.payload).pipe(
         map(data => new PagesActions.SetTimestamp(action.payload))
       );
-    })
+    }),
+    catchError( err => of(`Pages Service: ${err}`))
   );
 }

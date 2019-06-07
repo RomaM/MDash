@@ -25,7 +25,6 @@ export class AuthService {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
         response => {
-          console.log(response.user.providerData[0]);
           this.userDataSubject.next(response.user.providerData[0]);
           this.router.navigate(['/']);
         }
@@ -45,6 +44,8 @@ export class AuthService {
         this.router.navigate(['/auth']);
     });
   }
+
+  removeUser(email) {}
 
   isAuthenticated(): Promise<any> {
     return new Promise((res, rej) => {

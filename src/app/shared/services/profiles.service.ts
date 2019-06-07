@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {UserDetailsModel} from '../models/user-details.model';
-import {BehaviorSubject, from} from 'rxjs';
-import {switchMap, map} from 'rxjs/operators';
+import {BehaviorSubject, from, of} from 'rxjs';
+import {switchMap, map, catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,8 @@ export class ProfilesService {
         this.profileSubject.next(profile);
         this.profilesDataSubject.next(data);
         // return data;
-      })
+      }),
+      catchError( err => of(`Profile Service: ${err}`))
     );
   }
 
@@ -52,7 +53,8 @@ export class ProfilesService {
         const newProfiles = this.profilesDataSubject.value;
         newProfiles.push([key.name, userProfile]);
         this.profilesDataSubject.next(newProfiles);
-      })
+      }),
+      catchError( err => of(`Profile Service: ${err}`))
     );
   }
 
@@ -73,7 +75,26 @@ export class ProfilesService {
             el[1] = profile;
           }
         });
-      })
+      }),
+      catchError( err => of(`Profile Service: ${err}`))
+    );
+  }
+
+  deleteUserProfile(key: number) {
+    const token$ = from(this.authService.getToken());
+
+    return token$.pipe(
+      switchMap(token => {
+        return this.httpClient.delete<any>(
+          `https://funnelsdetails.firebaseio.com/users/${key}.json?auth=${token}`
+        );
+      }),
+      map(() => {
+        let newProfiles = this.profilesDataSubject.value;
+        newProfiles = newProfiles.filter(el => el[0] !== key);
+        this.profilesDataSubject.next(newProfiles);
+      }),
+      catchError( err => of(`Profile Service: ${err}`))
     );
   }
 
@@ -86,18 +107,4 @@ export class ProfilesService {
     }
     return profile;
   }
-
-  // profilesData(data: any, key?: string) {
-  //   if (key) {
-  //     const newProfiles = this.profilesDataSubject.getValue();
-  //     newProfiles.push([key, data]);
-  //     this.profilesDataSubject.next(newProfiles);
-  //   } else {
-  //     this.profilesDataSubject.next(data);
-  //
-  //     console.log(data)
-  //     this.profileSubject.next(null);
-  //   }
-  // }
 }
-

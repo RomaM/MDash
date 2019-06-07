@@ -1,7 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subscription} from 'rxjs/index';
-import {UserDetailsModel} from '../../../shared/models/user-details.model';
+import {Subscription} from 'rxjs/index';
 import {ProfilesService} from '../../../shared/services/profiles.service';
+import {Store} from '@ngrx/store';
+import * as profileReducer from '../store/profile.reducer';
+import * as ProfileActions from '../store/profile.actions';
 
 @Component({
   selector: 'app-list',
@@ -12,7 +14,7 @@ export class ListComponent implements OnInit, OnDestroy {
   profilesSubscription: Subscription;
   profilesData: any;
 
-  constructor(private profileService: ProfilesService) { }
+  constructor(private profileService: ProfilesService, private store: Store<profileReducer.State>) { }
 
   ngOnInit() {
     this.profilesSubscription = this.profileService.profilesDataSubject.subscribe(
@@ -22,8 +24,8 @@ export class ListComponent implements OnInit, OnDestroy {
     );
   }
 
-  removeItem() {
-    console.log('Remove item');
+  removeItem(key) {
+    this.store.dispatch(new ProfileActions.DeleteProfile(key));
   }
 
   ngOnDestroy() {

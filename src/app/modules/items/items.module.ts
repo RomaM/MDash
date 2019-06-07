@@ -3,13 +3,12 @@ import {CoreModule} from '../../core/core.module';
 import {CommonModule} from '@angular/common';
 import {StoreModule} from '@ngrx/store';
 import {ItemsRoutingModule} from './items-routing.module';
-import {
-  MatCardModule,
-  MatCheckboxModule,
-  MatGridListModule, MatIconModule,
-  MatInputModule,
-  MatSelectModule
-} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 import {ItemsComponent} from './items.component';
 import {ItemComponent} from './item/item.component';

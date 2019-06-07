@@ -71,4 +71,19 @@ export class ProfileEffects {
     ),
     tap(() => this.router.navigate(['/profile']))
   );
+
+  @Effect()
+  deleteProfile$ = this.actions$.pipe(
+    ofType(<string>ProfileActions.ProfileActionTypes.DELETE_PROFILE),
+    switchMap((action: ProfileActions.DeleteProfile) =>
+      this.profilesService.deleteUserProfile(action.payload)
+        .pipe(
+          map(data => {
+            return new ProfileActions.EditedProfile({selectedId: null, editedMode: false});
+          }),
+          catchError(err => throwError(err))
+        )
+    ),
+    tap(() => this.router.navigate(['/profile']))
+  );
 }
