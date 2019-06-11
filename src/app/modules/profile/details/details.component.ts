@@ -32,7 +32,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if ((this.route.snapshot.url.join('')).indexOf('edit') >= 0) {
       this.editMode = true;
-      this.selectedId = this.route.snapshot.params.id ? this.route.snapshot.params.id : null;
+      this.selectedId = this.route.snapshot.params['id'] ? this.route.snapshot.params['id'] : null;
     }
 
     this.store.dispatch(new ProfileActions.EditedProfile({selectedId: this.selectedId, editedMode: this.editMode}));
@@ -59,7 +59,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       surname: new FormControl({value: '', disabled: !this.editMode}, Validators.required),
       email: new FormControl({value: '', disabled: true}, Validators.required),
       phone: new FormControl({value: '', disabled: !this.editMode}, Validators.required),
-      uid: new FormControl({value: '', disabled: !this.editMode}, Validators.required),
+      uid: new FormControl({value: '', disabled: true}, Validators.required),
       isSAdmin: new FormControl({value: '', disabled: true}, Validators.required),
 
     });

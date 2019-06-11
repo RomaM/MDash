@@ -18,8 +18,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   hide = true;
 
   ngOnInit() {
-    console.log('COMPONENT: LoginComponent - Init');
-
     this.formInit();
   }
 

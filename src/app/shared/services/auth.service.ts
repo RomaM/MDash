@@ -32,8 +32,12 @@ export class AuthService {
       .catch(error => console.error(error));
   }
 
-  signUp(email: string, password: string) {
-    return firebase.auth().createUserWithEmailAndPassword(email, password);
+  signUp(email: string, password: string, fullName: string) {
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        const user = firebase.auth().currentUser;
+        user.updateProfile({displayName: fullName});
+      });
   }
 
   signOut() {
@@ -44,8 +48,6 @@ export class AuthService {
         this.router.navigate(['/auth']);
     });
   }
-
-  removeUser(email) {}
 
   isAuthenticated(): Promise<any> {
     return new Promise((res, rej) => {

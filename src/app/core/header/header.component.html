@@ -1,8 +1,8 @@
-<mat-toolbar color="primary" class="mat-toolbar">
-  <mat-toolbar-row>
+<mat-toolbar color="primary" class="mat-toolbar header">
+  <mat-toolbar-row class="header__row">
     <span></span>
-    <span class="spacer"></span>
-    <small>User Name</small>
+    <span class="header__spacer"></span>
+    <small class="header__user-name">{{activeUser['displayName']}}</small>
     &nbsp;
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>account_circle</mat-icon>
@@ -11,6 +11,10 @@
       <button mat-menu-item (click)="signOut()">
         <mat-icon>sentiment_very_dissatisfied</mat-icon>
         <span>LogOut</span>
+      </button>
+      <button mat-menu-item routerLink="/profile/edit">
+        <mat-icon>person_outline</mat-icon>
+        <span>Edit Profile</span>
       </button>
     </mat-menu>
   </mat-toolbar-row>

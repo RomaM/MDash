@@ -34,7 +34,7 @@ export class ProfileEffects {
   registerUser$ = this.actions$.pipe(
     ofType(<string>ProfileActions.ProfileActionTypes.REGISTER_USER),
     switchMap((action: ProfileActions.RegisterUser) =>
-      from(this.authService.signUp(action.payload.profile.email, action.payload.password))
+      from(this.authService.signUp(action.payload.profile.email, action.payload.password, action.payload.fullName))
         .pipe(
           map( () => {
             return new ProfileActions.AddProfile(action.payload.profile);

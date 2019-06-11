@@ -46,9 +46,4 @@ export class ListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.itemsLoadedSubscription.unsubscribe();
   }
-
-  log() {
-    // this.db.list('pages/list').valueChanges().subscribe(data =>
-    // console.log(data));
-  }
 }

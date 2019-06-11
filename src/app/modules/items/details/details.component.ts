@@ -34,7 +34,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit() {
-    this.editedItem = this.route.snapshot.params.id ? this.route.snapshot.params.id : 0;
+    this.editedItem = this.route.snapshot.params['id'] ? this.route.snapshot.params['id'] : 0;
     this.initForm();
   }
 
@@ -63,7 +63,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.itemsLoadedSubscription = this.itemsService.loadedData.subscribe(
       data => {
         if (!!this.editedItem && data.length > 0) {
-          console.log('Edit Mode');
           this.store.dispatch(new PagesActions.EditedPage({ selectedID: +this.editedItem, editedMode: true }));
 
           this.key = data[this.editedItem][0];
@@ -92,7 +91,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   remove() {
     this.itemsService.removeItem(this.key).subscribe(
       res => {
-        console.log(res);
+        // console.log(res);
         this.router.navigate(['/list']);
       },
       err => console.log(err)

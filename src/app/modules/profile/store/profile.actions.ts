@@ -24,7 +24,7 @@ export class LoadingProfile implements Action {
 export class RegisterUser implements Action {
   readonly type = ProfileActionTypes.REGISTER_USER;
 
-  constructor(public payload: {profile: UserDetailsModel, password: string}) {}
+  constructor(public payload: {profile: UserDetailsModel, password: string, fullName: string}) {}
 }
 
 export class AddProfile implements Action {

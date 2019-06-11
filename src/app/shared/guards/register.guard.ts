@@ -13,7 +13,7 @@ export class RegisterGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): boolean | UrlTree {
     const currentProfile = this.profileService.profileSubject.value;
-    if (currentProfile[1].isSAdmin) {
+    if (currentProfile[1]['isSAdmin']) {
       return true;
     } else {
       return this.router.parseUrl('/auth');

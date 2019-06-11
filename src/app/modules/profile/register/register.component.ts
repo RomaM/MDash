@@ -45,13 +45,20 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm && this.registerForm.valid) {
       console.log('Register form is valid');
       const values = this.registerForm.getRawValue();
-      const uid = 'UID_DATA';
+      const uid = this.uuid();
       const newUser = new UserDetailsModel(
         values.isSAdmin, values.name, values.surname, values.email, values.phone, uid
       );
       this.store.dispatch(
-        new ProfileActions.RegisterUser({profile: newUser, password: values.password})
+        new ProfileActions.RegisterUser({profile: newUser, password: values.password, fullName: `${values.name} ${values.surname}`})
       );
     }
+  }
+
+  uuid() {
+    const uuid = () =>
+      'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, ( k, r ) =>
+        ('x' === k ? (r = Math.random()*16|0) : (r&0x3|0x8)).toString(16));
+    return uuid();
   }
 }
