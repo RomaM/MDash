@@ -32,13 +32,13 @@ export class PagesEffects {
       )
     ),
     map( data => {
-      this.itemsService.onLoaded(data.list);
+      this.itemsService.onLoaded(data['list']);
       return data;
     }),
     switchMap( data => {
       return [
         new PagesActions.LoadingPages(true),
-        new PagesActions.SetTimestamp(data.timestamp.val)];
+        new PagesActions.SetTimestamp(data['timestamp'].val)];
     }),
     catchError( err => of(`Pages Service: ${err}`))
   );
@@ -75,7 +75,7 @@ export class PagesEffects {
   getTimestamp$ = this.actions$.pipe(
     ofType(<string>PagesActions.PageActionTypes.GET_TIMESTAMP),
     switchMap(data => this.itemsService.getTimestamp().pipe(
-      map((timestamp: {[key: string]: string}) => new PagesActions.SetTimestamp(timestamp.key))
+      map((timestamp: {[key: string]: string}) => new PagesActions.SetTimestamp(timestamp['key']))
     )),
     catchError( err => of(`Pages Service: ${err}`))
   );

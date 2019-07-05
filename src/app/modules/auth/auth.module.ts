@@ -10,6 +10,7 @@ import {AuthRoutingModule} from './auth-routing.module';
 
 import {LoginComponent} from './login/login.component';
 import {AuthComponent} from './auth.component';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {AuthComponent} from './auth.component';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,

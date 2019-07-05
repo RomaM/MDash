@@ -1,22 +1,26 @@
 export class UserDetailsModel {
-  public isSAdmin: boolean;
-  public name: string;
-  public surname: string;
-  public email: string;
-  public phone: any;
-  public uid: string;
+  constructor (
+    public isSAdmin: boolean,
+    public name: string,
+    public surname: string,
+    public email: string,
+    public phone: any,
+    public uid: string,
+  ) {}
+}
 
-  constructor (isSAdmin: boolean,
-               name: string,
-               surname: string,
-               email: string,
-               phone: any,
-               uid: string) {
-    this.isSAdmin = isSAdmin;
-    this.name = name;
-    this.surname = surname;
-    this.email = email;
-    this.phone = phone;
-    this.uid = uid;
+export class CurrentUser {
+  constructor (
+    public email: string,
+    public uid: string,
+    private _token: string,
+    private _tokenExpirationDate: Date
+  ) {}
+
+  get token() {
+    if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
+      return null;
+    }
+    return this._token;
   }
 }

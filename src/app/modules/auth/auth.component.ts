@@ -9,7 +9,10 @@ import {AuthService} from '../../shared/services/auth.service';
 })
 export class AuthComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private authService: AuthService) {
-    this.authService.isLoggedSubject.value ? this.router.navigate(['/']) : false;
+    if (this.authService.currUser) {
+      // todo: Loader to prevent form appearance
+      this.router.navigate(['/']);
+    }
   }
 
   ngOnInit() {}

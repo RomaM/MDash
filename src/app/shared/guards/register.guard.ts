@@ -16,7 +16,7 @@ export class RegisterGuard implements CanActivate {
     if (currentProfile[1]['isSAdmin']) {
       return true;
     } else {
-      return this.router.parseUrl('/auth');
+      return this.router.parseUrl('/');
     }
   }
 }

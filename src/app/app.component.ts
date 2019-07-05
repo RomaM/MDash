@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import * as firebase from 'firebase';
 import {environment} from '../environments/environment';
+import {AuthService} from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ import {environment} from '../environments/environment';
 })
 export class AppComponent implements OnChanges, OnInit, DoCheck, AfterViewInit, AfterContentInit, OnDestroy {
 
-  constructor(private ngZone: NgZone) {
+  constructor(private ngZone: NgZone, private authService: AuthService) {
     // Preventing continual internal changes/operations from triggering change detection in DoCheck()
     this.ngZone.runOutsideAngular(() => {
       firebase.initializeApp(environment.firebase);
@@ -21,7 +22,9 @@ export class AppComponent implements OnChanges, OnInit, DoCheck, AfterViewInit, 
 
   ngOnChanges(changes: SimpleChanges) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.autoLogin();
+  }
 
   ngDoCheck() {}
 

@@ -1,10 +1,7 @@
-import {AfterViewInit, Component, DoCheck, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../shared/services/auth.service';
-import {map} from 'rxjs/operators';
-import {UserDetailsModel} from '../../../shared/models/user-details.model';
-
-import * as firebase from 'firebase';
+import {catchError} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +13,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm: FormGroup;
   hide = true;
+  error = null;
 
   ngOnInit() {
     this.formInit();
@@ -34,7 +32,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   signInUser() {
     if (this.loginForm && this.loginForm.valid) {
-      this.authService.signIn(this.loginForm.value.email, this.loginForm.value.password);
+      this.authService.signIn(this.loginForm.value.email, this.loginForm.value.password)
+        .subscribe(res => res, err => { this.error = err; });
     }
   }
 

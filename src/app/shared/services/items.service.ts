@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpRequest} from '@angular/common/http';
 import {BehaviorSubject, from} from 'rxjs';
 import {ItemsData, PageDetailsModel} from '../models/page-detail.model';
-import {map, switchMap} from 'rxjs/operators';
+import {map, switchMap, take, tap} from 'rxjs/operators';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {AuthService} from './auth.service';
 
@@ -52,23 +52,35 @@ export class ItemsService {
   }
 
   fetchItems() {
-    const token$ = from(this.authService.getToken());
+    // const token$ = from(this.authService.getToken());
 
-    return token$.pipe(
-      switchMap(
-        (token) => {
-          return this.httpClient.get<any>(`https://funnelsdetails.firebaseio.com/pages.json?auth=${token}`,
-            {
-              observe: 'body',
-              responseType: 'json'
-            });
-        }
-      ),
-      map(data => {
-        data.list = Object.entries(data.list);
-        return data;
+    return this.httpClient.get<any>(`https://funnelsdetails.firebaseio.com/pages.json`,
+      {
+        observe: 'body',
+        responseType: 'json'
       })
-    );
+      .pipe(
+        map(data => {
+          data.list = Object.entries(data['list']);
+          return data;
+        })
+      );
+
+    // return token$.pipe(
+    //   switchMap(
+    //     (token) => {
+    //       return this.httpClient.get<any>(`https://funnelsdetails.firebaseio.com/pages.json?auth=${token}`,
+    //         {
+    //           observe: 'body',
+    //           responseType: 'json'
+    //         });
+    //     }
+    //   ),
+    //   map(data => {
+    //     data.list = Object.entries(data.list);
+    //     return data;
+    //   })
+    // );
 
   }
 
