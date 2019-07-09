@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
           res => res,
           err => {
             this.error = err;
-            this.dialogService.addDialogComponent(this.dialogHost.viewContainerRef, 'Title', 'Message', this.onCloseDialog);
+            this.dialogService.addDialogComponent(this.dialogHost.viewContainerRef, 'Sign In Error', err, this.onCloseDialog);
           }
         );
     }

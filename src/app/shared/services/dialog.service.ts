@@ -20,9 +20,12 @@ export class DialogService implements OnDestroy {
     const dialogComponentRef = hostViewContainer.createComponent(dialogComponentFactory);
     dialogComponentRef.instance.title = title;
     dialogComponentRef.instance.message = msg;
+    dialogComponentRef.instance.confirmMsg = 'Close';
 
     this.confirmSub = dialogComponentRef.instance.confirm.subscribe(confirmFn);
     if (declineFn) {
+      dialogComponentRef.instance.confirmMsg = 'Yes';
+      dialogComponentRef.instance.declineMsg = 'No';
       this.declineSub = dialogComponentRef.instance.decline.subscribe(declineFn);
     }
   }
