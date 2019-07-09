@@ -10,12 +10,13 @@ import {AuthRoutingModule} from './auth-routing.module';
 
 import {LoginComponent} from './login/login.component';
 import {AuthComponent} from './auth.component';
+import {DialogHostDirective} from '../../shared/directives/dialog-host.directive';
 import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
     AuthComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     CommonModule,

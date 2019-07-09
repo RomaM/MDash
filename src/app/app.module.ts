@@ -11,13 +11,17 @@ import {AppRoutingModule } from './app-routing.module';
 import {AppComponent } from './app.component';
 import {environment} from '../environments/environment';
 import {AuthInterceptorService} from './shared/services/auth-interceptor.service';
-import {SharedModule} from './shared/shared.module';
+import {DialogComponent} from './shared/components/dialog/dialog.component';
+import {MatButtonModule, MatCardModule} from '@angular/material';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogComponent
   ],
   imports: [
+    MatCardModule,
+    MatButtonModule,
     BrowserModule,
     HttpClientModule,
     // NoopAnimationsModule,
@@ -32,6 +36,7 @@ import {SharedModule} from './shared/shared.module';
     useClass: AuthInterceptorService,
     multi: true
   }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogComponent]
 })
-export class AppModule { }
+export class AppModule {}

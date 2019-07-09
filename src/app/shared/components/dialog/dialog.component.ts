@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-dialog',
@@ -8,13 +8,16 @@ import {Component, Input, OnInit} from '@angular/core';
 export class DialogComponent implements OnInit {
   @Input() title: string;
   @Input() message: string;
+  @Input() confirmMsg: string;
+  @Input() declineMsg: string;
+  @Output() confirm = new EventEmitter<void>();
+  @Output() decline = new EventEmitter<void>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  close() {
-    return true;
-  }
+  onConfirm() { this.confirm.emit(); }
+
+  onDecline() { this.decline.emit(); }
 }

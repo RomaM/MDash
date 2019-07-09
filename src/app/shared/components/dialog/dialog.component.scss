@@ -3,23 +3,33 @@
   z-index: 100;
   display: flex;
   justify-content: center;
+  align-items: center;
   top: 0;
   right: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,.05);
+  background: rgba(0,0,0,.25);
 }
 
 .dialog {
-  &__title {
-
-  }
+  padding: 25px;
 
   &__content {
-
+    font-size: 16px;
   }
+}
 
-  &__actions {
+.actions {
+  margin: 0;
+  text-align: center;
 
+  &__btn {
+    &_confirm {
+      background: #009908;
+    }
+
+    &_decline {
+      background: #dc005a;
+    }
   }
 }

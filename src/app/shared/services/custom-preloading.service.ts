@@ -5,15 +5,8 @@ import {Observable, of} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class CustomPreloadingService implements PreloadingStrategy{
-
-  constructor() { }
-
-  preload(route: Route, fn: () => Observable<any>): Observable<any> {
-    if (route.data && route.data['preload']) {
-      return fn();
-    } else {
-      return of(null);
-    }
+export class CustomPreloadingService implements PreloadingStrategy {
+  preload(route: Route, fn: Function): Observable<any> {
+    return route.data && route.data['preload'] ? fn() : of(null);
   }
 }

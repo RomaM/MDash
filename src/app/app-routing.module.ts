@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: './modules/auth/auth.module#AuthModule',
-    data: {preload: true}
+    data: {preload: false}
   },
   {
     path: '**',
