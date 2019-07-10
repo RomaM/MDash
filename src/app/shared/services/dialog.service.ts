@@ -13,7 +13,7 @@ export class DialogService implements OnDestroy {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
-  addDialogComponent(hostContainer, title: string, msg: string, confirmFn: Function, declineFn?: Function) {
+  openDialog(hostContainer, title: string, msg: string, confirmFn: Function, declineFn?: Function) {
     const dialogComponentFactory = this.componentFactoryResolver.resolveComponentFactory(DialogComponent);
     const hostViewContainer = hostContainer;
     hostViewContainer.clear();

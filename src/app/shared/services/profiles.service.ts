@@ -16,8 +16,6 @@ export class ProfilesService {
   profileSubject = new BehaviorSubject<[string, UserDetailsModel]>(null);
 
   fetchUserProfiles() {
-    // const token$ = from(this.authService.getToken());
-    // const user = this.authService.userDataSubject.value;
     let userEmail = '';
 
     return this.authService.userDataSubject.pipe(
@@ -41,29 +39,9 @@ export class ProfilesService {
       catchError( err => of(`Profile Service: ${err}`))
     );
 
-    // return token$.pipe(
-    //   switchMap((token) => {
-    //     return this.httpClient.get<any>(
-    //       `https://funnelsdetails.firebaseio.com/users.json?auth=${token}`,
-    //       {
-    //         observe: 'body',
-    //         responseType: 'json'
-    //       });
-    //   }),
-    //   map(data => {
-    //     data = Object.entries(data);
-    //     const profile = this.getProfileData(data, user.email);
-    //     this.profileSubject.next(profile);
-    //     this.profilesDataSubject.next(data);
-    //     // return data;
-    //   }),
-    //   catchError( err => of(`Profile Service: ${err}`))
-    // );
   }
 
   addUserProfile(userProfile: UserDetailsModel) {
-    // const token$ = from(this.authService.getToken());
-
     return this.authService.userDataSubject.pipe(
         take(1),
         exhaustMap(currUser => {
@@ -79,26 +57,9 @@ export class ProfilesService {
         }),
         catchError( err => of(`Profile Service: ${err}`))
       );
-
-    // return token$.pipe(
-    //   switchMap(token => {
-    //     return this.httpClient.post<any>(
-    //       `https://funnelsdetails.firebaseio.com/users.json?auth=${token}`,
-    //       userProfile
-    //     );
-    //   }),
-    //   map((key) => {
-    //     const newProfiles = this.profilesDataSubject.value;
-    //     newProfiles.push([key.name, userProfile]);
-    //     this.profilesDataSubject.next(newProfiles);
-    //   }),
-    //   catchError( err => of(`Profile Service: ${err}`))
-    // );
   }
 
   updateUserProfile(key: string, userProfile: UserDetailsModel) {
-    // const token$ = from(this.authService.getToken());
-
     return this.authService.userDataSubject.pipe(
       take(1),
       exhaustMap(currUser => {
@@ -118,27 +79,9 @@ export class ProfilesService {
       catchError( err => of(`Profile Service: ${err}`))
     );
 
-  //   return token$.pipe(
-  //     switchMap(token => {
-  //       return this.httpClient.patch<any>(
-  //         `https://funnelsdetails.firebaseio.com/users/${key}.json?auth=${token}`,
-  //         userProfile
-  //       );
-  //     }),
-  //     map((profile) => {
-  //       const newProfiles = this.profilesDataSubject.value;
-  //       newProfiles.map((el) => {
-  //         if (el[1].email === profile.email) {
-  //           el[1] = profile;
-  //         }
-  //       });
-  //     }),
-  //     catchError( err => of(`Profile Service: ${err}`))
-  //   );
   }
 
   deleteUserProfile(key: number) {
-    // const token$ = from(this.authService.getToken());
     return this.authService.userDataSubject.pipe(
       take(1),
       exhaustMap(currUser => {
@@ -153,21 +96,6 @@ export class ProfilesService {
       }),
       catchError( err => of(`Profile Service: ${err}`))
     );
-
-
-    // return token$.pipe(
-    //   switchMap(token => {
-    //     return this.httpClient.delete<any>(
-    //       `https://funnelsdetails.firebaseio.com/users/${key}.json?auth=${token}`
-    //     );
-    //   }),
-    //   map(() => {
-    //     let newProfiles = this.profilesDataSubject.value;
-    //     newProfiles = newProfiles.filter(el => el[0] !== key);
-    //     this.profilesDataSubject.next(newProfiles);
-    //   }),
-    //   catchError( err => of(`Profile Service: ${err}`))
-    // );
   }
 
   getProfileData(profilesList: [string, UserDetailsModel][], currentEmail: string) {

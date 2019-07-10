@@ -48,7 +48,6 @@ export class AuthService {
       }
     ).pipe(
       tap(res => {
-        console.log(res);
         this.handleUser(res.email, res.localId, res.idToken, +res.expiresIn);
         this.router.navigate(['/']);
       }),
@@ -96,7 +95,7 @@ export class AuthService {
         errorMsg = 'This email address doesn\'t exist.';
         break;
       case 'INVALID_PASSWORD':
-        errorMsg = 'This password isn\'t correct.';
+        errorMsg = 'This password is not correct.';
         break;
       case 'USER_DISABLED':
         errorMsg = 'This user account has been disabled.';

@@ -1,33 +1,24 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../shared/services/auth.service';
-import {DialogHostDirective} from '../../../shared/directives/dialog-host.directive';
-import {DialogService} from '../../../shared/services/dialog.service';
+import {SnackBarService} from '../../../shared/services/snack-bar.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild(DialogHostDirective, {static: false}) dialogHost: DialogHostDirective;
-
+export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private dialogService: DialogService
+    private snackBarService: SnackBarService
   ) {}
 
   loginForm: FormGroup;
   hide = true;
-  error = null;
 
   ngOnInit() {
     this.formInit();
-
-  }
-
-  ngAfterViewInit() {
-    console.log(this.dialogHost);
   }
 
   formInit() {
@@ -47,23 +38,12 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(
           res => res,
           err => {
-            this.error = err;
-            this.dialogService.addDialogComponent(this.dialogHost.viewContainerRef, 'Sign In Error', err, this.onCloseDialog);
+            if (err) {
+              this.snackBarService.openSnack(err.toString());
+            }
           }
         );
     }
-  }
-
-  signOutUser() {
-    this.authService.signOut();
-  }
-
-  onCloseDialog() {
-    this.error = null;
-  }
-
-  ngOnDestroy() {
-
   }
 
 }
