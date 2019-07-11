@@ -19,6 +19,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {pagesReducer} from './store/pages.reducer';
 import {PagesEffects} from './store/pages.effects';
 import {FilterPipe} from '../../shared/pipes/filter.pipe';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {FilterPipe} from '../../shared/pipes/filter.pipe';
   imports: [
     CommonModule,
     CoreModule,
+    SharedModule,
     FormsModule,
     StoreModule.forFeature('pagesState', pagesReducer),
     EffectsModule.forFeature([PagesEffects]),

@@ -37,11 +37,7 @@ export class LoginComponent implements OnInit {
       this.authService.signIn(this.loginForm.value.email, this.loginForm.value.password)
         .subscribe(
           res => res,
-          err => {
-            if (err) {
-              this.snackBarService.openSnack(err.toString());
-            }
-          }
+          err => { this.snackBarService.openSnack(err); }
         );
     }
   }
