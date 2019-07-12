@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MatButtonModule, MatCardModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatSnackBarModule} from '@angular/material';
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import { DialogHostDirective } from './directives/dialog-host.directive';
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../shared/services/auth.service';
 import {SnackBarService} from '../../../shared/services/snack-bar.service';
@@ -34,10 +34,14 @@ export class LoginComponent implements OnInit {
 
   signInUser() {
     if (this.loginForm && this.loginForm.valid) {
+      this.snackBarService.closeSnack();
       this.authService.signIn(this.loginForm.value.email, this.loginForm.value.password)
         .subscribe(
           res => res,
-          err => { this.snackBarService.openSnack(err); }
+          err => {
+            // this.snackBarService.closeSnack();
+            this.snackBarService.openSnack(err);
+          }
         );
     }
   }

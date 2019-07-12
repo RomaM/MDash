@@ -15,7 +15,7 @@ export class DialogService implements OnDestroy {
 
   addDialogComponent(hostContainer, msg: string, confirmFn, declineFn?) {
     const dialogComponentFactory = this.componentFactoryResolver.resolveComponentFactory(DialogComponent);
-    const hostViewContainer = hostContainer;
+    const hostViewContainer = hostContainer.viewContainerRef;
     hostViewContainer.clear();
     const dialogComponentRef = hostViewContainer.createComponent(dialogComponentFactory);
     dialogComponentRef.instance.message = msg;
@@ -23,14 +23,18 @@ export class DialogService implements OnDestroy {
     dialogComponentRef.instance.declineMsg = 'No';
 
     this.confirmSub = dialogComponentRef.instance.confirm.subscribe(() => {
-      confirmFn().subscribe();
+      confirmFn();
+      hostViewContainer.clear();
     });
     if (declineFn) {
       this.declineSub = dialogComponentRef.instance.decline.subscribe(() => {
-        declineFn().subscribe().pipe(tap(() => hostViewContainer.clear()));
+        declineFn();
+        hostViewContainer.clear();
       });
     } else {
-      hostViewContainer.clear();
+      this.declineSub = dialogComponentRef.instance.decline.subscribe(() => {
+        hostViewContainer.clear();
+      });
     }
   }
 

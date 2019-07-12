@@ -4,8 +4,6 @@ import {select, Store} from '@ngrx/store';
 import * as pagesReducer from '../store/pages.reducer';
 import {Observable, Subscription} from 'rxjs';
 import {ItemsService} from '../../../shared/services/items.service';
-import {tap, map, switchMap, timeout} from 'rxjs/operators';
-import {AngularFireDatabase} from '@angular/fire/database';
 
 @Component({
   selector: 'app-list',

@@ -29,7 +29,7 @@ import {MatButtonModule, MatCardModule, MatSnackBarModule} from '@angular/materi
     BrowserAnimationsModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    !environment.production ? StoreDevtoolsModule.instrument({maxAge: 25,}) : [],
+    !environment.production ? StoreDevtoolsModule.instrument(<StoreDevtoolsOptions>{maxAge: 25}) : [],
     AppRoutingModule
   ],
   providers: [{

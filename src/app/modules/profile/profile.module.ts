@@ -20,12 +20,19 @@ import {ProfileEffects} from './store/profile.effects';
 import {DetailsComponent} from './details/details.component';
 import {RegisterComponent} from './register/register.component';
 import { ListComponent } from './list/list.component';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
-  declarations: [ProfileComponent, DetailsComponent, RegisterComponent, ListComponent],
+  declarations: [
+    ProfileComponent,
+    DetailsComponent,
+    RegisterComponent,
+    ListComponent
+  ],
   imports: [
     CommonModule,
     CoreModule,
+    SharedModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
