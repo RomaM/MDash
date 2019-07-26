@@ -11,6 +11,7 @@ import {SidebarComponent} from './sidebar/sidebar.component';
 import {FooterComponent} from './footer/footer.component';
 import {LayoutComponent} from './layout/layout.component';
 import {RouterModule} from '@angular/router';
+import {DialogHostDirective} from '../shared/directives/dialog-host.directive';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {RouterModule} from '@angular/router';
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
+    DialogHostDirective
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import {RouterModule} from '@angular/router';
     MatSidenavModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    DialogHostDirective
   ]
 })
 

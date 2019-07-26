@@ -1,6 +1,5 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Injectable} from '@angular/core';
-import {AuthService} from '../services/auth.service';
 import {ProfilesService} from '../services/profiles.service';
 
 @Injectable({
@@ -12,10 +11,14 @@ export class RegisterGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): boolean | UrlTree {
+
+    // todo: Add ProfilesService.fetchProfiles before get profileSubject
+
     const currentProfile = this.profileService.profileSubject.value;
-    if (currentProfile[1]['isSAdmin']) {
+    if (currentProfile && currentProfile[1]['isSAdmin']) {
       return true;
     } else {
+      console.log(`[RegisterGuard] -> Current Profile: ${currentProfile}`);
       return this.router.parseUrl('/');
     }
   }

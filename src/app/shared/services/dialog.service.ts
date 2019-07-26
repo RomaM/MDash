@@ -1,22 +1,30 @@
 import {ComponentFactoryResolver, Injectable, OnDestroy} from '@angular/core';
 import {DialogComponent} from '../components/dialog/dialog.component';
-import {Subscription} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {Subject, Subscription} from 'rxjs';
+
+interface DialogData {
+  msg: string;
+  confirmFunc?: any;
+  declineFunc?: any;
+}
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class DialogService implements OnDestroy {
 
   private confirmSub: Subscription;
   private declineSub: Subscription;
+  createDialog = new Subject<DialogData>();
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
   addDialogComponent(hostContainer, msg: string, confirmFn, declineFn?) {
+
     const dialogComponentFactory = this.componentFactoryResolver.resolveComponentFactory(DialogComponent);
     const hostViewContainer = hostContainer.viewContainerRef;
-    hostViewContainer.clear();
+    // hostViewContainer.clear();
     const dialogComponentRef = hostViewContainer.createComponent(dialogComponentFactory);
     dialogComponentRef.instance.message = msg;
     dialogComponentRef.instance.confirmMsg = 'Yes';

@@ -39,13 +39,10 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   removeItem(key) {
-    this.dialogService.addDialogComponent(this.hostDialog, 'Do you really want to Delete this profile?', this.removeItemConfirmed(key));
-  }
-
-  removeItemConfirmed(key) {
-    return () => {
-      this.store.dispatch(new ProfileActions.DeleteProfile(key));
-    };
+    this.dialogService.createDialog.next({
+      msg: 'Do you really want to Delete this profile?',
+      confirmFunc: () => this.store.dispatch(new ProfileActions.DeleteProfile(key))
+    });
   }
 
   ngOnDestroy() {

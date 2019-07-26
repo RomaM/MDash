@@ -7,7 +7,7 @@ import { DialogHostDirective } from './directives/dialog-host.directive';
 @NgModule({
   declarations: [
     NotFoundComponent,
-    DialogHostDirective
+    // DialogHostDirective
   ],
   imports: [
     CommonModule,
@@ -18,7 +18,7 @@ import { DialogHostDirective } from './directives/dialog-host.directive';
     MatCardModule,
     MatButtonModule,
     NotFoundComponent,
-    DialogHostDirective
+    // DialogHostDirective
   ]
 })
 
