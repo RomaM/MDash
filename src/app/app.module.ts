@@ -12,7 +12,11 @@ import {AppComponent } from './app.component';
 import {environment} from '../environments/environment';
 import {AuthInterceptorService} from './shared/services/auth-interceptor.service';
 import {DialogComponent} from './shared/components/dialog/dialog.component';
-import {MatButtonModule, MatCardModule, MatSnackBarModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatSnackBarModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [

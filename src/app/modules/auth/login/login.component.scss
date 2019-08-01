@@ -12,9 +12,9 @@
     width: 100%;
     box-sizing: border-box;
     font-size: 14px;
+    overflow: hidden;
 
-    &__input {
-    }
+    &__input {}
 
     &__err {
       font-size: 12px;
