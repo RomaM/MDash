@@ -2,6 +2,8 @@ import {Component, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../shared/services/auth.service';
 import {SnackBarService} from '../../../shared/services/snack-bar.service';
+import {of} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -36,14 +38,14 @@ export class LoginComponent implements OnInit {
     if (this.loginForm && this.loginForm.valid) {
       this.snackBarService.closeSnack();
       this.authService.signIn(this.loginForm.value.email, this.loginForm.value.password)
-        .subscribe(
-          res => res,
-          err => {
+        .pipe(
+          catchError(err => {
             // this.snackBarService.closeSnack();
             this.snackBarService.openSnack(err);
-          }
-        );
+            return of(err);
+          })
+        )
+        .subscribe(res => res);
     }
   }
-
 }

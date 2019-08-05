@@ -14,19 +14,22 @@ import {AuthInterceptorService} from './shared/services/auth-interceptor.service
 import {DialogComponent} from './shared/components/dialog/dialog.component';
 import {
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatProgressSpinnerModule,
   MatSnackBarModule
 } from '@angular/material';
+import {LoaderComponent} from './shared/components/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DialogComponent
+    DialogComponent,
+    LoaderComponent
   ],
   imports: [
     MatCardModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     BrowserModule,
     HttpClientModule,
     // NoopAnimationsModule,

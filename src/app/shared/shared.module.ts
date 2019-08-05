@@ -10,21 +10,17 @@ import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
-    NotFoundComponent,
-    LoaderComponent,
-    // DialogHostDirective
+    NotFoundComponent
   ],
   imports: [
     CommonModule,
     MatCardModule,
-    MatButtonModule,
-    MatProgressSpinnerModule
+    MatButtonModule
   ],
   exports: [
     MatCardModule,
     MatButtonModule,
-    NotFoundComponent,
-    // DialogHostDirective
+    NotFoundComponent
   ]
 })
 
