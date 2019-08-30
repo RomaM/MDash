@@ -76,8 +76,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log('Submited'); // ToDo: Loader for communications with server
-
     if (this.detailsForm.valid) {
 
       if (!!this.editedItem) {

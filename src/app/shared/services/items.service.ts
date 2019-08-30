@@ -101,11 +101,17 @@ export class ItemsService {
   onLoaded(data: PageDetailsModel, key?: string) {
     if (key) {
       const newList = this.loadedData.getValue();
-      newList.push([key, data]);
+      let exists = false;
+      newList.map(el => {
+        if (el[0] === key) {
+         el[1] = {...data};
+         exists = true;
+        }
+      });
+      if (!exists) { newList.push([key, data]); }
+
       this.loadedData.next(newList);
-    } else {
-      this.loadedData.next(data);
-    }
+    } else { this.loadedData.next(data); }
   }
 }
 

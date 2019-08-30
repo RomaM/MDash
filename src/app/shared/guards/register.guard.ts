@@ -14,17 +14,24 @@ export class RegisterGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    return this.profileService.fetchUserProfiles().pipe(
-      map(
-        () => {
-          const currentProfile = this.profileService.profileSubject.value;
-          if (currentProfile && currentProfile[1]['isSAdmin']) {
-            return true;
-          } else {
-            return this.router.parseUrl('/');
+    let currentProfile = this.profileService.profileSubject.value;
+
+    if (currentProfile) {
+      if (currentProfile[1]['isSAdmin']) { return true;
+      } else { return this.router.parseUrl('/'); }
+    } else {
+      return this.profileService.fetchUserProfiles().pipe(
+        map(
+          () => {
+            currentProfile = this.profileService.profileSubject.value;
+            if (currentProfile && currentProfile[1]['isSAdmin']) {
+              return true;
+            } else {
+              return this.router.parseUrl('/');
+            }
           }
-        }
-      )
-    );
+        )
+      );
+    }
   }
 }

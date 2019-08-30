@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {UserDetailsModel} from '../models/user-details.model';
 import {BehaviorSubject, from, of} from 'rxjs';
-import {switchMap, map, catchError, exhaustMap, take} from 'rxjs/operators';
+import {switchMap, map, catchError, exhaustMap, take, takeWhile} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,8 @@ export class ProfilesService {
     let userEmail = '';
 
     return this.authService.userDataSubject.pipe(
-      take(1),
+      takeWhile(data => this.profilesDataSubject.value === null),
+      // take(1),
       exhaustMap(currUser => {
         userEmail = currUser.email;
         return this.httpClient.get<any>(
