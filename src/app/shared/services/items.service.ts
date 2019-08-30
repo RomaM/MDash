@@ -98,20 +98,20 @@ export class ItemsService {
       {val: data}, {reportProgress: true});
   }
 
-  onLoaded(data: PageDetailsModel, key?: string) {
-    if (key) {
-      const newList = this.loadedData.getValue();
-      let exists = false;
-      newList.map(el => {
-        if (el[0] === key) {
-         el[1] = {...data};
-         exists = true;
-        }
-      });
-      if (!exists) { newList.push([key, data]); }
-
-      this.loadedData.next(newList);
-    } else { this.loadedData.next(data); }
-  }
+  // onLoaded(data: PageDetailsModel, key?: string) {
+  //   if (key) {
+  //     const newList = this.loadedData.getValue();
+  //     let exists = false;
+  //     newList.map(el => {
+  //       if (el[0] === key) {
+  //        el[1] = {...data};
+  //        exists = true;
+  //       }
+  //     });
+  //     if (!exists) { newList.push([key, data]); }
+  //
+  //     this.loadedData.next(newList);
+  //   } else { this.loadedData.next(data); }
+  // }
 }
 

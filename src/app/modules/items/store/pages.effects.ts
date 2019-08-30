@@ -28,7 +28,7 @@ export class PagesEffects {
     }),
     switchMap(() => this.itemsService.fetchItems().pipe(
       map( data => {
-        this.itemsService.onLoaded(data['list']);
+        this.itemsService.loadedData.next(data['list']);
         return data;
       }),
       catchError((err) => throwError(err))
