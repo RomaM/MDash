@@ -34,7 +34,7 @@ export class AddPage implements Action {
 
 export class DeletePage implements Action {
   readonly type = PageActionTypes.DELETE_PAGE;
-  constructor(public payload: number) {}
+  constructor(public payload: any) {}
 }
 
 export class UpdatePage implements Action {

@@ -65,6 +65,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
         if (!!this.editedItem && data.length > 0) {
           this.store.dispatch(new PagesActions.EditedPage({ selectedID: +this.editedItem, editedMode: true }));
 
+          console.log(data[this.editedItem][0]);
+
           this.key = data[this.editedItem][0];
 
           this.detailsForm.patchValue(data[this.editedItem][1]);
@@ -87,13 +89,14 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   remove() {
-    this.itemsService.removeItem(this.key).subscribe(
-      res => {
-        // console.log(res);
-        this.router.navigate(['/list']);
-      },
-      err => console.log(err)
-    );
+    this.store.dispatch(new PagesActions.DeletePage(this.key));
+    // this.itemsService.removeItem(this.key).subscribe(
+    //   res => {
+    //     // console.log(res);
+    //     this.router.navigate(['/list']);
+    //   },
+    //   err => console.log(err)
+    // );
   }
 
   setImage(event) {

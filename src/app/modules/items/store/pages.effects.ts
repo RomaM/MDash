@@ -27,11 +27,11 @@ export class PagesEffects {
       return loaded === false;
     }),
     switchMap(() => this.itemsService.fetchItems().pipe(
-        map( data => {
-          this.itemsService.onLoaded(data['list']);
-          return data;
-        }),
-        catchError((err) => throwError(err))
+      map( data => {
+        this.itemsService.onLoaded(data['list']);
+        return data;
+      }),
+      catchError((err) => throwError(err))
       )
     ),
     switchMap( data => {
@@ -49,7 +49,12 @@ export class PagesEffects {
     switchMap((action: PagesActions.AddPage) => this.itemsService.addItem(action.payload).pipe(
       map(data => {
         const timestamp = this.itemsService.generateTimestamp(action.payload);
-        this.itemsService.onLoaded(action.payload, data.name);
+        // this.itemsService.onLoaded(action.payload, data.name);
+
+        const newList = this.itemsService.loadedData.getValue();
+        newList.push([data['name'], action.payload]);
+
+        this.itemsService.loadedData.next(newList);
         return new PagesActions.UpdateTimestamp(timestamp);
       }),
       catchError(err => throwError(err))
@@ -62,9 +67,32 @@ export class PagesEffects {
   updatePage$ = this.actions$.pipe(
     ofType(<string>PagesActions.PageActionTypes.UPDATE_PAGE),
     switchMap((action: PagesActions.UpdatePage) => {
-      console.log(action.payload.key);
-      this.itemsService.onLoaded(action.payload.val, action.payload.key);
+      let newList = this.itemsService.loadedData.getValue();
+      newList = newList.map(el => {
+        if (el[0] === action.payload.key) { el[1] = {...action.payload.val};
+        }
+        return el;
+      });
+      this.itemsService.loadedData.next(newList);
+
       return this.itemsService.updateItem(action.payload.key, action.payload.val);
+    }),
+    catchError(err => {
+      return throwError(err);
+    }),
+    tap(() => this.router.navigate(['/list'])),
+    catchError( err => of(`Pages Service: ${err}`))
+  );
+
+  @Effect({dispatch: false})
+  deletePage$ = this.actions$.pipe(
+    ofType(<string>PagesActions.PageActionTypes.DELETE_PAGE),
+    switchMap((action: PagesActions.DeletePage) => {
+      let newList = this.itemsService.loadedData.getValue();
+      newList = newList.filter(el => el[0] !== action.payload);
+      this.itemsService.loadedData.next(newList);
+
+      return this.itemsService.removeItem(action.payload);
     }),
     catchError(err => {
       return throwError(err);
