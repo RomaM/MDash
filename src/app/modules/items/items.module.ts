@@ -20,6 +20,7 @@ import {pagesReducer} from './store/pages.reducer';
 import {PagesEffects} from './store/pages.effects';
 import {FilterPipe} from '../../shared/pipes/filter.pipe';
 import {SharedModule} from '../../shared/shared.module';
+import {MatDatepickerModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {SharedModule} from '../../shared/shared.module';
     CoreModule,
     SharedModule,
     FormsModule,
+    MatDatepickerModule,
     StoreModule.forFeature('pagesState', pagesReducer),
     EffectsModule.forFeature([PagesEffects]),
     MatCardModule,

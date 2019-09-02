@@ -14,7 +14,7 @@
         {{feature.value ? feature.key + '; ' : ''}}
       </span>
     </h5>
-    <h4 class="content__detail content__detail_date">{{itemData.date}}</h4>
+    <h4 class="content__detail content__detail_date">{{itemData.date |  date:'dd/MM/yyyy'}}</h4>
   </mat-card-content>
   
   <mat-card-actions class="actions">

@@ -31,7 +31,10 @@ export class PagesEffects {
         this.itemsService.loadedData.next(data['list']);
         return data;
       }),
-      catchError((err) => throwError(err))
+      catchError((err) => {
+        this.itemsService.loadedData.next([]);
+        return throwError(err);
+      })
       )
     ),
     switchMap( data => {

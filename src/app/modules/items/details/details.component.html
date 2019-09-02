@@ -41,7 +41,9 @@
       </mat-form-field>
   
       <mat-form-field class="info__field info__field_date">
-        <input matInput placeholder="Date" formControlName="date">
+        <input matInput [matDatepicker]="datePicker" placeholder="Date" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker disabled="false"></mat-datepicker>
       </mat-form-field>
   
       <mat-form-field class="info__field info__field_id">

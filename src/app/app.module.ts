@@ -13,8 +13,11 @@ import {environment} from '../environments/environment';
 import {AuthInterceptorService} from './shared/services/auth-interceptor.service';
 import {DialogComponent} from './shared/components/dialog/dialog.component';
 import {
+  MAT_DATE_LOCALE,
   MatButtonModule,
-  MatCardModule, MatProgressSpinnerModule,
+  MatCardModule,
+  MatNativeDateModule,
+  MatProgressSpinnerModule,
   MatSnackBarModule
 } from '@angular/material';
 import {LoaderComponent} from './shared/components/loader/loader.component';
@@ -30,6 +33,7 @@ import {LoaderComponent} from './shared/components/loader/loader.component';
     MatButtonModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatNativeDateModule,
     BrowserModule,
     HttpClientModule,
     // NoopAnimationsModule,
@@ -43,7 +47,9 @@ import {LoaderComponent} from './shared/components/loader/loader.component';
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi: true
-  }],
+    },
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+  ],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent]
 })

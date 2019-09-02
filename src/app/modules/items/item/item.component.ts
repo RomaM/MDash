@@ -19,9 +19,7 @@ export class ItemComponent implements OnInit {
               private route: ActivatedRoute,
               private store: Store<pagesReducer.State>) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   editItem(index: number) {
     this.router.navigate(['item', index], {relativeTo: this.route});
