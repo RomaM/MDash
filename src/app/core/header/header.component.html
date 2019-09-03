@@ -2,7 +2,7 @@
   <mat-toolbar-row class="header__row">
     <span></span>
     <span class="header__spacer"></span>
-    <small class="header__user-name">{{activeUser['displayName']}}</small>
+    <small class="header__user-name">{{activeUser.name}} {{activeUser.surname}}</small>
     &nbsp;
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>account_circle</mat-icon>

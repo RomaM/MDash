@@ -22,6 +22,9 @@ import {
 } from '@angular/material';
 import {LoaderComponent} from './shared/components/loader/loader.component';
 
+import {profileReducer} from './modules/profile/store/profile.reducer';
+import {ProfileEffects} from './modules/profile/store/profile.effects';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,8 +41,8 @@ import {LoaderComponent} from './shared/components/loader/loader.component';
     HttpClientModule,
     // NoopAnimationsModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot(profileReducer),
+    EffectsModule.forRoot([ProfileEffects]),
     !environment.production ? StoreDevtoolsModule.instrument(<StoreDevtoolsOptions>{maxAge: 25}) : [],
     AppRoutingModule
   ],

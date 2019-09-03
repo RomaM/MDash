@@ -13,11 +13,10 @@ import * as ProfileActions from './store/profile.actions';
 })
 export class ProfileComponent implements OnInit, DoCheck {
   constructor(private profileService: ProfilesService,
-              private store: Store<profileReducer.State>) {
-  }
+              private store: Store<profileReducer.State>) {}
 
   ngOnInit() {
-    this.store.dispatch(new ProfileActions.LoadProfile());
+    // this.store.dispatch(new ProfileActions.LoadProfile());
   }
 
   ngDoCheck () {

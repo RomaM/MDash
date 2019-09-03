@@ -7,6 +7,7 @@ import * as PagesActions from '../store/pages.actions';
 import {select, Store} from '@ngrx/store';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ItemsService} from '../../../shared/services/items.service';
+import {DialogService} from '../../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-details',
@@ -29,7 +30,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   constructor(private itemsService: ItemsService,
               private store: Store<pagesReducer.State>,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private dialogService: DialogService) { }
 
   ngOnInit() {
     this.editedItem = this.route.snapshot.params['id'] ? this.route.snapshot.params['id'] : 0;
@@ -88,7 +89,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   remove() {
     this.itemsLoadedSubscription.unsubscribe();
-    this.store.dispatch(new PagesActions.DeletePage(this.key));
+
+    this.dialogService.createDialog.next({
+      msg: 'Do you really want to Delete this page?',
+      confirmFunc: () => this.store.dispatch(new PagesActions.DeletePage(this.key))
+    });
+
     // this.itemsService.removeItem(this.key).subscribe(
     //   res => {
     //     // console.log(res);

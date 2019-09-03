@@ -1,26 +1,31 @@
 <ng-template appDialog></ng-template>
 <div class="list">
   <h3 class="list__title">Profile list</h3>
-  <mat-card class="item" *ngFor="let profile of profilesData; let i = index;">
-    <mat-card-header class="content">
-      <div mat-card-avatar class="content__icon"><mat-icon>rowing</mat-icon></div>
-      <mat-card-title class="content__name">{{profile[1].name}} {{profile[1].surname}}</mat-card-title>
-      <mat-card-subtitle class="content__email">{{profile[1].email}}</mat-card-subtitle>
-    </mat-card-header>
+  
+  <ng-container *ngFor="let profile of profilesData; let i = index;">
+    <mat-card class="item" *ngIf="i != currentProfileIndex; else hidden">
+        <mat-card-header class="content">
+          <div mat-card-avatar class="content__icon"><mat-icon>rowing</mat-icon></div>
+          <mat-card-title class="content__name">{{profile[1].name}} {{profile[1].surname}}</mat-card-title>
+          <mat-card-subtitle class="content__email">{{profile[1].email}}</mat-card-subtitle>
+        </mat-card-header>
+      
+        <mat-card-actions class="actions">
+          <button
+            class="actions__btn actions__btn_edit"
+            mat-flat-button
+            routerLink="/profile/edit/{{i}}">
+            Edit
+          </button>
+          <button
+            class="actions__btn actions__btn_remove"
+            mat-flat-button
+            (click)="removeItem(profile[0])">
+            Remove
+          </button>
+        </mat-card-actions>
+    </mat-card>
     
-    <mat-card-actions class="actions">
-      <button
-          class="actions__btn actions__btn_edit"
-          mat-flat-button
-          routerLink="/profile/edit/{{i}}">
-        Edit
-      </button>
-      <button
-          class="actions__btn actions__btn_remove"
-          mat-flat-button
-          (click)="removeItem(profile[0])">
-        Remove
-      </button>
-    </mat-card-actions>
-  </mat-card>
+    <ng-template #hidden></ng-template>
+  </ng-container>
 </div>

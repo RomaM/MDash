@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../shared/services/auth.service';
 import {SnackBarService} from '../../../shared/services/snack-bar.service';
 import {of} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -45,7 +45,10 @@ export class LoginComponent implements OnInit {
             return of(err);
           })
         )
-        .subscribe(res => res);
+        .subscribe(res => {
+
+          return res;
+        });
     }
   }
 }
