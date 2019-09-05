@@ -2,8 +2,18 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {UserDetailsModel} from '../models/user-details.model';
-import {BehaviorSubject, from, of} from 'rxjs';
-import {switchMap, map, catchError, exhaustMap, take, takeWhile} from 'rxjs/operators';
+import {BehaviorSubject, from, of, throwError} from 'rxjs';
+import {
+  switchMap,
+  map,
+  catchError,
+  exhaustMap,
+  take,
+  takeWhile,
+  skipWhile,
+  distinctUntilChanged,
+  tap, shareReplay
+} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,42 +25,35 @@ export class ProfilesService {
   profilesDataSubject = new BehaviorSubject<any>(null);
   profileSubject = new BehaviorSubject<[string, UserDetailsModel]>(null);
 
+  setCurrentProfile() {
+    let profile = this.authService.userDataSubject.value;
+
+    profile = this.getProfileData(this.profilesDataSubject.value, profile['email']);
+    this.profileSubject.next(profile);
+  }
+
   fetchUserProfiles() {
-    let userEmail = '';
-
-    return this.authService.userDataSubject.pipe(
-      takeWhile(data => this.profilesDataSubject.value === null),
-      // take(1),
-      exhaustMap(currUser => {
-        userEmail = currUser.email;
-        return this.httpClient.get<any>(
-          `https://funnelsdetails.firebaseio.com/users.json`,
-          {
-            observe: 'body',
-            responseType: 'json'
-          });
-      }),
-      map(data => {
-        data = Object.entries(data);
-        const profile = this.getProfileData(data, userEmail);
-        this.profileSubject.next(profile);
-        this.profilesDataSubject.next(data);
-        // return data;
-      }),
-      catchError( err => of(`Profile Service: ${err}`))
-    );
-
+    return this.httpClient.get<any>(
+      `https://funnelsdetails.firebaseio.com/users.json`,
+      {
+        observe: 'body',
+        responseType: 'json'
+      })
+      .pipe(
+        map(data => {
+          data = Object.entries(data);
+          this.profilesDataSubject.next(data);
+          this.setCurrentProfile();
+        }),
+        catchError( err => throwError(`Profile Service: ${err}`))
+      );
   }
 
   addUserProfile(userProfile: UserDetailsModel) {
-    return this.authService.userDataSubject.pipe(
-        take(1),
-        exhaustMap(currUser => {
-          return this.httpClient.post<any>(
-            `https://funnelsdetails.firebaseio.com/users.json`,
-            userProfile
-          );
-        }),
+    return this.httpClient.post<any>(
+      `https://funnelsdetails.firebaseio.com/users.json`,
+      userProfile
+    ).pipe(
         map((key) => {
           const newProfiles = this.profilesDataSubject.value;
           newProfiles.push([key['name'], userProfile]);
@@ -61,14 +64,10 @@ export class ProfilesService {
   }
 
   updateUserProfile(key: string, userProfile: UserDetailsModel) {
-    return this.authService.userDataSubject.pipe(
-      take(1),
-      exhaustMap(currUser => {
-        return this.httpClient.patch<any>(
-          `https://funnelsdetails.firebaseio.com/users/${key}.json`,
-          userProfile
-        );
-      }),
+    return this.httpClient.patch<any>(
+      `https://funnelsdetails.firebaseio.com/users/${key}.json`,
+      userProfile
+    ).pipe(
       map((profile) => {
         const newProfiles = this.profilesDataSubject.value;
         newProfiles.map((el) => {
@@ -79,17 +78,12 @@ export class ProfilesService {
       }),
       catchError( err => of(`Profile Service: ${err}`))
     );
-
   }
 
   deleteUserProfile(key: number) {
-    return this.authService.userDataSubject.pipe(
-      take(1),
-      exhaustMap(currUser => {
-        return this.httpClient.delete<any>(
-          `https://funnelsdetails.firebaseio.com/users/${key}.json`
-        );
-      }),
+    return this.httpClient.delete<any>(
+      `https://funnelsdetails.firebaseio.com/users/${key}.json`
+    ).pipe(
       map(() => {
         let newProfiles = this.profilesDataSubject.value;
         newProfiles = newProfiles.filter(el => el[0] !== key);

@@ -8,6 +8,7 @@ import {UserDetailsModel} from '../../../shared/models/user-details.model';
 import * as profileReducer from '../store/profile.reducer';
 import * as ProfileActions from '../store/profile.actions';
 import {Store} from '@ngrx/store';
+import {skipWhile} from 'rxjs/operators';
 
 
 @Component({
@@ -16,7 +17,7 @@ import {Store} from '@ngrx/store';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit, OnDestroy {
-  profilesDataSubscription: Subscription;
+  currentProfileSubscription: Subscription;
   detailsForm: FormGroup;
   editMode = false;
   selectedId = null;
@@ -25,8 +26,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private store: Store<profileReducer.State>,
-              private profileService: ProfilesService,
-              private authService: AuthService) {
+              private profileService: ProfilesService) {
   }
 
   ngOnInit() {
@@ -39,16 +39,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
     this.initForm();
 
-    this.profilesDataSubscription = this.profileService.profilesDataSubject.subscribe(
+    this.currentProfileSubscription = this.profileService.profileSubject
+      .pipe(
+        skipWhile(data => data === null)
+      )
+      .subscribe(
       data => {
-        if (data) {
-          this.currentProfile = this.profileService.profileSubject.value;
-          this.isSAdmin = this.currentProfile[1].isSAdmin;
+        this.currentProfile = data;
+        this.isSAdmin = this.currentProfile ? this.currentProfile[1].isSAdmin : false;
 
-          !!this.selectedId
-            ? this.detailsForm.patchValue(data[this.selectedId][1])
-            : this.detailsForm.patchValue(this.currentProfile[1]);
-        }
+        !!this.selectedId
+          ? this.detailsForm.patchValue(this.profileService.profilesDataSubject.value[this.selectedId][1])
+          : this.detailsForm.patchValue(this.currentProfile[1]);
       }
     );
   }
@@ -79,6 +81,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.profilesDataSubscription.unsubscribe();
+    this.currentProfileSubscription.unsubscribe();
   }
 }

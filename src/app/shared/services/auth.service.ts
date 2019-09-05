@@ -23,11 +23,9 @@ interface AuthResponseData {
 
 export class AuthService {
   userDataSubject = new BehaviorSubject<any>(null);
-  // isLoggedSubject = new BehaviorSubject<boolean>(!!localStorage.getItem('isLogged'));
   private tokenExpirationTimer: any;
 
-  constructor(private httpClient: HttpClient, private router: Router) {
-  }
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   signIn(email: string, password: string) {
     // firebase.auth().signInWithEmailAndPassword(email, password)

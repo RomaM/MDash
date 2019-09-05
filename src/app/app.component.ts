@@ -5,6 +5,10 @@ import {
 import * as firebase from 'firebase';
 import {environment} from '../environments/environment';
 import {AuthService} from './shared/services/auth.service';
+import {distinctUntilChanged, skipWhile, switchMap, takeWhile, tap} from 'rxjs/operators';
+import * as ProfileActions from './modules/profile/store/profile.actions';
+import {Store} from '@ngrx/store';
+import * as profileReducer from './modules/profile/store/profile.reducer';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +17,7 @@ import {AuthService} from './shared/services/auth.service';
 })
 export class AppComponent implements OnChanges, OnInit, DoCheck, AfterViewInit, AfterContentInit, OnDestroy {
 
-  constructor(private ngZone: NgZone, private authService: AuthService) {
+  constructor(private ngZone: NgZone, private authService: AuthService, private store: Store<profileReducer.State>) {
     // Preventing continual internal changes/operations from triggering change detection in DoCheck()
     this.ngZone.runOutsideAngular(() => {
       firebase.initializeApp(environment.firebase);
@@ -24,6 +28,11 @@ export class AppComponent implements OnChanges, OnInit, DoCheck, AfterViewInit, 
 
   ngOnInit() {
     this.authService.autoLogin();
+
+    this.authService.userDataSubject
+      .subscribe(data => {
+        if (data !== null) { this.store.dispatch(new ProfileActions.LoadProfile()); }
+      });
   }
 
   ngDoCheck() {}

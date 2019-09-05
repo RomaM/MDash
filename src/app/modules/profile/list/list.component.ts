@@ -34,7 +34,6 @@ export class ListComponent implements OnInit, OnDestroy {
         this.currentProfile = this.profileService.profileSubject.value;
 
         this.currentProfileIndex = data.findIndex(el => el[1]['uid'] === this.currentProfile[1]['uid'])
-        console.log(this.currentProfileIndex);
         this.profilesData = data;
       }
     );

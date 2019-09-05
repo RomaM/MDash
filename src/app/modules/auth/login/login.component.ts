@@ -45,10 +45,7 @@ export class LoginComponent implements OnInit {
             return of(err);
           })
         )
-        .subscribe(res => {
-
-          return res;
-        });
+        .subscribe(res => res);
     }
   }
 }

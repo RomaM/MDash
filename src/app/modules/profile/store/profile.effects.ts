@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {from, Observable, throwError} from 'rxjs';
 import * as profileReducer from '../store/profile.reducer';
 import * as ProfileActions from '../store/profile.actions';
-import {map, switchMap, catchError, tap} from 'rxjs/operators';
+import {map, switchMap, catchError, tap, takeWhile} from 'rxjs/operators';
 import {AuthService} from '../../../shared/services/auth.service';
 import {ProfilesService} from '../../../shared/services/profiles.service';
 
@@ -27,7 +27,7 @@ export class ProfileEffects {
           }),
           catchError( err => throwError(err))
         )
-    )
+    ),
   );
 
   @Effect()

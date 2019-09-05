@@ -16,11 +16,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
   @ViewChild(DialogHostDirective, {static: true}) dialogDirective: DialogHostDirective;
   dialogSubscription: Subscription;
 
-  constructor(private dialogService: DialogService, private store: Store<profileReducer.State>) { }
+  constructor(private dialogService: DialogService) { }
 
   ngOnInit() {
-    this.store.dispatch(new ProfileActions.LoadProfile());
-
     this.dialogSubscription = this.dialogService.createDialog.subscribe(
       data => {
         this.dialogService.addDialogComponent(this.dialogDirective, data.msg, data.confirmFunc);

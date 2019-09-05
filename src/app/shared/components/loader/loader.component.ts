@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SpinnerService} from '../../services/spinner.service';
 import {Subscription} from 'rxjs/index';
+import {distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
   selector: 'app-loader',
@@ -17,7 +18,9 @@ export class LoaderComponent implements OnInit, OnDestroy {
   isLoading: boolean;
 
   ngOnInit() {
-    this.loadingSubscription = this.spinnerService.showLoader.subscribe(
+    this.loadingSubscription = this.spinnerService.showLoader
+      .pipe(distinctUntilChanged())
+      .subscribe(
       data => this.isLoading = data
     );
   }
