@@ -62,6 +62,8 @@ describe('SERVICE -> Profile Service', () => {
         }
       );
 
+      console.log(authService.userDataSubject.value);
+
       const req = backend.expectOne({url:
           `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyBZRtSixnLvglkNRxsX6hH3nkxybI_JSz4`
       });
@@ -73,9 +75,30 @@ describe('SERVICE -> Profile Service', () => {
     }))
   );
 
-  it('Should use Fetch profiles', async(inject([ProfilesService, HttpTestingController, AuthService],
-    (service: ProfilesService, backend: HttpTestingController) => {
-      const mockProfiles = {email: 'test@email.com'};
+  it('Should use Fetch profiles', async(inject([ProfilesService, AuthService, HttpTestingController, AuthService],
+    (service: ProfilesService, authService: AuthService, backend: HttpTestingController) => {
+
+      const mockUser = {
+        email: 'test@test.test',
+        token: 'token',
+        uid: 1,
+        _token: 'token',
+        _tokenExpirationDate: new Date()
+      };
+
+      const mockProfile = [
+        'FBUID',
+        {
+          'email': 'test@test.test',
+          'isSAdmin': false,
+          'name': 'name',
+          'phone': '7777777',
+          'surname': 'surname',
+          'uid': 'UID'
+        }
+      ];
+
+      const spyProp = spyOnProperty(authService.userDataSubject, 'value', 'get').and.returnValue(mockUser);
 
       service.fetchUserProfiles()
         .subscribe(data => {
@@ -90,7 +113,7 @@ describe('SERVICE -> Profile Service', () => {
 
       expect(req.request.method).toEqual('GET');
 
-      req.flush(mockProfiles);
+      req.flush(mockProfile);
     }))
   );
 });

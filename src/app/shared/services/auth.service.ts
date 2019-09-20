@@ -142,7 +142,7 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  get currUser() {
+  get currUser(): any {
     const currUser: {
       email: string,
       uid: string,

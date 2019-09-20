@@ -39,6 +39,8 @@ export class ProfilesService {
 
     profile = this.getProfileData(this.profilesDataSubject.value, profile['email']);
     this.profileSubject.next(profile);
+    console.log('CURRENT PROFILE');
+    console.log(this.profileSubject.value);
   }
 
   fetchUserProfiles(): Observable<any> {

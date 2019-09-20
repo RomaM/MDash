@@ -6,14 +6,13 @@ import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {State, Store, StoreModule} from '@ngrx/store';
 import {profileReducer} from '../store/profile.reducer';
-import Spy = jasmine.Spy;
 import {from, Observable, of} from 'rxjs';
 
 describe('COMPONENT -> List Component', () => {
   let fixture: ComponentFixture<ListComponent>;
   let component: ListComponent;
   let profileService: ProfilesService;
-  let spy: Spy;
+  let spy: jasmine.Spy;
   let mockProfiles;
 
   beforeEach( async(() => {
