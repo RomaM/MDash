@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
   activeUser = new UserDetailsModel(false, '', '', '', '', '');
 
+  asyncStringForTest = '';
 
   ngOnInit() {
     // this.currentUserSubscription = this.authService.userDataSubject
@@ -34,6 +35,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     //     }
     //   });
 
+    this.profileService.getAsyncStringForTest()
+      .then( data => this.asyncStringForTest = data);
+
     this.profileSubscription = this.profileService.profileSubject
       .pipe(skipWhile(data => data === null))
       .subscribe(data => this.activeUser = data[1]);
@@ -44,7 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.profileSubscription.unsubscribe();
+    if (this.profileSubscription) { this.profileSubscription.unsubscribe(); }
     // this.currentUserSubscription.unsubscribe();
   }
 }

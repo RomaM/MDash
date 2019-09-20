@@ -29,19 +29,18 @@ export class ListComponent implements OnInit, OnDestroy {
     private dialogService: DialogService) { }
 
   ngOnInit() {
-    this.profilesSubscription = this.profileService.profilesDataSubject.subscribe(
+    this.profilesSubscription = this.profileService.profilesDataSubject
+      .subscribe(
       data => {
         this.currentProfile = this.profileService.profileSubject.value;
 
-        this.currentProfileIndex = data.findIndex(el => el[1]['uid'] === this.currentProfile[1]['uid'])
+        this.currentProfileIndex = data.findIndex(el => {
+          return el[1]['uid'] === this.currentProfile[1]['uid'];
+        });
+
         this.profilesData = data;
       }
     );
-  }
-
-  editItem(key) {
-    console.log(this.profilesData);
-    // this.router.navigate('/');
   }
 
   removeItem(key) {
@@ -52,7 +51,7 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.profilesSubscription.unsubscribe();
+    if (this.profilesSubscription) {this.profilesSubscription.unsubscribe();}
   }
 
 }

@@ -110,7 +110,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.itemsLoadedSubscription.unsubscribe();
+    if (this.itemsLoadedSubscription) {this.itemsLoadedSubscription.unsubscribe();}
 
     this.store.dispatch(new PagesActions.EditedPage(
       {selectedID: -1, editedMode: false}

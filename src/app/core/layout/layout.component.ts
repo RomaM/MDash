@@ -27,7 +27,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogSubscription.unsubscribe();
+    if (this.dialogSubscription) {this.dialogSubscription.unsubscribe();}
   }
 
 }

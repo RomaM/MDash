@@ -17,10 +17,16 @@ import * as profileReducer from './modules/profile/store/profile.reducer';
 })
 export class AppComponent implements OnChanges, OnInit, DoCheck, AfterViewInit, AfterContentInit, OnDestroy {
 
-  constructor(private ngZone: NgZone, private authService: AuthService, private store: Store<profileReducer.State>) {
+  title = 'FD';
+
+  constructor(private ngZone: NgZone,
+              private authService: AuthService,
+              private store: Store<profileReducer.State>) {
     // Preventing continual internal changes/operations from triggering change detection in DoCheck()
     this.ngZone.runOutsideAngular(() => {
-      firebase.initializeApp(environment.firebase);
+      if (!firebase.apps.length) {
+        firebase.initializeApp(environment.firebase);
+      }
     });
   }
 
@@ -33,6 +39,8 @@ export class AppComponent implements OnChanges, OnInit, DoCheck, AfterViewInit, 
       .subscribe(data => {
         if (data !== null) { this.store.dispatch(new ProfileActions.LoadProfile()); }
       });
+
+
   }
 
   ngDoCheck() {}

@@ -81,6 +81,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentProfileSubscription.unsubscribe();
+    if (this.currentProfileSubscription) {this.currentProfileSubscription.unsubscribe();}
   }
 }

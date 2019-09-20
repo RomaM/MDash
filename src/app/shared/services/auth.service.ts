@@ -156,6 +156,8 @@ export class AuthService {
   private handleUser(email: string, uid: string, token: string, expiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
     const currUser = new CurrentUser(email, uid, token, expirationDate);
+    console.log('AuthService -> handleUser -> ');
+    console.log(currUser);
     this.userDataSubject.next(currUser);
     this.autoLogout(+expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(currUser));
