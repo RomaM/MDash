@@ -26,21 +26,11 @@ export class ProfilesService {
   profileSubject: (BehaviorSubject<[string, UserDetailsModel]> | any)
     = new BehaviorSubject<[string, UserDetailsModel]>(null);
 
-  getAsyncStringForTest() {
-    return new Promise<string>((res, rej) => {
-      setTimeout(() => {
-        res('ASD');
-      }, 2000);
-    });
-  }
-
   setCurrentProfile() {
     let profile = this.authService.userDataSubject.value;
 
     profile = this.getProfileData(this.profilesDataSubject.value, profile['email']);
     this.profileSubject.next(profile);
-    console.log('CURRENT PROFILE');
-    console.log(this.profileSubject.value);
   }
 
   fetchUserProfiles(): Observable<any> {
@@ -54,7 +44,6 @@ export class ProfilesService {
         map(data => {
           data = Object.entries(data);
           this.profilesDataSubject.next(data);
-          console.log(this.profilesDataSubject.value);
           this.setCurrentProfile();
         }),
         catchError( err => throwError(`Profile Service: ${err}`))

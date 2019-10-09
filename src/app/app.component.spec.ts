@@ -10,7 +10,7 @@ import {profileReducer} from './modules/profile/store/profile.reducer';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('COMPONENT -> App Component', () => {
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
@@ -28,7 +28,7 @@ describe('COMPONENT -> App Component', () => {
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
-  }));
+  });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);

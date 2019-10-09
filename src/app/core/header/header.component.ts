@@ -23,24 +23,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
   activeUser = new UserDetailsModel(false, '', '', '', '', '');
 
-  asyncStringForTest = '';
-
   ngOnInit() {
-    // this.currentUserSubscription = this.authService.userDataSubject
-    //   .pipe(takeWhile(data => data !== null))
-    //   .subscribe(currUser => {
-    //     console.log(currUser)
-    //     if (currUser['email'] !== this.authService.userDataSubject.value['email']) {
-    //       this.profileService.profilesDataSubject.next(null);
-    //     }
-    //   });
-
-    this.profileService.getAsyncStringForTest()
-      .then( data => this.asyncStringForTest = data);
-
     this.profileSubscription = this.profileService.profileSubject
-      .pipe(skipWhile(data => data === null))
-      .subscribe(data => this.activeUser = data[1]);
+      .pipe( skipWhile(data => data === null) )
+      .subscribe(data => {
+        this.activeUser = data[1];
+      });
   }
 
   signOut() {

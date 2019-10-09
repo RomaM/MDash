@@ -7,12 +7,14 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule} from '@ngrx/store';
 import {profileReducer} from '../../modules/profile/store/profile.reducer';
 import {ProfilesService} from '../../shared/services/profiles.service';
-import {publishBehavior} from 'rxjs/operators';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
+import {UserDetailsModel} from '../../shared/models/user-details.model';
+import {By} from '@angular/platform-browser';
 
 describe('COMPONENT -> Header Component', () => {
   let fixture: ComponentFixture<HeaderComponent>;
   let component: HeaderComponent;
+  let profileService: ProfilesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,43 +25,49 @@ describe('COMPONENT -> Header Component', () => {
         HttpClientTestingModule,
         StoreModule.forRoot({profileReducer})
       ],
+      providers: [ProfilesService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
+    }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
-    // fixture.detectChanges();
+    fixture.detectChanges();
+    profileService = TestBed.get(ProfilesService);
   });
 
   it('Should create Header Component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get the test async string at the beginning as empty', () => {
-    const profileService = fixture.debugElement.injector.get(ProfilesService);
-    const spy = spyOn(profileService, 'getAsyncStringForTest').and.returnValue(Promise.resolve('ASD'));
-    fixture.detectChanges();
-    expect(spy).toHaveBeenCalled(); // The method called
-    expect(component.asyncStringForTest).toBe(''); // The method returns an empty string;
+  it('Should get an active user', () => {
+    // const profileService = fixture.debugElement.injector.get(ProfilesService);
+    const currProfile = new UserDetailsModel(false, 'user', 'user', 'email', 123, 'uid');
+    const currUser = ['uid', currProfile];
+
+    profileService.profileSubject.next(currUser);
+    expect(component.activeUser).toEqual(currProfile);
   });
 
-  it('Should get the test async string asynchronously', async(() => {
-    // const profileService = fixture.debugElement.injector.get(ProfilesService);
-    const profileService = TestBed.get(ProfilesService);
-    const spy = spyOn(profileService, 'getAsyncStringForTest').and.returnValue(Promise.resolve('ASD'));
+  it('Should has header username equal to a test data', () => {
+    const currProfile = new UserDetailsModel(false, 'user', 'user', 'email', 123, 'uid');
+    const currUser = ['uid', currProfile];
+    profileService.profileSubject.next(currUser);
+    const headerText = fixture.debugElement.query(By.css('.header__user-name'));
+    component.ngOnInit();
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(component.asyncStringForTest).toBe('ASD');
-    });
-  }));
 
-  it('Should get the test async string asynchronously after a while', fakeAsync(() => {
-    const profileService = fixture.debugElement.injector.get(ProfilesService);
-    const spy = spyOn(profileService, 'getAsyncStringForTest').and.returnValue(Promise.resolve('ASD'));
-    fixture.detectChanges();
-    tick();
-    expect(component.asyncStringForTest).toBe('ASD');
-  }));
+    console.log(fixture.debugElement.query(By.css('.header__user-name')).nativeElement);
+    console.log(fixture.nativeElement);
+
+    expect(headerText.nativeElement.textContent).toEqual(`${currProfile.name} ${currProfile.surname}`);
+  });
+
+  // it('Should get an active user async string', fakeAsync(() => {
+  //   const profileService = fixture.debugElement.injector.get(ProfilesService);
+  //   const spy = spyOn(profileService, 'getAsyncStringForTest').and.returnValue(Promise.resolve('ASD'));
+  //   tick();
+  //   expect(component.asyncStringForTest).toBe('ASD');
+  // }));
 });
