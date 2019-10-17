@@ -20,12 +20,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private store: Store<profileReducer.State>) { }
 
   profileSubscription: Subscription;
-  currentUserSubscription: Subscription;
   activeUser = new UserDetailsModel(false, '', '', '', '', '');
 
   ngOnInit() {
     this.profileSubscription = this.profileService.profileSubject
-      .pipe( skipWhile(data => data === null) )
+      .pipe(
+        skipWhile(data => data === null)
+      )
       .subscribe(data => {
         this.activeUser = data[1];
       });
@@ -37,6 +38,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.profileSubscription) { this.profileSubscription.unsubscribe(); }
-    // this.currentUserSubscription.unsubscribe();
   }
 }

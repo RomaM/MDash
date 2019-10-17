@@ -2,7 +2,7 @@ import {Action} from '@ngrx/store';
 import {UserDetailsModel} from '../../../shared/models/user-details.model';
 
 export enum ProfileActionTypes {
-  LOAD_PROFILE = '[Profile] Load',
+  LOAD_PROFILES = '[Profile] Load',
   LOADING_PROFILE = '[Profile] Loading',
   REGISTER_USER = '[Profile] User',
   EDITED_PROFILE = '[Profile] Edited',
@@ -11,8 +11,8 @@ export enum ProfileActionTypes {
   DELETE_PROFILE = '[Profile] Delete'
 }
 
-export class LoadProfile implements Action {
-  readonly type = ProfileActionTypes.LOAD_PROFILE;
+export class LoadProfiles implements Action {
+  readonly type = ProfileActionTypes.LOAD_PROFILES;
 }
 
 export class LoadingProfile implements Action {
@@ -52,7 +52,7 @@ export class DeleteProfile implements Action {
 }
 
 export type ProfileActions =
-  LoadProfile |
+  LoadProfiles |
   LoadingProfile |
   RegisterUser |
   AddProfile |

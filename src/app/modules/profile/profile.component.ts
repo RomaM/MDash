@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit, DoCheck {
               private store: Store<profileReducer.State>) {}
 
   ngOnInit() {
-    // this.store.dispatch(new ProfileActions.LoadProfile());
+    // this.store.dispatch(new ProfileActions.LoadProfiles());
   }
 
   ngDoCheck () {

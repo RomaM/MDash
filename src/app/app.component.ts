@@ -37,7 +37,7 @@ export class AppComponent implements OnChanges, OnInit, DoCheck, AfterViewInit, 
 
     this.authService.userDataSubject
       .subscribe(data => {
-        if (data !== null) { this.store.dispatch(new ProfileActions.LoadProfile()); }
+        if (data !== null) { this.store.dispatch(new ProfileActions.LoadProfiles()); }
       });
 
 

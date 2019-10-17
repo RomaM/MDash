@@ -18,7 +18,7 @@ export class ProfileEffects {
 
   @Effect()
   fetchProfiles$ = this.actions$.pipe(
-    ofType(<string>ProfileActions.ProfileActionTypes.LOAD_PROFILE),
+    ofType(<string>ProfileActions.ProfileActionTypes.LOAD_PROFILES),
     switchMap(() =>
       this.profilesService.fetchUserProfiles()
         .pipe(

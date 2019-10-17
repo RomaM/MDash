@@ -1,13 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {from, Observable, Subscription} from 'rxjs';
-import {first, map, take, takeUntil, takeWhile, tap} from 'rxjs/operators';
+import {first, map, skipWhile, take, takeUntil, takeWhile, tap} from 'rxjs/operators';
 import * as pagesReducer from '../store/pages.reducer';
 import * as PagesActions from '../store/pages.actions';
 import {select, Store} from '@ngrx/store';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ItemsService} from '../../../shared/services/items.service';
 import {DialogService} from '../../../shared/services/dialog.service';
+import {UserDetailsModel} from '../../../shared/models/user-details.model';
+import {ProfilesService} from '../../../shared/services/profiles.service';
 
 @Component({
   selector: 'app-details',
@@ -18,6 +20,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
   detailsForm: FormGroup;
   editedItem: number;
   itemsLoadedSubscription: Subscription;
+  profileSubscription: Subscription;
+  activeUser = this.profileService.profileSubject.value ?
+    this.profileService.profileSubject.value[1] :
+    new UserDetailsModel(false, '', '', '', '', '');
 
   pageBrands = ['RCPro', 'S2Trade', 'Glenm', 'TradeLTD', 'TradeFW'];
   pageLangs = ['ru', 'en', 'de', 'es', 'it'];
@@ -30,17 +36,27 @@ export class DetailsComponent implements OnInit, OnDestroy {
   constructor(private itemsService: ItemsService,
               private store: Store<pagesReducer.State>,
               private route: ActivatedRoute,
-              private dialogService: DialogService) { }
+              private dialogService: DialogService,
+              private profileService: ProfilesService) { }
 
   ngOnInit() {
     this.editedItem = this.route.snapshot.params['id'] ? this.route.snapshot.params['id'] : 0;
     this.initForm();
+
+    this.profileSubscription = this.profileService.profileSubject
+      .pipe(
+        // map(data => console.log(data)),
+        skipWhile(data => data === null)
+      )
+      .subscribe(data => {
+        this.activeUser = data[1];
+      });
   }
 
   initForm () {
     this.detailsForm = new FormGroup({
       'title': new FormControl('', Validators.required),
-      'author': new FormControl('', Validators.required),
+      'author': new FormControl({value: '', disabled: true}, Validators.required),
       'id': new FormControl({value: this.editedItem, disabled: true}, Validators.required),
       'url': new FormControl('', Validators.required),
       'taskUrl': new FormControl('', Validators.required),
@@ -66,12 +82,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
           this.store.dispatch(new PagesActions.EditedPage({ selectedID: +this.editedItem, editedMode: true }));
 
           this.key = data[this.editedItem][0];
-
-
           this.detailsForm.patchValue(data[this.editedItem][1]);
-        } else if (data.length > 0) {
 
-          this.detailsForm.patchValue({id: data.length + 1}); // Add an ID field if a new page is creating
+        } else if (data.length > 0) {
+          this.detailsForm.patchValue({
+            'id': data.length + 1,
+            'author': `${this.activeUser.name} ${this.activeUser.surname}`
+          }); // Add an ID field if a new page is creating
         }
       }
     );
@@ -110,7 +127,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.itemsLoadedSubscription) {this.itemsLoadedSubscription.unsubscribe();}
+    if (this.itemsLoadedSubscription) { this.itemsLoadedSubscription.unsubscribe(); }
+    if (this.profileSubscription) { this.profileSubscription.unsubscribe(); }
 
     this.store.dispatch(new PagesActions.EditedPage(
       {selectedID: -1, editedMode: false}
