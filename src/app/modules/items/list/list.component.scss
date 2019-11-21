@@ -1,9 +1,48 @@
-.item-cards {
+.filters {
   display: flex;
   flex-flow: row wrap;
   width: 100%;
+  padding: 10px 10px 0;
+  box-sizing: border-box;
+  overflow: hidden;
 
-  &__item {
+  &__cell {
+    flex: 0 1 10%;
+    padding-left: 15px;
+    width: 10%;
+
+    &_title {
+      padding-left: 0;
+      width: 25%;
+    }
+  }
+
+  .actions {
+    display: flex;
+    margin-left: auto;
+    padding: 10px 0;
+
+    &__btn {
+      &_push {
+        color: #6e00ff;
+      }
+
+      &_fetch {
+        color: #dc005a;
+      }
+
+      &_add {
+        color: #01b60b;
+      }
+    }
+  }
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+
+  &__elem {
     flex: 0 1 25%;
   }
 }

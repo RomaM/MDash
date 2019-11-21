@@ -9,3 +9,25 @@ $custom-theme-warn:    mat-palette($mat-deep-orange);
 $custom-theme: mat-dark-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
 
 @include angular-material-theme($custom-theme);
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background: #424242;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+}

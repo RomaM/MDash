@@ -1,0 +1,61 @@
+<mat-card class="details">
+  <h1 class="title" *ngIf="!editMode">Profile Info</h1>
+  <h1 class="title" *ngIf="editMode">Edit Profile</h1>
+  <div class="actions">
+    <button
+        *ngIf="!editMode && isSAdmin"
+        mat-flat-button
+        class="actions__btn actions__btn_register"
+        type="button"
+        routerLink="/profile/new">
+      Register a new user
+    </button>
+  </div>
+  <form [formGroup]="detailsForm" class="form" (ngSubmit)="saveChanges()">
+    <mat-form-field class="form__field form__field_name">
+      <input matInput placeholder="First Name" formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="form__field form__field_surname">
+      <input matInput placeholder="Last Name" formControlName="surname">
+    </mat-form-field>
+    <mat-form-field class="form__field form__field_email">
+      <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field class="form__field form__field_phone">
+      <input matInput placeholder="Phone" formControlName="phone">
+    </mat-form-field>
+    <mat-form-field class="form__field form__field_uid">
+      <input matInput placeholder="User ID" formControlName="uid">
+    </mat-form-field>
+    <mat-form-field class="form__field form__field_issadmin">
+      <input matInput placeholder="Super Admin Rights" formControlName="isSAdmin">
+    </mat-form-field>
+  
+    <div class="actions">
+      <button
+          *ngIf="!editMode"
+          mat-flat-button
+          class="actions__btn actions__btn_edit"
+          type="button"
+          routerLink="/profile/edit">
+        Edit
+      </button>
+      <button
+          *ngIf="editMode"
+          mat-flat-button
+          class="actions__btn actions__btn_save"
+          type="submit">
+        Save
+      </button>
+      <button
+          *ngIf="editMode"
+          mat-flat-button
+          class="actions__btn actions__btn_cancel"
+          type="button"
+          routerLink="/profile">
+        Cancel
+      </button>
+    </div>
+  </form>
+</mat-card>
+<app-list *ngIf="!editMode && isSAdmin"></app-list>

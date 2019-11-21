@@ -1,0 +1,47 @@
+.title {
+  text-align: center;
+}
+
+.login {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .field-wrap {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    overflow: hidden;
+
+    &__input {}
+
+    &__err {
+      font-size: 12px;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+  &__btn {
+    min-width: 180px;
+    font-size: 16px;
+    line-height: 2.5;
+  }
+
+  &__link {
+    color: #009908;
+  }
+
+  &__devider {
+    margin: 10px 0;
+  }
+}

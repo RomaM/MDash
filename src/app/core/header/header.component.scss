@@ -1,15 +1,18 @@
-.mat-toolbar {
+.header {
   position: absolute;
   top: 0;
   z-index: 10;
   height: 50px;
   min-height: 50px;
+  overflow: hidden;
 
-  .mat-toolbar-row {
+  &__row {
     height: 50px;
   }
-}
 
-.spacer {
-  flex: 1 1 auto;
+  &__spacer {
+    flex: 1 1 auto;
+  }
+
+  &__user-name {}
 }

@@ -1,0 +1,62 @@
+.details {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.form {
+  max-width: 500px;
+
+  &__field {
+    padding-bottom: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+
+    &_name, &_email {
+      width: 50%;
+      padding-right: 7px;
+    }
+
+    &_surname, &_phone {
+      width: 50%;
+      padding-left: 8px;
+    }
+
+    &_uid {
+      width: 70%;
+      padding-right: 7px;
+    }
+
+    &_issadmin {
+      width: 30%;
+      padding-left: 8px;
+    }
+  }
+}
+
+.actions {
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+
+  &__btn {
+    margin: 0 5px;
+    font-size: 16px;
+
+    &_register {
+      background: #10a40d;
+    }
+
+    &_save {
+      background: #009908;
+    }
+
+    &_edit {
+      background: #6e00ff;
+    }
+
+    &_cancel {
+      background: #dc005a;
+    }
+  }
+}

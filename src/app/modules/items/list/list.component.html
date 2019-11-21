@@ -1,10 +1,64 @@
-<!--<button mat-button (click)="store()">Store</button>-->
-<!--<button mat-button (click)="get()">Get</button>-->
+<div class="filters">
+  <mat-form-field class="filters__cell filters__cell_title">
+    <input matInput placeholder="Title" value="" [(ngModel)]="filterTitle">
+  </mat-form-field>
 
-<div class="item-cards">
-  <app-item *ngFor="let item of pagesList; let i = index;"
-            [index]="i"
-            [itemData]="item"
-            class="item-cards__item">
+  <mat-form-field class="filters__cell filters__cell_steps">
+    <mat-select placeholder="Step" [(ngModel)]="filterSteps">
+      <mat-option value="all">All</mat-option>
+      <mat-option value="1">1 step</mat-option>
+      <mat-option value="2">2 step</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="filters__cell filters__cell_brands">
+    <mat-select placeholder="Brand" [(ngModel)]="filterBrands">
+      <mat-option value="all">All</mat-option>
+      <mat-option value="rcpro">RCPro</mat-option>
+      <mat-option value="glenm">Glenm</mat-option>
+      <mat-option value="s2trade">S2Trade</mat-option>
+      <mat-option value="tradefw">TradeFW</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="filters__cell filters__cell_lang">
+    <mat-select placeholder="Lang" [(ngModel)]="filterLang">
+      <mat-option value="all">All</mat-option>
+      <mat-option value="en">en</mat-option>
+      <mat-option value="es">es</mat-option>
+      <mat-option value="it">it</mat-option>
+      <mat-option value="ru">ru</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="actions">
+    <!--<button mat-button class="actions__btn actions__btn_push" (click)="push()">-->
+      <!--<mat-icon>cloud_upload</mat-icon>-->
+    <!--</button>-->
+    <!--<button mat-button class="actions__btn actions__btn_fetch" (click)="fetch()">-->
+      <!--<mat-icon>cloud_download</mat-icon>-->
+    <!--</button>-->
+
+    <!--<button mat-button  class="actions__btn actions__btn_log" (click)="log()" >-->
+      <!--<mat-icon>visibility</mat-icon>-->
+    <!--</button>-->
+
+    <button mat-button  class="actions__btn actions__btn_add" routerLink="/list/new">
+      <mat-icon>playlist_add</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="list">
+  <app-item *ngFor="let item of pagesData
+    | filter:'title':filterTitle
+    | filter:'steps':filterSteps
+    | filter:'brand':filterBrands
+    | filter:'lang':filterLang;
+    let i = index;"
+    [index]="i"
+    [timestamp]="item[0]"
+    [itemData]="item[1]"
+    class="list__elem">
   </app-item>
 </div>

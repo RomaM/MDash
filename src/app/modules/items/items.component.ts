@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Store} from '@ngrx/store';
+import * as pagesReducer from './store/pages.reducer';
+import * as PagesActions from './store/pages.actions';
 
 @Component({
   selector: 'app-items',
@@ -6,10 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent implements OnInit {
-
-  constructor() { }
+  constructor(private store: Store<pagesReducer.State>) {}
 
   ngOnInit() {
+    this.store.dispatch(new PagesActions.LoadPages());
   }
-
 }

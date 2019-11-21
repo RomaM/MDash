@@ -1,0 +1,22 @@
+<div class="overlay">
+  <mat-card class="dialog">
+    <mat-card-content class="dialog__content">
+      <p class="dialog__msg">{{message}}</p>
+    </mat-card-content>
+    <mat-card-actions class="actions">
+      <button
+          class="actions__btn actions__btn_confirm"
+          mat-flat-button
+          (click)="onConfirm()">
+        {{confirmMsg}}
+      </button>
+      <button
+          *ngIf="declineMsg"
+          class="actions__btn actions__btn_decline"
+          mat-flat-button
+          (click)="onDecline()">
+        {{declineMsg}}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

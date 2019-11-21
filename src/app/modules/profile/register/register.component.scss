@@ -1,0 +1,54 @@
+.register {
+
+}
+
+.title {
+  text-align: center;
+}
+
+.register-form {
+  margin: auto;
+  max-width: 500px;
+
+  .field-wrap {
+    width: 100%;
+    padding-bottom: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+
+    &_name {
+      width: 50%;
+      padding-right: 7px;
+      box-sizing: border-box;
+    }
+
+    &_surname {
+      width: 50%;
+      padding-left: 8px;
+      box-sizing: border-box;
+    }
+
+    &__err {
+      font-size: 12px;
+    }
+  }
+}
+
+.actions {
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+
+  &__btn {
+    margin: 0 5px;
+    font-size: 16px;
+
+    &_submit {
+      background: #10a40d;
+    }
+
+    &_cancel {
+      background: #dc005a;
+    }
+  }
+}

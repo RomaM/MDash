@@ -1,43 +1,47 @@
-import { Component, OnInit } from '@angular/core';
-import {PageDetailsModel} from '../../../shared/models/page-detail.model';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ItemsData, PageDetailsModel} from '../../../shared/models/page-detail.model';
+import {select, Store} from '@ngrx/store';
+import * as pagesReducer from '../store/pages.reducer';
+import {Observable, Subscription} from 'rxjs';
 import {ItemsService} from '../../../shared/services/items.service';
-import {List} from './list.data';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
 
-  pagesList: PageDetailsModel[]
-    // = this.list.list;
+export class ListComponent implements OnInit, OnDestroy {
+  itemsLoadedSubscription: Subscription;
 
-  constructor(private itemsService: ItemsService, private list: List) { }
+  filterTitle: string;
+  filterSteps: string;
+  filterBrands: string;
+  filterLang: string;
+
+  pagesData: any = [];
+
+  constructor(private store: Store<pagesReducer.State>,
+              private itemsService: ItemsService) { }
 
   ngOnInit() {
-    this.itemsService.getItems()
+    this.filterTitle = '';
+    this.filterSteps = '';
+    this.filterBrands = '';
+    this.filterLang = '';
+
+    this.itemsLoadedSubscription = this.itemsService.loadedData
       .subscribe(
-        (response) => {
-          this.pagesList = response;
+      (data: any) => {
+        // if (Object.keys(data).length > 0 && data.constructor === Object) {
+        if (data.length > 0) {
+          this.pagesData = data;
         }
-      );
+      }
+    );
   }
 
-  store() {
-    this.itemsService.storeItems(this.pagesList)
-      .subscribe(
-        (response) => { console.log(response); }
-      );
+  ngOnDestroy() {
+    if (this.itemsLoadedSubscription) { this.itemsLoadedSubscription.unsubscribe(); }
   }
-
-  get() {
-    this.itemsService.getItems()
-      .subscribe(
-        (response) => {
-          console.log(response);
-        }
-      );
-  }
-
 }

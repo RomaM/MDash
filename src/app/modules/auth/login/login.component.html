@@ -1,1 +1,40 @@
-Login
+<!--<app-dialog [message]="error" title="Sign In Error" (close)="onCloseDialog()" *ngIf="error"></app-dialog>-->
+
+<h1 class="title">Sign In</h1>
+<form class="login" [formGroup]="loginForm" (ngSubmit)="signInUser()">
+	<mat-form-field class="field-wrap" appearance="outline">
+		<mat-label>Enter your email</mat-label>
+		<input
+			class="field-wrap__input"
+			matInput
+			placeholder=""
+			formControlName="email">
+		<mat-error class="field-wrap__err" *ngIf="field.email.errors">
+			<span *ngIf="field.email.errors.email">Please enter a valid email address</span>
+			<span *ngIf="field.email.errors.required">Email is <strong>required</strong></span>
+		</mat-error>
+	</mat-form-field>
+	
+	<mat-form-field class="field-wrap" appearance="outline">
+		<mat-label>Enter your password</mat-label>
+		<input
+			class="field-wrap__input"
+			matInput
+			placeholder=""
+			formControlName="password"
+			[type]="hide ? 'password' : 'text'">
+		<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+		<mat-error class="field-wrap__err" *ngIf="field.password.errors">
+			<span *ngIf="field.password.errors.minlength">Password must be at least 4 characters long</span>
+			<span *ngIf="field.password.errors.required">Password is <strong>required</strong></span>
+		</mat-error>
+	</mat-form-field>
+	
+	<div class="actions">
+		<button
+			class="actions__btn actions__btn_submit"
+			mat-raised-button
+			color="primary"
+			type="submit">SIGN IN</button>
+	</div>
+</form>
