@@ -16,8 +16,6 @@ export class ListComponent implements OnInit {
   constructor(private itemsService: ItemsService, private list: List) { }
 
   ngOnInit() {
-    // let i = 9000;
-    // while (i > 1) { i--; console.log(i); }
     this.itemsService.getItems()
       .subscribe(
         (response) => {
@@ -36,7 +34,9 @@ export class ListComponent implements OnInit {
   get() {
     this.itemsService.getItems()
       .subscribe(
-        (response) => { console.log(response); }
+        (response) => {
+          console.log(response);
+        }
       );
   }
 
