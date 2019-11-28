@@ -1,6 +1,7 @@
 .details {
   display: flex;
-  flex-flow: row wrap;
+  align-items: center;
+  flex-flow: column wrap;
   justify-content: center;
 }
 
@@ -36,7 +37,7 @@
 
 .actions {
   width: 100%;
-  padding: 15px 0;
+  padding: 0 0 15px 0;
   text-align: center;
 
   &__btn {

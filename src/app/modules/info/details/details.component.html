@@ -1,0 +1,40 @@
+<mat-card class="details">
+  <h1 class="title" *ngIf="!editMode">Add Info</h1>
+  <h1 class="title" *ngIf="editMode">Edit Info</h1>
+  
+  <form [formGroup]="detailsForm" class="form" (ngSubmit)="onSubmit()">
+    <mat-form-field class="form__field form__field_name">
+      <input matInput placeholder="Info title" formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="form__field form__field_link">
+      <input matInput placeholder="Info link" formControlName="link">
+    </mat-form-field>
+    <mat-form-field class="form__field form__field_details">
+      <textarea matInput placeholder="Info details" formControlName="details"></textarea>
+    </mat-form-field>
+    
+    <div class="actions">
+      <button
+        *ngIf="!editMode"
+        mat-flat-button
+        class="actions__btn actions__btn_save"
+        type="submit">
+        Save
+      </button>
+      <button
+        *ngIf="editMode"
+        mat-flat-button
+        class="actions__btn actions__btn_update"
+        type="submit">
+        Update
+      </button>
+      <button
+        mat-flat-button
+        class="actions__btn actions__btn_cancel"
+        type="button"
+        routerLink="/info">
+        Cancel
+      </button>
+    </div>
+  </form>
+</mat-card>

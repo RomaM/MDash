@@ -1,9 +1,8 @@
 <mat-card class="details">
-  <h1 class="title" *ngIf="!editMode">Profile Info</h1>
-  <h1 class="title" *ngIf="editMode">Edit Profile</h1>
-  <div class="actions">
+  <h1 class="details__title" *ngIf="!editMode">Profile Info</h1>
+  <h1 class="details__title" *ngIf="editMode">Edit Profile</h1>
+  <div class="actions" *ngIf="!editMode && isSAdmin">
     <button
-        *ngIf="!editMode && isSAdmin"
         mat-flat-button
         class="actions__btn actions__btn_register"
         type="button"

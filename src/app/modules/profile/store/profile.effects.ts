@@ -22,9 +22,7 @@ export class ProfileEffects {
     switchMap(() =>
       this.profilesService.fetchUserProfiles()
         .pipe(
-          map(() => {
-            return new ProfileActions.LoadingProfile(true);
-          }),
+          map(() => new ProfileActions.LoadingProfile(true)),
           catchError( err => throwError(err))
         )
     ),

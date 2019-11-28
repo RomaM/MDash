@@ -48,4 +48,4 @@ import {MatDatepickerModule} from '@angular/material';
   ]
 })
 
-export class ListItemsModule { }
+export class ListItemsModule {}

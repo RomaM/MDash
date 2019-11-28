@@ -3,7 +3,7 @@ import {HttpClient, HttpRequest} from '@angular/common/http';
 import {BehaviorSubject, from, Subject} from 'rxjs';
 import {ItemsData, PageDetailsModel} from '../models/page-detail.model';
 import {map, switchMap, take, tap} from 'rxjs/operators';
-import {AngularFireDatabase} from '@angular/fire/database';
+// import {AngularFireDatabase} from '@angular/fire/database';
 import {AuthService} from './auth.service';
 
 @Injectable({

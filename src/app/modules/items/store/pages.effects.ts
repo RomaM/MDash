@@ -21,11 +21,9 @@ export class PagesEffects {
   loadPages$ = this.actions$.pipe(
     ofType(<string>PagesActions.PageActionTypes.LOAD_PAGES),
     withLatestFrom(this.store.pipe(
-      select('pagesState', 'loaded')
+      select(state => state['pagesState'].loaded)
     )),
-    takeWhile(([, loaded]) => {
-      return loaded === false;
-    }),
+    takeWhile(([, loaded]) => !loaded),
     switchMap(() => this.itemsService.fetchItems().pipe(
       map( data => {
         this.itemsService.loadedData.next(data['list']);

@@ -11,6 +11,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'info',
+    loadChildren: './modules/info/info.module#InfoModule',
+    data: {preload: true},
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'profile',
     loadChildren: './modules/profile/profile.module#ProfileModule',
     data: {preload: true},

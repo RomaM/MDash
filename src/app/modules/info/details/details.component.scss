@@ -1,0 +1,45 @@
+.details {
+  display: flex;
+  align-items: center;
+  flex-flow: column wrap;
+  justify-content: center;
+
+  &__title {
+    text-align: center;
+    align-items: center;
+  }
+}
+
+.form {
+  max-width: 500px;
+
+  &__field {
+    width: 100%;
+    padding-bottom: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 15px 0;
+
+  &__btn {
+    font-size: 16px;
+
+    &_save, &_update {
+      margin-right: 5px;
+      background: #6e00ff;
+    }
+
+    &_cancel {
+      margin-left: 5px;
+      background: #dc005a;
+    }
+  }
+}
+

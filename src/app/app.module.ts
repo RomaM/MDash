@@ -50,7 +50,7 @@ import {ProfileEffects} from './modules/profile/store/profile.effects';
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi: true
-    },
+  },
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent],
