@@ -9,10 +9,6 @@ import {map} from 'rxjs/operators';
 export class InfoService {
   constructor(private httpClient: HttpClient) {}
 
-  addItem(item: any) {
-    return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/info.json', item);
-  }
-
   fetchItems() {
     return this.httpClient.get<any>('https://funnelsdetails.firebaseio.com/info.json',
       {
@@ -22,5 +18,13 @@ export class InfoService {
       .pipe(
         map(data => data)
       );
+  }
+
+  addItem(item: any) {
+    return this.httpClient.post<any>('https://funnelsdetails.firebaseio.com/info.json', item);
+  }
+
+  removeItem(key: string) {
+    return this.httpClient.delete<any>(`https://funnelsdetails.firebaseio.com/info/${key}.json`);
   }
 }

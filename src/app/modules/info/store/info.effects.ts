@@ -1,10 +1,17 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, ofType} from '@ngrx/effects';
+import {act, Actions, Effect, ofType} from '@ngrx/effects';
 import {Router} from '@angular/router';
 import {catchError, filter, map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {select, Store} from '@ngrx/store';
 import {State} from './info.reducer';
-import {AddInfo, InfoActionsTypes, LoadingInfo, SaveInfo} from './info.actions';
+import {
+  AddInfo,
+  InfoActionsTypes,
+  AddInfoSuccess,
+  LoadInfoSuccess,
+  DeleteInfo,
+  DeleteInfoSuccess
+} from './info.actions';
 import {InfoService} from '../../../shared/services/info.service';
 import {of, throwError} from 'rxjs';
 
@@ -30,7 +37,7 @@ export class InfoEffects {
           value['key'] = key;
           listArr.push(value);
         }
-        return new LoadingInfo({loaded: true, linkList: listArr});
+        return new LoadInfoSuccess({loaded: true, linkList: listArr});
       })
     )),
     catchError(err => of(`Info List Loading: ${err}`))
@@ -43,11 +50,25 @@ export class InfoEffects {
       map((res) => {
         const info = action.payload;
         info.key = res.name;
-        return new SaveInfo(info);
+        return new AddInfoSuccess(info);
       }),
       tap(() => this.router.navigate(['/info'])),
       catchError(err => throwError(err))
     )),
     catchError(err => of(`Info Item Adding: ${err}`))
+  );
+
+  @Effect()
+  deleteInfo$ = this.actions$.pipe(
+    ofType(<string>InfoActionsTypes.DELETE_INFO),
+    tap(() => console.log('DELETE EFFECT')),
+    switchMap((action: DeleteInfo) => this.infoService.removeItem(action.payload).pipe(
+      map(res => {
+        return new DeleteInfoSuccess(action.payload);
+      }),
+      tap(() => this.router.navigate(['/info'])),
+      catchError(err => throwError(err))
+    )),
+    catchError(err => of(`Info Item Removing: ${err}`))
   );
 }

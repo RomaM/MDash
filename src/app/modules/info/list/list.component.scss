@@ -27,7 +27,7 @@
 
 .item {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
   margin: 5px 10px 5px;
@@ -36,11 +36,29 @@
 
 .content {
   margin: 0;
+
+  &__title {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  &__link {
+    padding: 0;
+    min-width: 0;
+    color: #10a40d;
+    line-height: 1.5;
+  }
+
+  &__details {
+    margin: 0;
+    line-height: 1.5;
+  }
 }
 
 .actions {
   margin: 0;
   padding: 0;
+  min-width: 100px;
 
   &.mat-card-actions {
     margin: 0;

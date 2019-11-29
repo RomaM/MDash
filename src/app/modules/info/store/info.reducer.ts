@@ -1,4 +1,5 @@
 import {InfoActions, InfoActionsTypes, InfoDetails} from './info.actions';
+import {act} from '@ngrx/effects';
 
 export interface State {
   loaded: boolean;
@@ -16,18 +17,26 @@ export const initialState: State = {
 
 export function infoReducer(state = initialState, action: InfoActions): State {
   switch (action.type) {
-    case InfoActionsTypes.LOADING_INFO: {
+    case InfoActionsTypes.LOAD_INFO_SUCCESS: {
       return {
         ...state,
         loaded: action.payload.loaded,
         linkList: action.payload.linkList
       };
     }
-    case InfoActionsTypes.SAVE_INFO: {
-      console.log(action.payload);
+    case InfoActionsTypes.ADD_INFO_SUCCESS: {
       return {
         ...state,
-        linkList: {...state.linkList, ...action.payload}
+        linkList: [...state.linkList, action.payload]
+      };
+    }
+    case InfoActionsTypes.DELETE_INFO_SUCCESS: {
+      let newList = [...state.linkList];
+      newList = newList.filter(elem => elem.key !== action.payload);
+      console.log(newList);
+      return {
+        ...state,
+        linkList: [...newList]
       };
     }
     default: {

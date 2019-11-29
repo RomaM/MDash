@@ -4,6 +4,7 @@ import {Observable, of, Subscription} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import {infoReducer, initialState, State} from '../store/info.reducer';
 import {catchError, filter, map, skipWhile, tap} from 'rxjs/operators';
+import {DeleteInfo, LoadInfo} from '../store/info.actions';
 
 @Component({
   selector: 'app-list',
@@ -38,7 +39,10 @@ export class ListComponent implements OnInit, OnDestroy {
   editItem() {
   }
 
-  removeItem() {}
+  removeItem(key) {
+    console.log(key);
+    this.store.dispatch(new DeleteInfo(key));
+  }
 
   ngOnDestroy() {
     if (this.profileSubscription) { this.profileSubscription.unsubscribe(); }

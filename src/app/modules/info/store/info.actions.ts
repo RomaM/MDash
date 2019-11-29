@@ -9,11 +9,12 @@ export interface InfoDetails {
 
 export enum InfoActionsTypes {
   LOAD_INFO = '[Info] Load',
-  LOADING_INFO = '[Info] Loading',
+  LOAD_INFO_SUCCESS = '[Info] Load Success',
   EDITED_INFO = '[Info] Edited',
   ADD_INFO = '[Info] Add',
-  SAVE_INFO = '[Info] Save',
+  ADD_INFO_SUCCESS = '[Info] Add Success',
   DELETE_INFO = '[Info] Delete',
+  DELETE_INFO_SUCCESS = '[Info] Delete Success',
   UPDATE_INFO = '[Info] Update',
 }
 
@@ -21,8 +22,8 @@ export class LoadInfo implements Action {
   readonly type = InfoActionsTypes.LOAD_INFO;
 }
 
-export class LoadingInfo implements Action {
-  readonly type = InfoActionsTypes.LOADING_INFO;
+export class LoadInfoSuccess implements Action {
+  readonly type = InfoActionsTypes.LOAD_INFO_SUCCESS;
   constructor(public payload: {loaded: boolean, linkList: InfoDetails[]}) {}
 }
 
@@ -36,14 +37,19 @@ export class AddInfo implements Action {
   constructor(public payload: InfoDetails) {}
 }
 
-export class SaveInfo implements Action {
-  readonly type = InfoActionsTypes.SAVE_INFO;
+export class AddInfoSuccess implements Action {
+  readonly type = InfoActionsTypes.ADD_INFO_SUCCESS;
   constructor(public payload: InfoDetails) {}
 }
 
 export class DeleteInfo implements Action {
   readonly type = InfoActionsTypes.DELETE_INFO;
-  constructor(public payload: number) {}
+  constructor(public payload: string) {}
+}
+
+export class DeleteInfoSuccess implements Action {
+  readonly type = InfoActionsTypes.DELETE_INFO_SUCCESS;
+  constructor(public payload: string) {}
 }
 
 export class UpdateInfo implements Action {
@@ -53,9 +59,10 @@ export class UpdateInfo implements Action {
 
 export type InfoActions =
   LoadInfo |
-  LoadingInfo |
+  LoadInfoSuccess |
   AddInfo |
-  SaveInfo |
+  AddInfoSuccess |
   EditedInfo |
   DeleteInfo |
+  DeleteInfoSuccess |
   UpdateInfo;

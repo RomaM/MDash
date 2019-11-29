@@ -1,5 +1,5 @@
 <mat-card class="details">
-  <h1 class="title" *ngIf="!editMode">Add Info</h1>
+  <h1 class="title" *ngIf="!editMode">Add a new info</h1>
   <h1 class="title" *ngIf="editMode">Edit Info</h1>
   
   <form [formGroup]="detailsForm" class="form" (ngSubmit)="onSubmit()">
