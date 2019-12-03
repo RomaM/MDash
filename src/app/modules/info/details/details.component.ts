@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Route} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import * as PagesActions from '../../items/store/pages.actions';
 import {ProfilesService} from '../../../shared/services/profiles.service';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {State} from '../store/info.reducer';
-import {AddInfo} from '../store/info.actions';
+import {AddInfo, EditedInfo, EditInfo} from '../store/info.actions';
+import {catchError, filter} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private profileService: ProfilesService,
@@ -20,16 +21,28 @@ export class DetailsComponent implements OnInit {
 
 
   editMode = false;
-  selectedId = -1;
+  editedItem;
   detailsForm: FormGroup;
 
   ngOnInit() {
+    this.initForm();
+
     if ((this.route.snapshot.url.join('')).indexOf('edit') >= 0) {
       this.editMode = true;
-      this.selectedId = this.route.snapshot.params['id'] ? this.route.snapshot.params['id'] : null;
-    }
+      const selectedId = this.route.snapshot.params['id'] ? this.route.snapshot.params['id'] : null;
 
-    this.initForm();
+    this.store.pipe(
+      select(state => state['infoState'].linkList),
+      filter((data: any[]) => data.length > 0),
+      catchError(err => of(`Info List Error: ${err}`))
+  ).subscribe(list => {
+    this.editedItem = list[selectedId];
+
+    this.store.dispatch(new EditedInfo({selectedID: +selectedId, editedMode: true}));
+
+    this.detailsForm.patchValue(this.editedItem);
+      });
+    }
   }
 
   initForm() {
@@ -38,34 +51,22 @@ export class DetailsComponent implements OnInit {
       'link': new FormControl(''),
       'details': new FormControl(''),
       });
-
-    // this.itemsLoadedSubscription = this.itemsService.loadedData
-    //   .subscribe(
-    //     data => {
-    //       if (!!this.editedItem && data.length > 0) {
-    //         this.store.dispatch(new PagesActions.EditedPage({ selectedID: +this.editedItem, editedMode: true }));
-    //
-    //         this.key = data[this.editedItem][0];
-    //         this.detailsForm.patchValue(data[this.editedItem][1]);
-    //
-    //       } else if (data.length > 0) {
-    //         this.detailsForm.patchValue({
-    //           'id': data.length + 1,
-    //           'author': `${this.activeUser.name} ${this.activeUser.surname}`
-    //         }); // Add an ID field if a new page is creating
-    //       }
-    //     }
-    //   );
   }
 
   onSubmit() {
     if (this.detailsForm.valid) {
-      if (!!this.editMode) {
-        // this.store.dispatch(new PagesActions.UpdatePage({key: this.key, val: this.detailsForm.getRawValue()}));
-      } else {
+      if (!!this.editMode && this.editedItem['key']) {
+        this.store.dispatch(new EditInfo({key: this.editedItem['key'], infoDetails: this.editedItem}));
+      } else if (!this.editMode) {
         this.store.dispatch(new AddInfo(this.detailsForm.getRawValue()));
+      } else {
+        throw new Error('Update Info Error');
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(new EditedInfo({selectedID: -1, editedMode: false}));
   }
 
 }

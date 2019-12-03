@@ -5,6 +5,8 @@ import {select, Store} from '@ngrx/store';
 import {infoReducer, initialState, State} from '../store/info.reducer';
 import {catchError, filter, map, skipWhile, tap} from 'rxjs/operators';
 import {DeleteInfo, LoadInfo} from '../store/info.actions';
+import * as PagesActions from '../../items/store/pages.actions';
+import {DialogService} from '../../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-list',
@@ -14,7 +16,8 @@ import {DeleteInfo, LoadInfo} from '../store/info.actions';
 export class ListComponent implements OnInit, OnDestroy {
 
   constructor(private profileService: ProfilesService,
-              private store: Store<State>) {}
+              private store: Store<State>,
+              private dialogService: DialogService) {}
 
   profileSubscription: Subscription;
   isSAdmin = false;
@@ -36,12 +39,12 @@ export class ListComponent implements OnInit, OnDestroy {
     );
   }
 
-  editItem() {
-  }
-
   removeItem(key) {
-    console.log(key);
-    this.store.dispatch(new DeleteInfo(key));
+
+    this.dialogService.createDialog.next({
+      msg: 'Do you really want to Delete this page?',
+      confirmFunc: () => this.store.dispatch(new DeleteInfo(key))
+    });
   }
 
   ngOnDestroy() {

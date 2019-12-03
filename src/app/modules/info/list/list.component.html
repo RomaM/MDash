@@ -24,7 +24,9 @@
     
       <mat-card-actions class="actions">
         <a mat-button class="actions__btn actions__btn_edit" (click)="editItem()">
-          <mat-icon color="primary">edit</mat-icon>
+          <mat-icon
+            color="primary"
+            routerLink="/info/edit/{{i}}">edit</mat-icon>
         </a>
         <a mat-button class="actions__btn actions__btn_edit" (click)="removeItem(item['key'])">
           <mat-icon color="warn">remove</mat-icon>

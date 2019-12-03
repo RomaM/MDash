@@ -39,6 +39,13 @@ export function infoReducer(state = initialState, action: InfoActions): State {
         linkList: [...newList]
       };
     }
+    case InfoActionsTypes.EDITED_INFO: {
+      return {
+        ...state,
+        editedMode: action.payload.editedMode,
+        selectedID: action.payload.selectedID
+      };
+    }
     default: {
       return {
         ...state

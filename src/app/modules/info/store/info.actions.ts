@@ -11,6 +11,8 @@ export enum InfoActionsTypes {
   LOAD_INFO = '[Info] Load',
   LOAD_INFO_SUCCESS = '[Info] Load Success',
   EDITED_INFO = '[Info] Edited',
+  EDIT_INFO = '[Info] Edit',
+  EDIT_INFO_SUCCESS = '[Info] Edit Success',
   ADD_INFO = '[Info] Add',
   ADD_INFO_SUCCESS = '[Info] Add Success',
   DELETE_INFO = '[Info] Delete',
@@ -30,6 +32,16 @@ export class LoadInfoSuccess implements Action {
 export class EditedInfo implements Action {
   readonly type = InfoActionsTypes.EDITED_INFO;
   constructor(public payload: {selectedID: number, editedMode: boolean}) {}
+}
+
+export class EditInfo implements Action {
+  readonly type = InfoActionsTypes.EDIT_INFO;
+  constructor(public payload: {key: string, infoDetails: InfoDetails}) {}
+}
+
+export class EditInfoSuccess implements Action {
+  readonly type = InfoActionsTypes.EDIT_INFO_SUCCESS;
+  constructor(public payload: {key: string, infoDetails: InfoDetails}) {}
 }
 
 export class AddInfo implements Action {
@@ -63,6 +75,8 @@ export type InfoActions =
   AddInfo |
   AddInfoSuccess |
   EditedInfo |
+  EditInfo |
+  EditInfoSuccess |
   DeleteInfo |
   DeleteInfoSuccess |
   UpdateInfo;

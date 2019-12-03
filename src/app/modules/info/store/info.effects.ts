@@ -10,7 +10,7 @@ import {
   AddInfoSuccess,
   LoadInfoSuccess,
   DeleteInfo,
-  DeleteInfoSuccess
+  DeleteInfoSuccess, EditInfo
 } from './info.actions';
 import {InfoService} from '../../../shared/services/info.service';
 import {of, throwError} from 'rxjs';
@@ -70,5 +70,11 @@ export class InfoEffects {
       catchError(err => throwError(err))
     )),
     catchError(err => of(`Info Item Removing: ${err}`))
+  );
+
+  @Effect()
+  editInfo$ = this.actions$.pipe(
+    ofType(<string>InfoActionsTypes.EDIT_INFO),
+    switchMap((action: EditInfo) => )
   );
 }

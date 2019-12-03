@@ -27,4 +27,8 @@ export class InfoService {
   removeItem(key: string) {
     return this.httpClient.delete<any>(`https://funnelsdetails.firebaseio.com/info/${key}.json`);
   }
+
+  editItem(key: string, infoDetails: any) {
+    return this.httpClient.patch(`https://funnelsdetails.firebaseio.com/info/${key}.json`, infoDetails);
+  }
 }

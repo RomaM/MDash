@@ -10,7 +10,11 @@
       <input matInput placeholder="Info link" formControlName="link">
     </mat-form-field>
     <mat-form-field class="form__field form__field_details">
-      <textarea matInput placeholder="Info details" formControlName="details"></textarea>
+      <textarea
+        matInput
+        placeholder="Info details"
+        formControlName="details"
+        matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=10></textarea>
     </mat-form-field>
     
     <div class="actions">
