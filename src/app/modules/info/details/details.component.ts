@@ -4,7 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProfilesService} from '../../../shared/services/profiles.service';
 import {select, Store} from '@ngrx/store';
 import {State} from '../store/info.reducer';
-import {AddInfo, EditedInfo, EditInfo} from '../store/info.actions';
+import {AddInfo, EditInfo, UpdateInfo} from '../store/info.actions';
 import {catchError, filter} from 'rxjs/operators';
 import {of} from 'rxjs';
 
@@ -38,7 +38,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ).subscribe(list => {
     this.editedItem = list[selectedId];
 
-    this.store.dispatch(new EditedInfo({selectedID: +selectedId, editedMode: true}));
+    this.store.dispatch(new EditInfo({selectedID: +selectedId, editedMode: true}));
 
     this.detailsForm.patchValue(this.editedItem);
       });
@@ -56,7 +56,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.detailsForm.valid) {
       if (!!this.editMode && this.editedItem['key']) {
-        this.store.dispatch(new EditInfo({key: this.editedItem['key'], infoDetails: this.editedItem}));
+        this.store.dispatch(new UpdateInfo(
+          {key: this.editedItem['key'],
+            ...this.detailsForm.getRawValue()}
+        ));
       } else if (!this.editMode) {
         this.store.dispatch(new AddInfo(this.detailsForm.getRawValue()));
       } else {
@@ -66,7 +69,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch(new EditedInfo({selectedID: -1, editedMode: false}));
+    this.store.dispatch(new EditInfo({selectedID: -1, editedMode: false}));
   }
 
 }

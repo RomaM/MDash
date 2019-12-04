@@ -10,7 +10,7 @@ import {
   AddInfoSuccess,
   LoadInfoSuccess,
   DeleteInfo,
-  DeleteInfoSuccess, EditInfo
+  DeleteInfoSuccess, EditInfo, UpdateInfo, UpdateInfoSuccess
 } from './info.actions';
 import {InfoService} from '../../../shared/services/info.service';
 import {of, throwError} from 'rxjs';
@@ -73,8 +73,18 @@ export class InfoEffects {
   );
 
   @Effect()
-  editInfo$ = this.actions$.pipe(
-    ofType(<string>InfoActionsTypes.EDIT_INFO),
-    switchMap((action: EditInfo) => )
+  updateInfo$ = this.actions$.pipe(
+    ofType(<string>InfoActionsTypes.UPDATE_INFO),
+    switchMap((action: UpdateInfo) => {
+      const {key, ...details} = action.payload;
+      return this.infoService.updateItem(key, details).pipe(
+        map(res => {
+          return new UpdateInfoSuccess({key: key, ...details});
+        }),
+        tap(() => this.router.navigate(['/info'])),
+        catchError(err => throwError(err))
+      );
+    }),
+    catchError(err => of(`Info Item Editing: ${err}`))
   );
 }

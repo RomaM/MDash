@@ -23,12 +23,17 @@
       </mat-card-content>
     
       <mat-card-actions class="actions">
-        <a mat-button class="actions__btn actions__btn_edit" (click)="editItem()">
+        <a
+          mat-button
+          class="actions__btn actions__btn_edit"
+          routerLink="/info/edit/{{i}}">
           <mat-icon
-            color="primary"
-            routerLink="/info/edit/{{i}}">edit</mat-icon>
+            color="primary">edit</mat-icon>
         </a>
-        <a mat-button class="actions__btn actions__btn_edit" (click)="removeItem(item['key'])">
+        <a
+          mat-button
+          class="actions__btn actions__btn_edit"
+          (click)="removeItem(item['key'])">
           <mat-icon color="warn">remove</mat-icon>
         </a>
       </mat-card-actions>
