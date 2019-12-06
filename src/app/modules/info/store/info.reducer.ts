@@ -40,7 +40,6 @@ export function infoReducer(state = initialState, action: InfoActions): State {
     }
     case InfoActionsTypes.UPDATE_INFO_SUCCESS: {
       let newList = [...state.linkList];
-
       newList = newList.map(elem => {
         if (elem.key === action.payload.key) { elem = action.payload; }
         return elem;

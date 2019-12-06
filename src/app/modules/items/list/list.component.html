@@ -3,6 +3,14 @@
     <input matInput placeholder="Title" value="" [(ngModel)]="filterTitle">
   </mat-form-field>
 
+  <mat-form-field class="filters__cell filters__cell_system">
+    <mat-select placeholder="System" [(ngModel)]="filterSystem">
+      <mat-option value="all">All</mat-option>
+      <mat-option value="1">Promotion</mat-option>
+      <mat-option value="2">NFS</mat-option>
+    </mat-select>
+  </mat-form-field>
+  
   <mat-form-field class="filters__cell filters__cell_steps">
     <mat-select placeholder="Step" [(ngModel)]="filterSteps">
       <mat-option value="all">All</mat-option>
@@ -14,10 +22,9 @@
   <mat-form-field class="filters__cell filters__cell_brands">
     <mat-select placeholder="Brand" [(ngModel)]="filterBrands">
       <mat-option value="all">All</mat-option>
-      <mat-option value="rcpro">RCPro</mat-option>
-      <mat-option value="glenm">Glenm</mat-option>
-      <mat-option value="s2trade">S2Trade</mat-option>
+      <mat-option value="tradeltd">TradeLTD</mat-option>
       <mat-option value="tradefw">TradeFW</mat-option>
+      <mat-option value="rcpro">RCPro</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -25,9 +32,11 @@
     <mat-select placeholder="Lang" [(ngModel)]="filterLang">
       <mat-option value="all">All</mat-option>
       <mat-option value="en">en</mat-option>
+      <mat-option value="ar">ar</mat-option>
+      <mat-option value="ru">ru</mat-option>
+      <mat-option value="de">de</mat-option>
       <mat-option value="es">es</mat-option>
       <mat-option value="it">it</mat-option>
-      <mat-option value="ru">ru</mat-option>
     </mat-select>
   </mat-form-field>
 

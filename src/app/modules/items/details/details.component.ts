@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {from, Observable, Subscription} from 'rxjs';
-import {first, map, skipWhile, take, takeUntil, takeWhile, tap} from 'rxjs/operators';
+import {filter, first, map, skipWhile, take, takeUntil, takeWhile, tap} from 'rxjs/operators';
 import * as pagesReducer from '../store/pages.reducer';
 import * as PagesActions from '../store/pages.actions';
 import {select, Store} from '@ngrx/store';
@@ -21,12 +21,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
   editedItem: number;
   itemsLoadedSubscription: Subscription;
   profileSubscription: Subscription;
-  activeUser = this.profileService.profileSubject.value ?
-    this.profileService.profileSubject.value[1] :
-    new UserDetailsModel(false, '', '', '', '', '');
+  activeUser$;
 
-  pageBrands = ['RCPro', 'S2Trade', 'Glenm', 'TradeLTD', 'TradeFW'];
-  pageLangs = ['ru', 'en', 'de', 'es', 'it'];
+  pageBrands = ['TradeLTD', 'TradeFW', 'RCPro'];
+  pageLangs = ['en', 'ar', 'ru', 'de', 'es', 'it'];
   pageSteps = [1, 2];
 
   imageUrl = 'assets/images/noimage.png';
@@ -43,14 +41,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.editedItem = this.route.snapshot.params['id'] ? this.route.snapshot.params['id'] : 0;
     this.initForm();
 
-    this.profileSubscription = this.profileService.profileSubject
-      .pipe(
-        // map(data => console.log(data)),
-        skipWhile(data => data === null)
-      )
-      .subscribe(data => {
-        this.activeUser = data[1];
-      });
+    if (!this.editedItem) {
+      this.profileSubscription = this.profileService.profileSubject
+        .subscribe(data => {
+          this.activeUser$ = data[1];
+          this.detailsForm.patchValue({'author': `${data[1].name} ${data[1].surname}`});
+        });
+    }
   }
 
   initForm () {
@@ -67,11 +64,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
       'lang': new FormControl('', Validators.required),
       'steps': new FormControl('', Validators.required),
       'features': new FormGroup({
-        'bb': new FormControl(false),
-        'push': new FormControl(false),
-        'video': new FormControl(false),
-        'slider': new FormControl(false),
         'form': new FormControl(false),
+        'video': new FormControl(false),
+        'no-brand-redirect': new FormControl(false),
+        'bb': new FormControl(false),
+        'fb-pixel': new FormControl(false),
+        'tw-pixel': new FormControl(false),
       })
     });
 
@@ -85,10 +83,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
           this.detailsForm.patchValue(data[this.editedItem][1]);
 
         } else if (data.length > 0) {
-          this.detailsForm.patchValue({
-            'id': data.length + 1,
-            'author': `${this.activeUser.name} ${this.activeUser.surname}`
-          }); // Add an ID field if a new page is creating
+          this.detailsForm.patchValue({'id': data.length + 1}); // Add an ID field if a new page is creating
         }
       }
     );

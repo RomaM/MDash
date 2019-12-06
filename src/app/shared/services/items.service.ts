@@ -61,7 +61,8 @@ export class ItemsService {
       })
       .pipe(
         map(data => {
-          data.list = Object.entries(data['list']);
+          data['list'] = data['list'] ? Object.entries(data['list']) : [];
+          // data.list = Object.entries(data['list']);
           return data;
         })
       );

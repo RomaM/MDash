@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {Effect, Actions, ofType} from '@ngrx/effects';
 import {Observable, of, throwError} from 'rxjs';
-import {combineLatest, tap, switchMap, withLatestFrom, map, catchError, takeWhile} from 'rxjs/operators';
+import {combineLatest, tap, switchMap, withLatestFrom, map, catchError, takeWhile, filter} from 'rxjs/operators';
 
 import * as PagesActions from './pages.actions';
 import * as pageReducer from './pages.reducer';
@@ -25,6 +25,7 @@ export class PagesEffects {
     )),
     takeWhile(([, loaded]) => !loaded),
     switchMap(() => this.itemsService.fetchItems().pipe(
+      // filter(data => !!data),
       map( data => {
         this.itemsService.loadedData.next(data['list']);
         return data;
@@ -41,7 +42,7 @@ export class PagesEffects {
         new PagesActions.SetTimestamp(data['timestamp'].val)
       ];
     }),
-    catchError( err => of(`Pages Service: ${err}`))
+    catchError( err => of(`Pages Service [Load Pages]: ${err}`))
   );
 
   @Effect()
@@ -61,7 +62,7 @@ export class PagesEffects {
       catchError(err => throwError(err))
     )),
     tap(() => this.router.navigate(['/list'])),
-    catchError( err => of(`Pages Service: ${err}`))
+    catchError( err => of(`Pages Service [Add Page]: ${err}`))
   );
 
   @Effect({dispatch: false})
@@ -82,7 +83,7 @@ export class PagesEffects {
       return throwError(err);
     }),
     tap(() => this.router.navigate(['/list'])),
-    catchError( err => of(`Pages Service: ${err}`))
+    catchError( err => of(`Pages Service [Update Page]: ${err}`))
   );
 
   @Effect({dispatch: false})
@@ -99,7 +100,7 @@ export class PagesEffects {
       return throwError(err);
     }),
     tap(() => this.router.navigate(['/list'])),
-    catchError( err => of(`Pages Service: ${err}`))
+    catchError( err => of(`Pages Service [Delete Page]: ${err}`))
   );
 
   @Effect()
@@ -108,7 +109,7 @@ export class PagesEffects {
     switchMap(data => this.itemsService.getTimestamp().pipe(
       map((timestamp: {[key: string]: string}) => new PagesActions.SetTimestamp(timestamp['key']))
     )),
-    catchError( err => of(`Pages Service: ${err}`))
+    catchError( err => of(`Pages Service [Timestamp Get]: ${err}`))
   );
 
   @Effect()
@@ -119,6 +120,6 @@ export class PagesEffects {
         map(data => new PagesActions.SetTimestamp(action.payload))
       );
     }),
-    catchError( err => of(`Pages Service: ${err}`))
+    catchError( err => of(`Pages Service [Timestamp Update]: ${err}`))
   );
 }

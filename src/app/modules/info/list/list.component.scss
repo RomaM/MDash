@@ -1,6 +1,7 @@
 .info {
   display: flex;
   flex-flow: row wrap;
+  padding: 0 10px;
 
   &__title {
     flex: 0 1 100%;
@@ -30,12 +31,14 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin: 5px 10px 5px;
+  margin: 5px 0;
   padding: 10px 6px 10px 16px;
+  box-sizing: border-box;
 }
 
 .content {
   margin: 0;
+  overflow: hidden;
 
   &__title {
     margin: 0;
@@ -45,8 +48,12 @@
   &__link {
     padding: 0;
     min-width: 0;
+    max-width: 100%;
     color: #10a40d;
     line-height: 1.5;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   &__details {

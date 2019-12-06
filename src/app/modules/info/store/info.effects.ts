@@ -31,6 +31,7 @@ export class InfoEffects {
     )),
     filter(([, loaded]) => !loaded),
     switchMap(() => this.infoService.fetchItems().pipe(
+      filter((data) => !!data),
       map(data => {
         const listArr = [];
         for (const [key, value] of Object.entries(data)) {
@@ -61,7 +62,6 @@ export class InfoEffects {
   @Effect()
   deleteInfo$ = this.actions$.pipe(
     ofType(<string>InfoActionsTypes.DELETE_INFO),
-    tap(() => console.log('DELETE EFFECT')),
     switchMap((action: DeleteInfo) => this.infoService.removeItem(action.payload).pipe(
       map(res => {
         return new DeleteInfoSuccess(action.payload);

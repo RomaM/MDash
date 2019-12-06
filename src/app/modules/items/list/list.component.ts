@@ -15,6 +15,7 @@ export class ListComponent implements OnInit, OnDestroy {
   itemsLoadedSubscription: Subscription;
 
   filterTitle: string;
+  filterSystem: string;
   filterSteps: string;
   filterBrands: string;
   filterLang: string;

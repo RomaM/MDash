@@ -24,17 +24,13 @@ export class ListComponent implements OnInit, OnDestroy {
   infoList$: Observable<any>;
 
   ngOnInit() {
-    this.profileSubscription = this.profileService.profileSubject.subscribe(data => {
-      if (data !== null) { this.isSAdmin = data[1]['isSAdmin']; }
-    });
-
-    // this.store.pipe(
-    //   select(state => console.log(state))
-    // ).subscribe();
+    this.profileSubscription = this.profileService.profileSubject
+      .pipe(filter(data => !!data))
+      .subscribe(data => this.isSAdmin = data[1]['isSAdmin']);
 
     this.infoList$ = this.store.pipe(
       select(state => state['infoState'].linkList),
-      filter((data: any[]) => data.length > 0),
+      // filter((data: any[]) => data.length > 0),
       catchError(err => of(`Info List Error: ${err}`))
     );
   }
