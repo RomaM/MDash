@@ -47,6 +47,24 @@
   flex-flow: row wrap;
 
   &__elem {
-    flex: 0 1 25%;
+    flex: 0 1 20%;
+  }
+
+  @media screen and (max-width: 1399px) {
+    &__elem {
+      flex-basis: 25%;
+    }
+  }
+
+  @media screen and (max-width: 1199px) {
+    &__elem {
+      flex-basis: 33%;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    &__elem {
+      flex-basis: 33%;
+    }
   }
 }

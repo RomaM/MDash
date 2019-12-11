@@ -18,27 +18,27 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 10px;
+  padding: 5px 10px 10px;
   margin: 0;
 
   &__detail {
     margin: 0;
     padding-top: 5px;
+    width: 100%;
+    font-weight: normal;
+    color: lightgray;
+
+    span {
+      color: white;
+    }
 
     &_title {
-      margin: 0;
-      padding-bottom: 5px;
+      padding-top: 0;
       text-align: center;
-      width: 100%;
     }
 
-    &_brand {
-      width: 60%;
-    }
-
-    &_lang, &_steps {
-      width: 20%;
-      text-align: right;
+    &_brand, &_lang, &_steps, &_date {
+      //width: 50%;
     }
   }
 
