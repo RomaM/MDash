@@ -4,13 +4,17 @@
 }
 
 .poster {
-  max-height: 235px;
+  max-height: 160px;
   overflow: hidden;
 
   &__img {
     width: 100%;
     height: auto;
     margin: 0;
+
+    &:first-child {
+      margin: 0;
+    }
   }
 }
 
