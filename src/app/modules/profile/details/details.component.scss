@@ -3,6 +3,11 @@
   align-items: center;
   flex-flow: column wrap;
   justify-content: center;
+  padding: 10px;
+
+  &__title {
+    margin: 0 0 15px 0;
+  }
 }
 
 .form {

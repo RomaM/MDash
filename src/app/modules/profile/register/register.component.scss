@@ -1,9 +1,10 @@
 .register {
+  padding: 10px;
 
-}
-
-.title {
-  text-align: center;
+  &__title {
+    text-align: center;
+    margin: 0 0 15px 0;
+  }
 }
 
 .register-form {

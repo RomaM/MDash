@@ -1,4 +1,7 @@
-<mat-card>
+<mat-card class="page-card">
+  <h1 class="page-card__title" *ngIf="editedItem">Edit page</h1>
+  <h1 class="page-card__title" *ngIf="!editedItem">Add a new page</h1>
+  
   <form class="details" [formGroup]="detailsForm" (ngSubmit)="onSubmit()">
     <div class="details__poster">
       <div class="poster-wrap" *ngIf="editedItem && detailsForm.value.image.length !== 0; else noImage">
