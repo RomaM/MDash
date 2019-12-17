@@ -1,7 +1,7 @@
 <mat-card class="page-card">
   <h1 class="page-card__title" *ngIf="editedItem">Edit page</h1>
   <h1 class="page-card__title" *ngIf="!editedItem">Add a new page</h1>
-  
+
   <form class="details" [formGroup]="detailsForm" (ngSubmit)="onSubmit()">
     <div class="details__poster">
       <div class="poster-wrap" *ngIf="editedItem && detailsForm.value.image.length !== 0; else noImage">
@@ -15,62 +15,68 @@
       <input class="details__img-url" type="file" (change)="setImage($event)">
       <input hidden formControlName="image">
     </div>
-    
+
     <div class="details__fields info">
       <mat-form-field class="info__field info__field_title">
         <input matInput placeholder="Title" formControlName="title">
       </mat-form-field>
-  
+
       <mat-form-field class="info__field info__field_author">
         <input matInput placeholder="Author" formControlName="author">
       </mat-form-field>
-  
+
+      <mat-form-field class="info__field info__field_system">
+        <mat-select placeholder="System" formControlName="system">
+          <mat-option *ngFor="let system of pageSystem" [value]="system | lowercase">{{system}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <mat-form-field class="info__field info__field_brand">
         <mat-select placeholder="Brand" formControlName="brand">
           <mat-option *ngFor="let brand of pageBrands" [value]="brand | lowercase">{{brand}}</mat-option>
         </mat-select>
       </mat-form-field>
-  
+
       <mat-form-field class="info__field info__field_lang">
         <mat-select placeholder="Language" formControlName="lang">
           <mat-option *ngFor="let lang of pageLangs" [value]="lang">{{lang}}</mat-option>
         </mat-select>
       </mat-form-field>
-  
+
       <mat-form-field class="info__field info__field_steps">
         <mat-select placeholder="Steps" formControlName="steps">
           <mat-option *ngFor="let step of pageSteps" [value]="step">{{step}}</mat-option>
         </mat-select>
       </mat-form-field>
-  
+
       <mat-form-field class="info__field info__field_date">
         <input matInput [matDatepicker]="datePicker" placeholder="Date" formControlName="date">
         <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
         <mat-datepicker #datePicker disabled="false"></mat-datepicker>
       </mat-form-field>
-  
+
       <mat-form-field class="info__field info__field_id">
         <input matInput placeholder="ID" formControlName="id">
       </mat-form-field>
-  
+
       <mat-form-field class="info__field info__field_page-url">
         <input matInput placeholder="Page URL" formControlName="url">
       </mat-form-field>
-  
+
       <a mat-button class="info__field info__field_page-link"
          href="{{detailsForm.get('url').value}}" target="_blank">
         <mat-icon>link</mat-icon>
       </a>
-      
+
       <mat-form-field class="info__field info__field_task-url">
         <input matInput placeholder="Task URL" formControlName="taskUrl">
       </mat-form-field>
-      
+
       <a mat-button class="info__field info__field_task-link"
          href="" target="_blank">
         <mat-icon>link</mat-icon>
       </a>
-  
+
       <section class="info__field info__field_features" formGroupName="features">
         <mat-checkbox formControlName="form">Form</mat-checkbox>
         <mat-checkbox formControlName="video">Video</mat-checkbox>
@@ -79,12 +85,12 @@
         <mat-checkbox formControlName="fb-pixel">FB pixel</mat-checkbox>
         <mat-checkbox formControlName="tw-pixel">TW pixel</mat-checkbox>
       </section>
-      
+
       <mat-form-field class="info__field info__field_description">
         <textarea matInput placeholder="Description" formControlName="description"></textarea>
       </mat-form-field>
     </div>
-    
+
     <div class="actions">
       <button
           mat-flat-button

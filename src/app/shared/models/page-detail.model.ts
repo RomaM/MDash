@@ -2,6 +2,7 @@ export class PageDetailsModel {
   public id: number;
   public author: string;
   public title: string;
+  public system: string;
   public brand: string;
   public lang: string;
   public url: string;
@@ -15,6 +16,7 @@ export class PageDetailsModel {
   constructor(id: number,
               author: string,
               title: string,
+              system: string,
               brand: string,
               lang: string,
               url: string,
@@ -27,6 +29,7 @@ export class PageDetailsModel {
     this.id = id;
     this.author = author;
     this.title = title;
+    this.system = system;
     this.brand = brand;
     this.lang = lang;
     this.url = url;

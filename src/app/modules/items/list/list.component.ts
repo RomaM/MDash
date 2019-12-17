@@ -27,6 +27,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.filterTitle = '';
+    this.filterSystem = '';
     this.filterSteps = '';
     this.filterBrands = '';
     this.filterLang = '';

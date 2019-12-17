@@ -6,11 +6,11 @@
   <mat-form-field class="filters__cell filters__cell_system">
     <mat-select placeholder="System" [(ngModel)]="filterSystem">
       <mat-option value="all">All</mat-option>
-      <mat-option value="1">Promotion</mat-option>
-      <mat-option value="2">NFS</mat-option>
+      <mat-option value="Promotion">Promotion</mat-option>
+      <mat-option value="NFS">NFS</mat-option>
     </mat-select>
   </mat-form-field>
-  
+
   <mat-form-field class="filters__cell filters__cell_steps">
     <mat-select placeholder="Step" [(ngModel)]="filterSteps">
       <mat-option value="all">All</mat-option>
@@ -61,6 +61,7 @@
 <div class="list">
   <app-item *ngFor="let item of pagesData
     | filter:'title':filterTitle
+    | filter:'system':filterSystem
     | filter:'steps':filterSteps
     | filter:'brand':filterBrands
     | filter:'lang':filterLang;

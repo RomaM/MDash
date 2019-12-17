@@ -53,27 +53,32 @@
     padding-left: 10px;
   }
 
-  &_brand {
+  &_system {
     width: 25%;
   }
 
+  &_brand {
+    width: 20%;
+    padding-left: 10px;
+  }
+
   &_lang {
-    width: 19%;
+    width: 10%;
     padding-left: 10px;
   }
 
   &_steps {
-    width: 19%;
+    width: 10%;
     padding-left: 10px;
   }
 
   &_date {
-    width: 22%;
+    width: 25%;
     padding-left: 10px;
   }
 
   &_id {
-    width: 15%;
+    width: 10%;
     padding-left: 10px;
   }
 

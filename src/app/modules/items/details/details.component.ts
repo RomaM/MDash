@@ -23,6 +23,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   profileSubscription: Subscription;
   activeUser$;
 
+  pageSystem = ['NFS', 'Promotion'];
   pageBrands = ['TradeLTD', 'TradeFW', 'RCPro'];
   pageLangs = ['en', 'ar', 'ru', 'de', 'es', 'it'];
   pageSteps = [1, 2];
@@ -61,6 +62,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       'image': new FormControl(this.imageUrl, Validators.required),
       'description': new FormControl(''),
       'brand': new FormControl('', Validators.required),
+      'system': new FormControl('', Validators.required),
       'lang': new FormControl('', Validators.required),
       'steps': new FormControl('', Validators.required),
       'features': new FormGroup({
