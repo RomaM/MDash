@@ -1,5 +1,6 @@
 @import "../node_modules/normalize.css/normalize.css";
 
+/** Material snack bar **/
 .snack-bar-msg {
   background: rgba(220,0,90,1);
 
@@ -14,3 +15,9 @@
     background: rgba(105, 0, 0, .3);
   }
 }
+
+/** Material selects **/
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: #01b60b;
+}
+
