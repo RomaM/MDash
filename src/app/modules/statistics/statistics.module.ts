@@ -5,7 +5,7 @@ import {SharedModule} from '../../shared/shared.module';
 import {StatisticsComponent} from './statistics.component';
 import { ChartsComponent } from './charts/charts.component';
 import { DetailsComponent } from './details/details.component';
-import {RouterModule} from '@angular/router';
+import {ChartsModule} from 'ng2-charts';
 import {StatisticsRoutingModule} from './statistics-routing.module';
 
 @NgModule({
@@ -18,6 +18,7 @@ import {StatisticsRoutingModule} from './statistics-routing.module';
     CommonModule,
     CoreModule,
     SharedModule,
+    ChartsModule,
     StatisticsRoutingModule
   ]
 })

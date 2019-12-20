@@ -1,3 +1,17 @@
 <div class="charts">
   <h1 class="charts__title">Page statistics</h1>
+  
+  <div class="charts__chart charts__chart_brands">
+    <canvas baseChart height="100%" width="100%"
+            [data]="brandsChartData"
+            [labels]="brandsChartLabels"
+            [chartType]="brandsChartType"
+            [options]="brandsChartOptions"
+            [plugins]="brandsChartPlugins"
+            [colors]="brandsChartColors"
+            [legend]="brandsChartLegend">
+    </canvas>
+  </div>
+  
+  <div class="charts__chart charts__chart_system"></div>
 </div>

@@ -1,8 +1,38 @@
 .charts {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+
   &__title {
-    flex: 0 1 100%;
-    padding: 0 10px;
+    width: 100%;
     margin: 10px 0 15px 0;
     text-align: center;
+  }
+
+  &__chart {
+    padding: 10px;
+    width: 33.3%;
+  }
+
+  @media screen and (max-width: 1399px) {
+    &__chart {
+      width: 50%;
+    }
+  }
+
+  @media screen and (max-width: 1199px) {
+    & {
+      align-items: center;
+    }
+
+    &__chart {
+      width: 60%;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    &__chart {
+      width: 100%;
+    }
   }
 }

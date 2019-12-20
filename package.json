@@ -27,6 +27,7 @@
     "@ngrx/store": "^8.5.2",
     "@ngrx/store-devtools": "^8.5.2",
     "chart.js": "^2.9.3",
+    "chartjs-plugin-datalabels": "^0.7.0",
     "core-js": "^3.4.1",
     "document-register-element": "^1.14.3",
     "firebase": "^7.4.0",
