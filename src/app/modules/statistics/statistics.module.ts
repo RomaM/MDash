@@ -7,6 +7,10 @@ import { ChartsComponent } from './charts/charts.component';
 import { DetailsComponent } from './details/details.component';
 import {ChartsModule} from 'ng2-charts';
 import {StatisticsRoutingModule} from './statistics-routing.module';
+import {StoreModule} from '@ngrx/store';
+import {pagesReducer} from '../items/store/pages.reducer';
+import {EffectsModule} from '@ngrx/effects';
+import {PagesEffects} from '../items/store/pages.effects';
 
 @NgModule({
   declarations: [
@@ -19,6 +23,8 @@ import {StatisticsRoutingModule} from './statistics-routing.module';
     CoreModule,
     SharedModule,
     ChartsModule,
+    StoreModule.forFeature('pagesState', pagesReducer),
+    EffectsModule.forFeature([PagesEffects]),
     StatisticsRoutingModule
   ]
 })

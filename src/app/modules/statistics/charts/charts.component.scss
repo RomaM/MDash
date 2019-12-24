@@ -1,6 +1,7 @@
 .charts {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   padding: 0 10px;
 
   &__title {
@@ -10,29 +11,46 @@
   }
 
   &__chart {
-    padding: 10px;
-    width: 33.3%;
+    padding: 0 10px 20px 10px;
+    width: 23%;
+    box-sizing: border-box;
+
+    &_bar {
+      width: 44%;
+    }
   }
 
   @media screen and (max-width: 1399px) {
     &__chart {
-      width: 50%;
+      width: 33%;
+
+      &_bar {
+        width: 67%;
+      }
     }
   }
 
   @media screen and (max-width: 1199px) {
     & {
-      align-items: center;
+      justify-content: center;
     }
 
     &__chart {
       width: 60%;
+
+      &_bar {
+        width: 80%;
+      }
     }
   }
 
   @media screen and (max-width: 991px) {
     &__chart {
       width: 100%;
+
+      &_bar {
+        width: 100%;
+      }
     }
   }
 }

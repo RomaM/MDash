@@ -1,7 +1,7 @@
 <div class="charts">
   <h1 class="charts__title">Page statistics</h1>
   
-  <div class="charts__chart charts__chart_brands">
+  <div class="charts__chart charts__chart_pie">
     <canvas baseChart height="100%" width="100%"
             [data]="brandsChartData"
             [labels]="brandsChartLabels"
@@ -10,6 +10,18 @@
             [plugins]="brandsChartPlugins"
             [colors]="brandsChartColors"
             [legend]="brandsChartLegend">
+    </canvas>
+  </div>
+  
+  <div class="charts__chart charts__chart_bar">
+    <canvas baseChart
+            [datasets]="systemChartData"
+            [labels]="systemChartLabels"
+            [options]="systemChartOptions"
+            [plugins]="systemChartPlugins"
+            [colors]="systemChartColors"
+            [legend]="systemChartLegend"
+            [chartType]="systemChartType">
     </canvas>
   </div>
   
