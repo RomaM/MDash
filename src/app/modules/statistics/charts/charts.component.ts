@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ChartDataSets, ChartType} from 'chart.js';
-import {Color, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip} from 'ng2-charts';
+import {Color, Label} from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import {ChartOptions, brandsOptions, systemOptions} from './chart.options';
 import {Subscription} from 'rxjs';
 import {ItemsService} from '../../../shared/services/items.service';
-import {filter, skipWhile} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-charts',
@@ -14,7 +14,9 @@ import {filter, skipWhile} from 'rxjs/operators';
 })
 export class ChartsComponent implements OnInit, OnDestroy {
   pagesLoadedSubscription: Subscription;
-  pagesData: any = [];
+
+  pagesToBrands: Array<{brand: string, pageAmount: number}> = [];
+  pagesToSystem: Array<{}> = [];
 
   brandsChartOptions: ChartOptions;
   brandsChartLabels: Label[];
@@ -39,25 +41,37 @@ export class ChartsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const brandsData = {
+      brandsChartLabels: [],
+      brandsChartData: []
+    };
+
+    this.chartsInit(brandsData);
+
     this.pagesLoadedSubscription = this.itemsService.loadedData
       .pipe(
         filter(data => !!data.length)
       )
       .subscribe(
         (data: any) => {
-          console.log(data);
-          this.pagesData = data;
+          data.map(el => {
+            // Pages to brands statistic
+            if (brandsData.brandsChartLabels.includes(el[1].brand)) {
+              brandsData.brandsChartLabels.find((item, index) => {
+                if (item === el[1].brand) { brandsData.brandsChartData[index]++; }
+              });
+            } else {
+              brandsData.brandsChartLabels.push(el[1].brand);
+              brandsData.brandsChartData.push(1);
+            }
+
+
+            // Pages system by dates statistic
+
+          });
         }
       );
 
-
-    const brandsData = {
-      brandsChartLabels: ['TradeLTD', 'TradeFW', 'RCPro'],
-      brandsChartData: [39, 12, 67]
-    };
-
-
-    this.chartsInit(brandsData);
   }
 
   chartsInit(brandsData) {
