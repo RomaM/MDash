@@ -46,7 +46,14 @@ export class ChartsComponent implements OnInit, OnDestroy {
       brandsChartData: []
     };
 
-    this.chartsInit(brandsData);
+    const systemData = {
+      systemChartLabels: [],
+      systemChartData: [
+        { data: [], label: ''},
+      ]
+    }
+
+    this.chartsInit();
 
     this.pagesLoadedSubscription = this.itemsService.loadedData
       .pipe(
@@ -55,7 +62,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
       .subscribe(
         (data: any) => {
           data.map(el => {
-            // Pages to brands statistic
+            // Brands data calculation
             if (brandsData.brandsChartLabels.includes(el[1].brand)) {
               brandsData.brandsChartLabels.find((item, index) => {
                 if (item === el[1].brand) { brandsData.brandsChartData[index]++; }
@@ -65,20 +72,45 @@ export class ChartsComponent implements OnInit, OnDestroy {
               brandsData.brandsChartData.push(1);
             }
 
+            // System data calculation
+            const elDate = new Date(el[1].date);
+            const elYearMonth = `${elDate.getFullYear()}.${elDate.getMonth() + 1}`
+            if (systemData.systemChartLabels.includes(elYearMonth)) {
+              console.log(systemData.systemChartLabels);
+              systemData.systemChartLabels.find((item, index) => {
+                if (item === elYearMonth) {
+                  systemData.systemChartData.find(system => {
+                    console.log(system);
+                    // (system.label === el.system) ? system.data[index]++ : '';
+                  });
+                }
+              });
+            } else {
 
-            // Pages system by dates statistic
+              systemData.systemChartLabels.push(elYearMonth);
+              systemData.systemChartData.push({data: [1], label: el[1].system});
 
+            }
           });
+
+          // Brands data update
+          this.brandsChartLabels = brandsData.brandsChartLabels;
+          this.brandsChartData = brandsData.brandsChartData;
+
+          // System data update
+          this.systemChartLabels = systemData.systemChartLabels;
+          this.systemChartData = systemData.systemChartData;
+
         }
       );
 
   }
 
-  chartsInit(brandsData) {
+  chartsInit() {
     /* Brands Chart */
     this.brandsChartOptions = brandsOptions;
-    this.brandsChartLabels = brandsData.brandsChartLabels;
-    this.brandsChartData = brandsData.brandsChartData;
+    this.brandsChartLabels = [];
+    this.brandsChartData = [];
     this.brandsChartType = 'pie';
     this.brandsChartLegend = true;
     this.brandsChartPlugins = [pluginDataLabels];
@@ -93,7 +125,6 @@ export class ChartsComponent implements OnInit, OnDestroy {
 
     /* System Chart */
     this.systemChartOptions = systemOptions;
-    this.systemChartLabels = ['1.2019', '2.2019', '3.2019', '4.2019', '5.2019', '6.2019', '7.2019', '8.2019', '9.2019'];
     this.systemChartType = 'bar';
     this.systemChartLegend = true;
     this.systemChartPlugins = [pluginDataLabels];
@@ -104,10 +135,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
       {backgroundColor: 'rgba(69,74,26,0.7)'},
     ];
 
-    this.systemChartData = [
-      { data: [65, 59, 80, 81, 56, 55, 33, 28, 58], label: 'NFS' },
-      { data: [28, 48, 40, 19, 86, 27, 88, 49, 64], label: 'Promotions' }
-    ];
+    this.systemChartLabels = [];
+    this.systemChartData = [{data: [], label: ''}];
   }
 
   ngOnDestroy() {

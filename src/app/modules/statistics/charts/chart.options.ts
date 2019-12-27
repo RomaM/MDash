@@ -37,7 +37,7 @@ export const systemOptions: ChartOptions = {
     yAxes: [{
       ticks: {
         stepSize: 10,
-        suggestedMax: 120,
+        suggestedMax: 50,
         min: 0
       }
     }]
