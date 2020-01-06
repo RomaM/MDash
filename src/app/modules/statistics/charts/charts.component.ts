@@ -51,7 +51,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
       systemChartData: [
         { data: [], label: ''},
       ]
-    }
+    };
 
     this.chartsInit();
 
@@ -74,22 +74,32 @@ export class ChartsComponent implements OnInit, OnDestroy {
 
             // System data calculation
             const elDate = new Date(el[1].date);
-            const elYearMonth = `${elDate.getFullYear()}.${elDate.getMonth() + 1}`
+            const elYearMonth = `${elDate.getFullYear()}.${elDate.getMonth() + 1}`;
+
+            console.log(elYearMonth);
+
+            let dateIndex;
+            // If system labels include current date, remember its index for chart data binding by index
             if (systemData.systemChartLabels.includes(elYearMonth)) {
-              console.log(systemData.systemChartLabels);
-              systemData.systemChartLabels.find((item, index) => {
-                if (item === elYearMonth) {
-                  systemData.systemChartData.find(system => {
-                    console.log(system);
-                    // (system.label === el.system) ? system.data[index]++ : '';
-                  });
-                }
-              });
+              dateIndex = systemData.systemChartLabels.findIndex(item => item === elYearMonth);
             } else {
-
               systemData.systemChartLabels.push(elYearMonth);
-              systemData.systemChartData.push({data: [1], label: el[1].system});
+              dateIndex = systemData.systemChartLabels.length - 1;
+            }
 
+
+            // Find system index if it exists
+            let systemIndex;
+            systemIndex = systemData.systemChartData.findIndex((item) => item.label === el[1].system);
+
+            if (systemIndex >= 0) {
+              systemData.systemChartData[systemIndex].data[dateIndex] =
+                !systemData.systemChartData[systemIndex].data[dateIndex] ? 1 : +1;
+            } else {
+              systemData.systemChartData.push({data: [], label: el[1].system});
+              systemData.systemChartData[systemData.systemChartData.length - 1].data[dateIndex] = 1;
+              // Clear the first empty element
+              if (systemData.systemChartData[0].label === '') { systemData.systemChartData.shift(); }
             }
           });
 
