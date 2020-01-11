@@ -10,18 +10,29 @@
     text-align: center;
   }
 
-  &__chart {
-    padding: 0 10px 20px 10px;
-    width: 23%;
-    box-sizing: border-box;
-
-    &_bar {
-      width: 44%;
+  @media screen and (max-width: 1199px) {
+    & {
+      justify-content: center;
     }
+  }
+}
+
+.chart {
+  padding: 0 10px 20px 10px;
+  width: 23%;
+  box-sizing: border-box;
+
+  &__title {
+    text-align: center;
+    margin: 15px 0;
+  }
+
+  &_bar {
+    width: 44%;
   }
 
   @media screen and (max-width: 1399px) {
-    &__chart {
+    & {
       width: 33%;
 
       &_bar {
@@ -32,10 +43,6 @@
 
   @media screen and (max-width: 1199px) {
     & {
-      justify-content: center;
-    }
-
-    &__chart {
       width: 60%;
 
       &_bar {
@@ -45,7 +52,17 @@
   }
 
   @media screen and (max-width: 991px) {
-    &__chart {
+    & {
+      width: 70%;
+
+      &_bar {
+        width: 100%;
+      }
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    & {
       width: 100%;
 
       &_bar {

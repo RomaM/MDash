@@ -2,30 +2,30 @@ import {ChartOptions} from 'chart.js';
 
 export {ChartOptions} from 'chart.js';
 
-export const brandsOptions: ChartOptions = {
-    responsive: true,
-    legend: {
-      position: 'top',
-      labels: {
-        fontColor: '#fff'
-      }
-    },
-    plugins: {
-      datalabels: {
-        color: '#fff',
-        textAlign: 'center',
-        font: {
-          weight: 'bold'
-        },
-        formatter: (value, ctx) => {
-          const label = ctx.chart.data.labels[ctx.dataIndex] + ':\n' + value;
-          return label;
-        },
-      },
+export const pieChartOptions: ChartOptions = {
+  responsive: true,
+  legend: {
+    position: 'top',
+    labels: {
+      fontColor: '#fff'
     }
-  };
+  },
+  plugins: {
+    datalabels: {
+      color: '#fff',
+      textAlign: 'center',
+      font: {
+        weight: 'bold'
+      },
+      formatter: (value, ctx) => {
+        const label = ctx.chart.data.labels[ctx.dataIndex] + ':\n' + value;
+        return label;
+      },
+    },
+  }
+};
 
-export const systemOptions: ChartOptions = {
+export const barChartOptions: ChartOptions = {
   responsive: true,
   legend: {
     position: 'bottom',
@@ -49,3 +49,4 @@ export const systemOptions: ChartOptions = {
     }
   }
 };
+

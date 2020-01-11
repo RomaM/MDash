@@ -1,7 +1,8 @@
 <div class="charts">
   <h1 class="charts__title">Page statistics</h1>
   
-  <div class="charts__chart charts__chart_pie">
+  <div class="chart chart_pie">
+    <h4 class="chart__title">Number of pages by brand</h4>
     <canvas baseChart height="100%" width="100%"
             [data]="brandsChartData"
             [labels]="brandsChartLabels"
@@ -13,7 +14,8 @@
     </canvas>
   </div>
   
-  <div class="charts__chart charts__chart_bar">
+  <div class="chart chart_bar">
+    <h4 class="chart__title">Number of pages per month and system</h4>
     <canvas baseChart
             [datasets]="systemChartData"
             [labels]="systemChartLabels"
@@ -25,5 +27,18 @@
     </canvas>
   </div>
   
-  <div class="charts__chart charts__chart_system"></div>
+  <div class="chart chart_pie">
+    <h4 class="chart__title">Number of pages by language</h4>
+    <canvas baseChart height="100%" width="100%"
+            [data]="langsChartData"
+            [labels]="langsChartLabels"
+            [chartType]="langsChartType"
+            [options]="langsChartOptions"
+            [plugins]="langsChartPlugins"
+            [colors]="langsChartColors"
+            [legend]="langsChartLegend">
+    </canvas>
+  </div>
+  
+  <div class="chart chart_steps"></div>
 </div>
