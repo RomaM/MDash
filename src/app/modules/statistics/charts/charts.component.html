@@ -1,44 +1,59 @@
 <div class="charts">
   <h1 class="charts__title">Page statistics</h1>
   
-  <div class="chart chart_pie">
-    <h4 class="chart__title">Number of pages by brand</h4>
-    <canvas baseChart height="100%" width="100%"
-            [data]="brandsChartData"
-            [labels]="brandsChartLabels"
-            [chartType]="brandsChartType"
-            [options]="brandsChartOptions"
-            [plugins]="brandsChartPlugins"
-            [colors]="brandsChartColors"
-            [legend]="brandsChartLegend">
-    </canvas>
+  <div class="charts__wrap" *ngIf="chartReady">
+    <div class="chart chart_pie">
+      <h4 class="chart__title">Number of pages by brand</h4>
+      <canvas baseChart height="100%" width="100%"
+              [data]="brandsChartData"
+              [labels]="brandsChartLabels"
+              [chartType]="brandsChartType"
+              [options]="brandsChartOptions"
+              [plugins]="brandsChartPlugins"
+              [colors]="brandsChartColors"
+              [legend]="brandsChartLegend">
+      </canvas>
+    </div>
+  
+    <div class="chart chart_bar">
+      <h4 class="chart__title">Number of pages per month and system</h4>
+      <canvas baseChart
+              [datasets]="systemChartData"
+              [labels]="systemChartLabels"
+              [options]="systemChartOptions"
+              [plugins]="systemChartPlugins"
+              [colors]="systemChartColors"
+              [legend]="systemChartLegend"
+              [chartType]="systemChartType">
+      </canvas>
+    </div>
+  
+    <div class="chart chart_bar">
+      <h4 class="chart__title">Number of pages per month and steps</h4>
+      <canvas baseChart
+              [datasets]="stepsChartData"
+              [labels]="stepsChartLabels"
+              [options]="stepsChartOptions"
+              [plugins]="stepsChartPlugins"
+              [colors]="stepsChartColors"
+              [legend]="stepsChartLegend"
+              [chartType]="stepsChartType">
+      </canvas>
+    </div>
+  
+    <div class="chart chart_pie">
+      <h4 class="chart__title">Number of pages by language</h4>
+      <canvas baseChart height="100%" width="100%"
+              [data]="langsChartData"
+              [labels]="langsChartLabels"
+              [chartType]="langsChartType"
+              [options]="langsChartOptions"
+              [plugins]="langsChartPlugins"
+              [colors]="langsChartColors"
+              [legend]="langsChartLegend">
+      </canvas>
+    </div>
   </div>
   
-  <div class="chart chart_bar">
-    <h4 class="chart__title">Number of pages per month and system</h4>
-    <canvas baseChart
-            [datasets]="systemChartData"
-            [labels]="systemChartLabels"
-            [options]="systemChartOptions"
-            [plugins]="systemChartPlugins"
-            [colors]="systemChartColors"
-            [legend]="systemChartLegend"
-            [chartType]="systemChartType">
-    </canvas>
-  </div>
   
-  <div class="chart chart_pie">
-    <h4 class="chart__title">Number of pages by language</h4>
-    <canvas baseChart height="100%" width="100%"
-            [data]="langsChartData"
-            [labels]="langsChartLabels"
-            [chartType]="langsChartType"
-            [options]="langsChartOptions"
-            [plugins]="langsChartPlugins"
-            [colors]="langsChartColors"
-            [legend]="langsChartLegend">
-    </canvas>
-  </div>
-  
-  <div class="chart chart_steps"></div>
 </div>

@@ -18,6 +18,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
   pagesToBrands: Array<{brand: string, pageAmount: number}> = [];
   pagesToSystem: Array<{}> = [];
 
+  chartReady = false;
+
   /* Brands Chart Properties */
   brandsChartOptions: ChartOptions;
   brandsChartLabels: Label[];
@@ -35,6 +37,15 @@ export class ChartsComponent implements OnInit, OnDestroy {
   systemChartPlugins;
   systemChartColors: Color[];
   systemChartData: ChartDataSets[];
+
+  /* Steps Chart Properties */
+  stepsChartOptions: ChartOptions;
+  stepsChartLabels: Label[];
+  stepsChartType: ChartType;
+  stepsChartLegend;
+  stepsChartPlugins;
+  stepsChartColors: Color[];
+  stepsChartData: ChartDataSets[];
 
   /* Langs Chart Properties */
   langsChartOptions: ChartOptions;
@@ -67,6 +78,13 @@ export class ChartsComponent implements OnInit, OnDestroy {
       data: []
     };
 
+    const stepsData = {
+      labels: [],
+      dataList: [
+        { data: [], label: ''},
+      ]
+    };
+
     this.chartsInit();
 
     this.pagesLoadedSubscription = this.itemsService.loadedData
@@ -82,10 +100,13 @@ export class ChartsComponent implements OnInit, OnDestroy {
             // Langs data calculation
             this.pieChartSelection(langsData, el[1].lang);
 
-            // System data calculation
             const elDate = new Date(el[1].date);
             const elYearMonth = `${elDate.getFullYear()}.${elDate.getMonth() + 1}`;
+            // System data calculation
             this.barChartSelection(systemData, elYearMonth, el[1].system);
+
+            // Steps data calculation
+            this.barChartSelection(stepsData, elYearMonth, el[1].steps);
 
             // const elDate = new Date(el[1].date);
             // const elYearMonth = `${elDate.getFullYear()}.${elDate.getMonth() + 1}`;
@@ -123,24 +144,29 @@ export class ChartsComponent implements OnInit, OnDestroy {
           this.systemChartLabels = systemData.labels;
           this.systemChartData = systemData.dataList;
 
+          // Steps data update
+          this.stepsChartLabels = stepsData.labels;
+          this.stepsChartData = stepsData.dataList;
+
           // Langs data update
           this.langsChartLabels = langsData.labels;
           this.langsChartData = langsData.data;
 
+          this.chartReady = true;
         }
       );
 
   }
 
   chartsInit() {
-    /* Brands Chart */
-    this.brandsChartOptions = pieChartOptions;
-    this.brandsChartLabels = [];
-    this.brandsChartData = [];
-    this.brandsChartType = 'pie';
-    this.brandsChartLegend = true;
-    this.brandsChartPlugins = [pluginDataLabels];
-    this.brandsChartColors = [
+    /* Brands Chart and Lang Chart */
+    this.brandsChartOptions = this.langsChartOptions = pieChartOptions;
+    this.brandsChartLabels = this.langsChartLabels = [];
+    this.brandsChartData = this.langsChartData = [];
+    this.brandsChartType = this.langsChartType = 'pie';
+    this.brandsChartLegend = this.langsChartLegend = true;
+    this.brandsChartPlugins = this.langsChartPlugins = [pluginDataLabels];
+    this.brandsChartColors = this.langsChartColors = [
       {
         backgroundColor:
           ['rgba(110, 0, 255, .7)', 'rgba(1, 182, 11, .7)', 'rgba(220, 0, 90, .7)', 'rgba(35,96,220,0.7)', 'rgba(69,74,26,0.7)'],
@@ -149,36 +175,20 @@ export class ChartsComponent implements OnInit, OnDestroy {
       }
     ];
 
-    /* System Chart */
-    this.systemChartOptions = barChartOptions;
-    this.systemChartType = 'bar';
-    this.systemChartLegend = true;
-    this.systemChartPlugins = [pluginDataLabels];
-    this.systemChartColors = [
+    /* System Chart and Steps Chart */
+    this.systemChartOptions = this.stepsChartOptions = barChartOptions;
+    this.systemChartType = this.stepsChartType = 'bar';
+    this.systemChartLegend = this.stepsChartLegend = true;
+    this.systemChartPlugins = this.stepsChartPlugins = [pluginDataLabels];
+    this.systemChartColors = this.stepsChartColors = [
       {backgroundColor: 'rgba(220, 0, 90, .7)'},
       {backgroundColor: 'rgba(110, 0, 255, .7)'},
       {backgroundColor: 'rgba(35,96,220,0.7)'},
       {backgroundColor: 'rgba(69,74,26,0.7)'},
     ];
 
-    this.systemChartLabels = [];
-    this.systemChartData = [{data: [], label: ''}];
-
-    /* Lang Chart */
-    this.langsChartOptions = pieChartOptions;
-    this.langsChartLabels = [];
-    this.langsChartData = [];
-    this.langsChartType = 'pie';
-    this.langsChartLegend = true;
-    this.langsChartPlugins = [pluginDataLabels];
-    this.langsChartColors = [
-      {
-        backgroundColor:
-          ['rgba(110, 0, 255, .7)', 'rgba(1, 182, 11, .7)', 'rgba(220, 0, 90, .7)', 'rgba(35,96,220,0.7)', 'rgba(69,74,26,0.7)'],
-        borderWidth: 0,
-        borderColor: '#303030',
-      }
-    ];
+    this.systemChartLabels = this.stepsChartLabels = [];
+    this.systemChartData = this.stepsChartData = [{data: [], label: ''}];
   }
 
   pieChartSelection(sourceObj, key) {
