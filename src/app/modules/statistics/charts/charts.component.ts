@@ -2,7 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ChartDataSets, ChartType} from 'chart.js';
 import {Color, Label} from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import {barChartOptions, ChartOptions, pieChartOptions} from './chart.options';
+import {ChartOptions,
+  brandsChartOptions,
+  langsChartOptions,
+  systemsChartOptions,
+  stepsChartOptions} from './chart.options';
 import {Subscription} from 'rxjs';
 import {ItemsService} from '../../../shared/services/items.service';
 import {filter} from 'rxjs/operators';
@@ -145,6 +149,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
           this.systemChartData = systemData.dataList;
 
           // Steps data update
+          stepsData.dataList.map(el => el.label = `${el.label} step`);
           this.stepsChartLabels = stepsData.labels;
           this.stepsChartData = stepsData.dataList;
 
@@ -160,7 +165,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
 
   chartsInit() {
     /* Brands Chart and Lang Chart */
-    this.brandsChartOptions = this.langsChartOptions = pieChartOptions;
+    this.brandsChartOptions = brandsChartOptions;
+    this.langsChartOptions = langsChartOptions;
     this.brandsChartLabels = this.langsChartLabels = [];
     this.brandsChartData = this.langsChartData = [];
     this.brandsChartType = this.langsChartType = 'pie';
@@ -176,15 +182,24 @@ export class ChartsComponent implements OnInit, OnDestroy {
     ];
 
     /* System Chart and Steps Chart */
-    this.systemChartOptions = this.stepsChartOptions = barChartOptions;
-    this.systemChartType = this.stepsChartType = 'bar';
+    this.systemChartOptions = systemsChartOptions;
+    this.stepsChartOptions = stepsChartOptions;
+    this.systemChartType = 'bar';
+    this.stepsChartType = 'bar';
     this.systemChartLegend = this.stepsChartLegend = true;
     this.systemChartPlugins = this.stepsChartPlugins = [pluginDataLabels];
-    this.systemChartColors = this.stepsChartColors = [
+    this.systemChartColors = [
       {backgroundColor: 'rgba(220, 0, 90, .7)'},
       {backgroundColor: 'rgba(110, 0, 255, .7)'},
-      {backgroundColor: 'rgba(35,96,220,0.7)'},
-      {backgroundColor: 'rgba(69,74,26,0.7)'},
+      {backgroundColor: 'rgba(35, 96, 220, 0.7)'},
+      {backgroundColor: 'rgba(69, 74, 26, 0.7)'},
+    ];
+
+    this.stepsChartColors = [
+      {backgroundColor: 'rgba(1, 182, 11, .7)'},
+      {backgroundColor: 'rgba(35, 96, 220, 0.7)'},
+      {backgroundColor: 'rgba(110, 0, 255, .7)'},
+      {backgroundColor: 'rgba(220, 0, 90, .7)'},
     ];
 
     this.systemChartLabels = this.stepsChartLabels = [];

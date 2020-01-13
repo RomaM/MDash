@@ -10,6 +10,7 @@ import {ItemsService} from '../../../shared/services/items.service';
 import {DialogService} from '../../../shared/services/dialog.service';
 import {UserDetailsModel} from '../../../shared/models/user-details.model';
 import {ProfilesService} from '../../../shared/services/profiles.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-details',
@@ -29,8 +30,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
   pageSteps = [1, 2];
 
   imageUrl = 'assets/images/noimage.png';
+  selectedImage: any;
 
   key = '';
+
+  firebaseStorageRef = firebase.storage().ref();
 
   constructor(private itemsService: ItemsService,
               private store: Store<pagesReducer.State>,
@@ -119,8 +123,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   setImage(event) {
-    const imgName = event.target.files[0].name;
-    this.detailsForm.patchValue({image: 'assets/images/funnels/' + imgName});
+    // const imgName = event.target.files[0].name;
+    this.selectedImage = event.target.files[0];
+    this.detailsForm.patchValue({image: 'assets/images/funnels/' + this.selectedImage.name});
   }
 
   ngOnDestroy() {
