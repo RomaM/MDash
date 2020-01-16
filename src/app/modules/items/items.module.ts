@@ -21,6 +21,7 @@ import {PagesEffects} from './store/pages.effects';
 import {FilterPipe} from '../../shared/pipes/filter.pipe';
 import {SharedModule} from '../../shared/shared.module';
 import {MatDatepickerModule} from '@angular/material';
+import {ReversePipe} from '../../shared/pipes/reverse.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {MatDatepickerModule} from '@angular/material';
     ItemComponent,
     DetailsComponent,
     ListComponent,
-    FilterPipe
+    FilterPipe,
+    ReversePipe
   ],
   imports: [
     CommonModule,
