@@ -6,6 +6,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {catchError, map, tap} from 'rxjs/operators';
 import {CurrentUser} from '../models/user-details.model';
+import {environment} from '../../../environments/environment';
 
 interface AuthResponseData {
   kind: string;
@@ -38,7 +39,7 @@ export class AuthService {
     //   .catch(error => console.error(error));
 
     return this.httpClient.post<AuthResponseData>(
-      'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyBZRtSixnLvglkNRxsX6hH3nkxybI_JSz4',
+      `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${environment.firebase.apiKey}`,
       {
         email: email,
         password: password,
@@ -61,7 +62,7 @@ export class AuthService {
     //   });
 
     return this.httpClient.post<AuthResponseData>(
-      'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBZRtSixnLvglkNRxsX6hH3nkxybI_JSz4',
+      `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${environment.firebase.apiKey}`,
       {
         email: email,
         password: password,
