@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, isDevMode} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {Observable, of, throwError} from 'rxjs';
@@ -10,7 +10,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService, private spinnerService: SpinnerService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    console.log(req);
+    if (isDevMode()) { console.log(req); }
 
     this.spinnerService.show();
     return this.authService.userDataSubject.pipe(

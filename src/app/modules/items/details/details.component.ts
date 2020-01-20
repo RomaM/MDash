@@ -1,16 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {from, Observable, Subscription} from 'rxjs';
-import {filter, first, map, skipWhile, take, takeUntil, takeWhile, tap} from 'rxjs/operators';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import * as firebase from 'firebase/app';
 import * as pagesReducer from '../store/pages.reducer';
 import * as PagesActions from '../store/pages.actions';
-import {select, Store} from '@ngrx/store';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {ActivatedRoute} from '@angular/router';
 import {ItemsService} from '../../../shared/services/items.service';
 import {DialogService} from '../../../shared/services/dialog.service';
-import {UserDetailsModel} from '../../../shared/models/user-details.model';
 import {ProfilesService} from '../../../shared/services/profiles.service';
-import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-details',

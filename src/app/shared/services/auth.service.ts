@@ -1,7 +1,5 @@
-import * as firebase from 'firebase';
 import {Injectable} from '@angular/core';
-// import {AngularFireAuth} from '@angular/fire/auth';
-import {BehaviorSubject, Observable, throwError} from 'rxjs/index';
+import {BehaviorSubject, throwError} from 'rxjs/index';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {catchError, map, tap} from 'rxjs/operators';

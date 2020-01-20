@@ -27,7 +27,7 @@ export class PagesEffects {
     switchMap(() => this.itemsService.fetchItems().pipe(
       // filter(data => !!data),
       map( data => {
-        data['list'].sort((prev, next) => <any>new Date(prev[1].date) - <any>new Date(next[1].date));
+        data['list'].sort((prev, next) => <any>new Date(next[1].date) - <any>new Date(prev[1].date));
         this.itemsService.loadedData.next(data['list']);
         return data;
       }),
@@ -57,7 +57,7 @@ export class PagesEffects {
         const newList = this.itemsService.loadedData.getValue();
         newList.push([data['name'], action.payload]);
 
-        newList.sort((prev, next) => <any>new Date(prev[1].date) - <any>new Date(next[1].date));
+        newList.sort((prev, next) => <any>new Date(next[1].date) - <any>new Date(prev[1].date));
 
         this.itemsService.loadedData.next(newList);
         return new PagesActions.UpdateTimestamp(timestamp);

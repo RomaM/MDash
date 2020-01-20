@@ -2,10 +2,9 @@ import {
   AfterContentInit, AfterViewInit, Component, DoCheck, NgZone, OnChanges, OnDestroy, OnInit,
   SimpleChanges
 } from '@angular/core';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import {environment} from '../environments/environment';
 import {AuthService} from './shared/services/auth.service';
-import {distinctUntilChanged, skipWhile, switchMap, takeWhile, tap} from 'rxjs/operators';
 import * as ProfileActions from './modules/profile/store/profile.actions';
 import {Store} from '@ngrx/store';
 import * as profileReducer from './modules/profile/store/profile.reducer';
