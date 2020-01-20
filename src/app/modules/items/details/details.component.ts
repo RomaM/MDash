@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import * as firebase from 'firebase/app';
+import 'firebase/storage';
 import * as pagesReducer from '../store/pages.reducer';
 import * as PagesActions from '../store/pages.actions';
 import {Store} from '@ngrx/store';
@@ -32,7 +32,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   key = '';
 
-  firebaseStorageRef = firebase.storage().ref();
+  // firebaseStorageRef = firebase.storage().ref();
 
   constructor(private itemsService: ItemsService,
               private store: Store<pagesReducer.State>,
