@@ -3,7 +3,7 @@ import {act, Actions, Effect, ofType} from '@ngrx/effects';
 import {Router} from '@angular/router';
 import {catchError, filter, map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {select, Store} from '@ngrx/store';
-import {State} from './info.reducer';
+import * as infoReducer from './info.reducer';
 import {
   AddInfo,
   InfoActionsTypes,
@@ -19,7 +19,7 @@ import {of, throwError} from 'rxjs';
 
 export class InfoEffects {
   constructor(private actions$: Actions,
-              private store: Store<State>,
+              private store: Store<infoReducer.State>,
               private router: Router,
               private infoService: InfoService) {}
 

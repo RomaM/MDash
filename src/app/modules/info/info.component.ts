@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {State} from './store/info.reducer';
+import * as infoReducer from './store/info.reducer';
 import {LoadInfo} from './store/info.actions';
 
 @Component({
@@ -9,7 +9,7 @@ import {LoadInfo} from './store/info.actions';
   styleUrls: ['./info.component.scss']
 })
 export class InfoComponent implements OnInit {
-  constructor(private store: Store<State>) {}
+  constructor(private store: Store<infoReducer.State>) {}
 
   ngOnInit() {
     this.store.dispatch(new LoadInfo());

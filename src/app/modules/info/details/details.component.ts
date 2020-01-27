@@ -3,7 +3,7 @@ import {ActivatedRoute, Route} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProfilesService} from '../../../shared/services/profiles.service';
 import {select, Store} from '@ngrx/store';
-import {State} from '../store/info.reducer';
+import * as infoReducer from '../store/info.reducer';
 import {AddInfo, EditInfo, UpdateInfo} from '../store/info.actions';
 import {catchError, filter} from 'rxjs/operators';
 import {of} from 'rxjs';
@@ -17,7 +17,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private profileService: ProfilesService,
-              private store: Store<State>) { }
+              private store: Store<infoReducer.State>) { }
 
 
   editMode = false;
