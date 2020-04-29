@@ -12,14 +12,11 @@ import {AppComponent } from './app.component';
 import {environment} from '../environments/environment';
 import {AuthInterceptorService} from './shared/services/auth-interceptor.service';
 import {DialogComponent} from './shared/components/dialog/dialog.component';
-import {
-  MAT_DATE_LOCALE,
-  MatButtonModule,
-  MatCardModule,
-  MatNativeDateModule,
-  MatProgressSpinnerModule,
-  MatSnackBarModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {LoaderComponent} from './shared/components/loader/loader.component';
 
 import {profileReducer} from './modules/profile/store/profile.reducer';
@@ -54,6 +51,6 @@ import {ProfileEffects} from './modules/profile/store/profile.effects';
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent]
+  // entryComponents: [DialogComponent]
 })
 export class AppModule {}

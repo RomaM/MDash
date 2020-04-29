@@ -1,6 +1,6 @@
 import {TestBed, async, ComponentFixture} from '@angular/core/testing';
 import {SidebarComponent} from './sidebar.component';
-import {MatToolbarModule} from '@angular/material';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('COMPONENT -> Sidebar Component', () => {

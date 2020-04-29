@@ -1,7 +1,7 @@
 import {TestBed, async, ComponentFixture, fakeAsync, tick} from '@angular/core/testing';
 import {HeaderComponent} from './header.component';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {MatMenuModule} from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule} from '@ngrx/store';
@@ -34,7 +34,7 @@ describe('COMPONENT -> Header Component', () => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    profileService = TestBed.get(ProfilesService);
+    profileService = TestBed.inject(ProfilesService);
   });
 
   it('Should create Header Component', () => {

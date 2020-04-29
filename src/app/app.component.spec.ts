@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import {LoaderComponent} from './shared/components/loader/loader.component';
 import {RouterTestingModule} from '@angular/router/testing';
-import {MatProgressSpinnerModule} from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {AuthService} from './shared/services/auth.service';
 import {Store, StoreModule} from '@ngrx/store';

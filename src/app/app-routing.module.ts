@@ -6,31 +6,31 @@ import {CustomPreloadingService} from './shared/services/custom-preloading.servi
 const routes: Routes = [
   {
     path: 'list',
-    loadChildren: './modules/items/items.module#ListItemsModule',
+    loadChildren: () => import('./modules/items/items.module').then(m => m.ListItemsModule),
     data: {preload: true},
     canActivate: [AuthGuard]
   },
   {
     path: 'info',
-    loadChildren: './modules/info/info.module#InfoModule',
+    loadChildren: () => import('./modules/info/info.module').then(m => m.InfoModule),
     data: {preload: true},
     canActivate: [AuthGuard]
   },
   {
     path: 'statistics',
-    loadChildren: './modules/statistics/statistics.module#StatisticsModule',
+    loadChildren: () => import('./modules/statistics/statistics.module').then(m => m.StatisticsModule),
     data: {preload: true},
     canActivate: [AuthGuard]
   },
   {
     path: 'profile',
-    loadChildren: './modules/profile/profile.module#ProfileModule',
+    loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule),
     data: {preload: true},
     canActivate: [AuthGuard]
   },
   {
     path: 'auth',
-    loadChildren: './modules/auth/auth.module#AuthModule',
+    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
     data: {preload: false}
   },
   {

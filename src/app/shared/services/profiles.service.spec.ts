@@ -23,7 +23,7 @@ describe('SERVICE -> Profile Service', () => {
       ]
     });
 
-    http = TestBed.get(HttpTestingController);
+    http = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
@@ -31,7 +31,7 @@ describe('SERVICE -> Profile Service', () => {
   });
 
   it('Should create Profile Service', inject([ProfilesService], (service: ProfilesService) => {
-    const profileServiceInstance = TestBed.get(ProfilesService);
+    const profileServiceInstance = TestBed.inject(ProfilesService);
 
     expect(service).toBe(profileServiceInstance);
     expect(service).toBeTruthy();

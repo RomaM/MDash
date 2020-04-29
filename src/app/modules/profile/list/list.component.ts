@@ -20,7 +20,7 @@ export class ListComponent implements OnInit, OnDestroy {
   profilesData: any;
   currentProfile: [string, UserDetailsModel];
   currentProfileIndex: number;
-  @ViewChild(DialogHostDirective, {static: false}) hostDialog: DialogHostDirective;
+  @ViewChild(DialogHostDirective) hostDialog: DialogHostDirective;
 
   constructor(
     private router: Router,

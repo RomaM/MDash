@@ -20,7 +20,7 @@ import {pagesReducer} from './store/pages.reducer';
 import {PagesEffects} from './store/pages.effects';
 import {FilterPipe} from '../../shared/pipes/filter.pipe';
 import {SharedModule} from '../../shared/shared.module';
-import {MatDatepickerModule} from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import {ReversePipe} from '../../shared/pipes/reverse.pipe';
 
 @NgModule({
