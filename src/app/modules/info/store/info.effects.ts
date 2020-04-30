@@ -49,7 +49,7 @@ export class InfoEffects {
     ofType(<string>InfoActionsTypes.ADD_INFO),
     switchMap((action: AddInfo) => this.infoService.addItem(action.payload).pipe(
       map((res) => {
-        const info = action.payload;
+        const info = {...action.payload};
         info.key = res.name;
         return new AddInfoSuccess(info);
       }),
