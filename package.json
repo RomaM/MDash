@@ -26,7 +26,7 @@
     "@ngrx/schematics": "^9.1.0",
     "@ngrx/store": "^9.1.0",
     "@ngrx/store-devtools": "^9.1.0",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "chartjs-plugin-datalabels": "^0.7.0",
     "core-js": "^3.4.1",
     "document-register-element": "^1.14.3",
